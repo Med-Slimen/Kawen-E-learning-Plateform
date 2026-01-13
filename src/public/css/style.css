@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+:root{
+  --primary-color:#198754;
+  --secondary-color:#1e7e34;
+  --bg-color1:#fff;
+  --bg-color2:#f1eeee;
+}
+body{
+     --bs-body-font-family: 'Inter', sans-serif;
+}
+.a-success-light:hover {
+    color: #fff;
+    background-color: var(--primary-color);
+    border-color: var(--secondary-color);
+    transition: all 0.2s ease;
+    border-radius: 5px;
+}
+a{
+  text-decoration:none;
+}
+html{
+  scroll-behavior: smooth;
+}
