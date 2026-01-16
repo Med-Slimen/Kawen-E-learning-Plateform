@@ -4,6 +4,16 @@
   --secondary-color:#1e7e34;
   --bg-color1:#fff;
   --bg-color2:#f1eeee;
+  --bg-color3:#eeeeee;
+}
+.bgcolor1{
+  background-color: var(--bg-color1);
+}
+.bgcolor2{
+  background-color: var(--bg-color2);
+}
+.bgcolor3{
+  background-color: var(--bg-color3);
 }
 body{
      --bs-body-font-family: 'Inter', sans-serif;
@@ -20,4 +30,21 @@ a{
 }
 html{
   scroll-behavior: smooth;
+}
+/*
+#contact{
+  background-image: url("../assets/images/1946.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}*/
+.card-hover {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.card-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
