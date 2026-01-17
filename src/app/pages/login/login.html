@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body class="bg-red-300">
+    <div class="min-h-screen bg-gray-200 flex items-center justify-center p-4">
+        <!-- Outer card -->
+        <div class="w-full max-w-5xl bg-white rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
+            <!-- Left: Image -->
+            <div class="hidden md:block relative">
+                <img src="public/assets/images/tog.jpg" alt="Login" class="h-full w-full object-cover" />
+                <!-- Optional overlay -->
+                <div class="absolute inset-0 bg-black/30"></div>
+                <div class="absolute bottom-6 left-6 right-6 text-white">
+                    <h2 class="text-3xl font-bold">Welcome to Kawen</h2>
+                    <p class="mt-2 text-white/90">
+                        Learn, teach, and grow with structured courses.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right: Form -->
+            <div class="p-8 sm:p-10">
+                <h1 class="text-2xl font-bold text-gray-900">Sign in</h1>
+                <p class="mt-1 text-gray-600">Use your email and password.</p>
+                <form class="mt-8 space-y-5">
+                    <!-- Email -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" placeholder="you@example.com"
+                            class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" />
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" placeholder="••••••••"
+                            class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" />
+                    </div>
+
+                    <!-- Remember + Forgot -->
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 text-sm text-gray-600">
+                            <input type="checkbox" class="h-4 w-4 rounded border-gray-300" />
+                            Remember me
+                        </label>
+
+                        <a href="#" class="text-sm font-medium text-green-600 hover:underline">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <!-- Button -->
+                    <button type="submit"
+                        class="w-full rounded-xl bg-green-600 py-3 font-semibold text-white hover:bg-green-700 cursor-pointer transition">
+                        Sign in
+                    </button>
+
+                    <!-- Divider -->
+                    <div class="flex items-center gap-3">
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                        <span class="text-xs text-gray-500">OR</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+
+                    <!-- Secondary button -->
+                    <button type="button"
+                        class="w-full rounded-xl border border-gray-300 cursor-pointer py-3 font-semibold text-gray-800 hover:bg-gray-50 transition">
+                        Continue with Google
+                    </button>
+
+                    <!-- Register -->
+                    <p class="text-center text-sm text-gray-600">
+                        Don’t have an account?
+                        <a class="font-semibold text-green-600 hover:underline" href="#">
+                            Sign up
+                        </a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
