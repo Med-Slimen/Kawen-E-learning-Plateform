@@ -1,1 +1,150 @@
-<p>sign-up works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="min-h-screen bg-gray-200 flex items-center justify-center p-4">
+        <!-- Outer card -->
+        <div class="w-full max-w-5xl max-h-150 bg-white rounded-2xl shadow-lg overflow-y-scroll grid grid-cols-1 md:grid-cols-2">
+            <!-- Left: Image -->
+            <div class="hidden md:block relative">
+                <img src="public/assets/images/tog.jpg" alt="Login" class="h-full w-full object-cover" />
+                <!-- Optional overlay -->
+                <div class="absolute inset-0 bg-black/30"></div>
+                <div class="absolute bottom-6 left-6 right-6 text-white">
+                    <h2 class="text-3xl font-bold">Welcome to Kawen</h2>
+                    <p class="mt-2 text-white/90">
+                        Learn, teach, and grow with structured courses.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right: Form -->
+            <div class="p-8 sm:p-10">
+                <h1 class="text-2xl font-bold text-gray-900">Sign up</h1>
+                <p class="mt-1 text-gray-600">Fill in your information !</p>
+                <form [formGroup]="signUpForm" (ngSubmit)="singUp()" class="mt-8 space-y-5">
+                    <div class="m-1">
+                        <label class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" placeholder="Your name" required formControlName="name"
+                            class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
+                    </div>
+                    @if(signUpForm.controls['name'].hasError('required') && signUpForm.controls['name'].touched){
+                        <span class="text-red-700 ">
+                            Name is required.
+                        </span>
+                    }
+                    @if(signUpForm.controls['name'].hasError('minlength') && signUpForm.controls['name'].touched){
+                        <span class="text-red-700 ">
+                            Name must be at least 3 characters long.
+                        </span>
+                    }
+                    <div class="m-1">
+                        <label class="block text-sm font-medium text-gray-700">Last Name</label>
+                        <input type="text" placeholder="Your last name" required formControlName="lastName"
+                            class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
+                    </div>
+                    @if(signUpForm.controls['lastName'].hasError('required') && signUpForm.controls['lastName'].touched){
+                        <span class="text-red-700 ">
+                            Last Name is required.
+                        </span>
+                    }
+                    @if(signUpForm.controls['lastName'].hasError('minlength') && signUpForm.controls['lastName'].touched){
+                        <span class="text-red-700 ">
+                            Last Name must be at least 3 characters long.
+                        </span>
+                    }
+                    <div class="m-1">
+                        <label class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" placeholder="you@example.com" required formControlName="email"
+                            class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
+                    </div>
+                    @if(signUpForm.controls['email'].hasError('required') && signUpForm.controls['email'].touched){
+                        <span class="text-red-700 ">
+                            Email is required.
+                        </span>
+                    }
+                    @if(signUpForm.controls['email'].hasError('email') && signUpForm.controls['email'].touched){
+                        <span class="text-red-700 ">
+                            Please enter a valid email address.
+                        </span>
+                    }
+                    <div class="m-1">
+                        <label class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" placeholder="••••••••" required formControlName="password"
+                            class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
+                    </div>
+                    @if(signUpForm.controls['password'].hasError('required') && signUpForm.controls['password'].touched){
+                        <span class="text-red-700 ">
+                            Password is required.
+                        </span>
+                    }
+                    @if(signUpForm.controls['password'].hasError('minlength') && signUpForm.controls['password'].touched){
+                        <span class="text-red-700 ">
+                            Password must be at least 6 characters long.
+                        </span>
+                    }
+                    <p>I want to join as :</p>
+                    <div class="grid grid-cols-2 items-center justify-center p-3 gap-4">
+                        <button type="button" (click)="selectRole('Student')">
+                            <div id="Student" class="bg-gray-100 text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users m-auto"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+                                
+                                    Student
+                                
+                            </div>
+                        </button>
+                        <button type="button" (click)="selectRole('Instructor')">
+                        <div id="Instructor" class="bg-gray-100 text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap-icon lucide-graduation-cap m-auto"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
+                            
+                                Instructor
+                            
+                        </div>
+                        </button>
+                    </div>
+                    @if(signUpForm.invalid){
+                    <button type="submit" [disabled]="signUpForm.invalid"
+                        class="w-full rounded-xl bg-green-300 cursor-not-allowed py-3 font-semibold text-white transition">
+                        Sign up
+                    </button>
+                    }
+                    @else{
+                        <button type="submit"
+                        class="w-full rounded-xl bg-green-600 py-3 font-semibold text-white hover:bg-green-700 cursor-pointer transition">
+                        Sign up
+                        </button>
+                    }
+                    <!-- Divider -->
+                    <div class="flex items-center gap-3">
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                        <span class="text-xs text-gray-500">OR</span>
+                        <div class="h-px flex-1 bg-gray-200"></div>
+                    </div>
+
+                    <!-- Secondary button -->
+                    <button type="button"
+                        class="w-full rounded-xl border border-gray-300 cursor-pointer py-3 font-semibold text-gray-800 hover:bg-gray-50 transition">
+                        Continue with Google
+                    </button>
+
+                    <!-- Register -->
+                    <p class="text-center text-sm text-gray-600">
+                        have an account?
+                        <a class="font-semibold text-green-600 hover:underline" routerLink="/Login">
+                            Sign in
+                        </a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
