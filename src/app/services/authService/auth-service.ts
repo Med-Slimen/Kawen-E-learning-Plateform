@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { User } from '../../models/user';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, user } from '@angular/fire/auth';
+import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root',
 })
@@ -9,14 +9,19 @@ export class AuthService {
   private fireAuth = inject(Auth);
   private firestore = inject(Firestore);
   public constructor() {}
-  login(email: string, password: string): void {
-    console.log(`Logging in with email: ${email} and password: ${password}`);
-    signInWithEmailAndPassword(this.fireAuth, email, password)
+  login(email: string, password: string): Promise<boolean> {
+    return signInWithEmailAndPassword(this.fireAuth, email, password)
       .then((userCredential) => {
-        console.log('Login successful:', userCredential);
+        const userRef= doc(this.firestore, 'users', userCredential.user.uid);
+        return getDoc(userRef).then((docSnap)=>{
+          if(!docSnap.exists())return false;
+          const userData= docSnap.data() as User;
+          localStorage.setItem('user', JSON.stringify(userData));
+          return true;
+        });
       })
       .catch((error) => {
-        console.error('Login failed:', error);
+        return false;
       });
   }
    signUp(name: string, lastName: string, email: string, password:string, role: string): void {

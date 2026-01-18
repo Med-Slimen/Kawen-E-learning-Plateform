@@ -92,7 +92,10 @@
                     <p>I want to join as :</p>
                     <div class="grid grid-cols-2 items-center justify-center p-3 gap-4">
                         <button type="button" (click)="selectRole('Student')">
-                            <div id="Student" class="bg-gray-100 text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition">
+                            <div id="Student" class="bg-gray-100 text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition"
+                            [class.bg-green-200]="selectedRole==='Student'"
+                            [class.bg-gray-100]="selectedRole!=='Student'"
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users m-auto"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
                                 
                                     Student
@@ -100,7 +103,10 @@
                             </div>
                         </button>
                         <button type="button" (click)="selectRole('Instructor')">
-                        <div id="Instructor" class="bg-gray-100 text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition">
+                        <div id="Instructor" class="bg-gray-100 text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition"
+                        [class.bg-green-200]="selectedRole==='Instructor'"
+                        [class.bg-gray-100]="selectedRole!=='Instructor'"
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap-icon lucide-graduation-cap m-auto"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
                             
                                 Instructor
@@ -108,18 +114,17 @@
                         </div>
                         </button>
                     </div>
-                    @if(signUpForm.invalid){
-                    <button type="submit" [disabled]="signUpForm.invalid"
-                        class="w-full rounded-xl bg-green-300 cursor-not-allowed py-3 font-semibold text-white transition">
+                    <button type="submit"
+                        class="w-full rounded-xl py-3 font-semibold text-white transition"
+                        [disabled]="signUpForm.invalid"
+                        [class.bg-green-600]="!signUpForm.invalid"
+                        [class.hover:bg-green-700]="!signUpForm.invalid"
+                        [class.cursor-pointer]="!signUpForm.invalid"
+                        [class.bg-green-300]="signUpForm.invalid"
+                        [class.cursor-not-allowed]="signUpForm.invalid"
+                        >
                         Sign up
                     </button>
-                    }
-                    @else{
-                        <button type="submit"
-                        class="w-full rounded-xl bg-green-600 py-3 font-semibold text-white hover:bg-green-700 cursor-pointer transition">
-                        Sign up
-                        </button>
-                    }
                     <!-- Divider -->
                     <div class="flex items-center gap-3">
                         <div class="h-px flex-1 bg-gray-200"></div>

@@ -23,26 +23,43 @@
                     </p>
                 </div>
             </div>
-
-            <!-- Right: Form -->
             <div class="p-8 sm:p-10">
                 <h1 class="text-2xl font-bold text-gray-900">Sign in</h1>
                 <p class="mt-1 text-gray-600">Use your email and password.</p>
-                <form class="mt-8 space-y-5">
-                    <!-- Email -->
-                    <div>
+                @if (this.error==1) {
+                    <div class="bg-red-200 text-black p-2 rounded border border-red-700 mt-2">
+                        Invalid email or password.
+                    </div>
+                }
+                <form [formGroup]="loginForm" class="mt-5 space-y-5" (ngSubmit)="login()">
+                    <div class="m-0">
                         <label class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" placeholder="you@example.com"
+                        <input type="email" placeholder="you@example.com" formControlName="email"
                             class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
                     </div>
+                    @if (loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched) {
+                        <span class="text-red-700 ">
+                            Email is required.
+                        </span>
 
-                    <!-- Password -->
-                    <div>
+                    }
+                    @if (loginForm.controls['email'].hasError('email') && loginForm.controls['email'].touched) {
+                        <span class="text-red-700 ">
+                            Please enter a valid email address.
+                        </span>
+
+                    }
+                    <div class="m-0">
                         <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" placeholder="••••••••"
+                        <input type="password" placeholder="••••••••" formControlName="password"
                             class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
                     </div>
-                    <!-- Remember + Forgot -->
+                    @if (loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched) {
+                        <span class="text-red-700 ">
+                            Password is required.
+                        </span>
+
+                    }
                     <div class="flex items-center justify-between">
                         <label class="flex items-center gap-2 text-sm text-gray-600">
                             <input type="checkbox" class="h-4 w-4 rounded border-gray-300" />
@@ -53,26 +70,26 @@
                             Forgot password?
                         </a>
                     </div>
-                    <!-- Button -->
                     <button type="submit"
-                        class="w-full rounded-xl bg-green-600 py-3 font-semibold text-white hover:bg-green-700 cursor-pointer transition">
+                        class="w-full rounded-xl  py-3 font-semibold text-white transition"
+                        [disabled]="loginForm.invalid"
+                        [class.bg-green-600]="!loginForm.invalid"
+                        [class.hover:bg-green-700]="!loginForm.invalid"
+                        [class.cursor-pointer]="!loginForm.invalid"
+                        [class.bg-green-300]="loginForm.invalid"
+                        [class.cursor-not-allowed]="loginForm.invalid"
+                        >
                         Sign in
                     </button>
-
-                    <!-- Divider -->
                     <div class="flex items-center gap-3">
                         <div class="h-px flex-1 bg-gray-200"></div>
                         <span class="text-xs text-gray-500">OR</span>
                         <div class="h-px flex-1 bg-gray-200"></div>
                     </div>
-
-                    <!-- Secondary button -->
                     <button type="button"
                         class="w-full rounded-xl border border-gray-300 cursor-pointer py-3 font-semibold text-gray-800 hover:bg-gray-50 transition">
                         Continue with Google
                     </button>
-
-                    <!-- Register -->
                     <p class="text-center text-sm text-gray-600">
                         Don’t have an account?
                         <a class="font-semibold text-green-600 hover:underline" routerLink="/Sign-Up">

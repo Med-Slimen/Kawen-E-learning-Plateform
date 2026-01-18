@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/authService/auth-service';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { User } from '../../models/user';
 
 @Component({
@@ -12,15 +12,23 @@ import { User } from '../../models/user';
 })
 export class Login {
   loginForm!:FormGroup;
+  error:number=0;
   // private authService= Inject(AuthService);
-  constructor(private fb:FormBuilder,private authService: AuthService) {}
+  constructor(private fb:FormBuilder,private authService: AuthService, private router: Router) {}
   ngOnInit(){
     this.loginForm=this.fb.group({
       email:['',[Validators.required,Validators.email]],
-      password:['',[Validators.required,Validators.minLength(6)]]
+      password:['',[Validators.required]]
     });
   }
   login():void{
-    this.authService.login(this.loginForm.value.email,this.loginForm.value.password);
+    this.authService.login(this.loginForm.value.email,this.loginForm.value.password).then((isLoggedIn)=>{
+      if(isLoggedIn){
+        this.router.navigate(['/Student_Dashboard']);}
+      else{
+        this.error=1;
+      }
+    
+  });
   }
 }

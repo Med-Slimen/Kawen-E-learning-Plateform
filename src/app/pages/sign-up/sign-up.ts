@@ -11,7 +11,7 @@ import { User } from '../../models/user';
   styleUrl: './sign-up.css',
 })
 export class SignUp {
-  private selectedRole: string='Student';
+  selectedRole: string='Student';
   private authService= inject(AuthService);
   private fb= inject(FormBuilder);
   signUpForm!:FormGroup;
@@ -32,19 +32,6 @@ export class SignUp {
   }
   selectRole(role: string): void {
     this.selectedRole = role;
-    if(role==='Student'){
-      document.getElementById('Student')?.classList.add('bg-green-200');
-      document.getElementById('Student')?.classList.remove('bg-gray-100');
-      document.getElementById('Instructor')?.classList.remove('bg-green-200');
-      document.getElementById('Instructor')?.classList.add('bg-gray-100');
-    }
-    else{
-      document.getElementById('Instructor')?.classList.add('bg-green-200');
-      document.getElementById('Instructor')?.classList.remove('bg-gray-100');
-      document.getElementById('Student')?.classList.remove('bg-green-200');
-      document.getElementById('Student')?.classList.add('bg-gray-100');
-    }
-    console.log(`Selected role: ${this.selectedRole}`);
   }
   
 }
