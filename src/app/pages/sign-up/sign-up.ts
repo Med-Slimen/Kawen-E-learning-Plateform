@@ -28,15 +28,7 @@ export class SignUp {
   }
   constructor() {}
   singUp(): void {
-    const user:User={
-      id: '',
-      name: this.signUpForm.value.name,
-      lastName: this.signUpForm.value.lastName,
-      email: this.signUpForm.value.email,
-      password: this.signUpForm.value.password,
-      role: this.selectedRole
-    };
-    this.authService.signUp(user);
+    this.authService.signUp(this.signUpForm.value.name,this.signUpForm.value.lastName,this.signUpForm.value.email,this.signUpForm.value.password,this.selectedRole);
   }
   selectRole(role: string): void {
     this.selectedRole = role;

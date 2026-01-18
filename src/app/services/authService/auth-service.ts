@@ -1,9 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { User } from '../../models/user';
-import { doc, setDoc } from 'firebase/firestore';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,11 +19,16 @@ export class AuthService {
         console.error('Login failed:', error);
       });
   }
-   signUp(user: User): void {
-    console.log("user :"+user);
-    createUserWithEmailAndPassword(this.fireAuth, user.email, user.password).then((cred)=>{
-      user.id=cred.user.uid;
-      setDoc(doc(this.firestore, 'users', user.id), user).then(() => {
+   signUp(name: string, lastName: string, email: string, password:string, role: string): void {
+    createUserWithEmailAndPassword(this.fireAuth, email,password).then((cred)=>{
+      const user: User = {
+        uid: cred.user.uid,
+        name: name,
+        lastName: lastName,
+        email: email,
+        role: role
+      };
+      setDoc(doc(this.firestore, 'users', user.uid), user).then(() => {
         console.log('User data saved successfully!');
       }).catch((error) => {
         console.error('Error saving user data:', error);
