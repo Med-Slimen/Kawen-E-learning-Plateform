@@ -1,5 +1,4 @@
-import { ViewportScroller } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { LayoutService } from '../../services/layoutService/layout-service';
 
