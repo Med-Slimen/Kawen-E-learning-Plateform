@@ -13,6 +13,7 @@ import { User } from '../../models/user';
 export class Login {
   loginForm!:FormGroup;
   error:number=0;
+  loading=false;
   // private authService= Inject(AuthService);
   constructor(private fb:FormBuilder,private authService: AuthService, private router: Router) {}
   ngOnInit(){
@@ -22,13 +23,14 @@ export class Login {
     });
   }
   login():void{
+    this.loading=true;
     this.authService.login(this.loginForm.value.email,this.loginForm.value.password).then((isLoggedIn)=>{
       if(isLoggedIn){
         this.router.navigate(['/Student_Dashboard']);}
       else{
         this.error=1;
       }
-    
+      this.loading=false;
   });
   }
 }

@@ -1,6 +1,7 @@
 import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
+import { LayoutService } from '../../services/layoutService/layout-service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,12 +11,11 @@ import { RouterLink } from "@angular/router";
 })
 export class HomePage {
   mobileMenuOpen = false;
-  toggleMobileMenu() {
-    this.mobileMenuOpen = !this.mobileMenuOpen;
+  constructor(private layoutService: LayoutService) {}
+  toggleMenu(menu: boolean): void {
+    menu = this.layoutService.toggleMenu(menu);
   }
-  constructor(private viewportScroller: ViewportScroller) {}
-
   scrollTo(anchor: string): void {
-    this.viewportScroller.scrollToAnchor(anchor);
+    this.layoutService.scrollTo(anchor);
   }
 }

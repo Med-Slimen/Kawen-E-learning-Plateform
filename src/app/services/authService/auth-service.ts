@@ -24,8 +24,8 @@ export class AuthService {
         return false;
       });
   }
-   signUp(name: string, lastName: string, email: string, password:string, role: string): void {
-    createUserWithEmailAndPassword(this.fireAuth, email,password).then((cred)=>{
+   signUp(name: string, lastName: string, email: string, password:string, role: string): Promise<boolean> {
+    return createUserWithEmailAndPassword(this.fireAuth, email,password).then((cred)=>{
       const user: User = {
         uid: cred.user.uid,
         name: name,
@@ -33,18 +33,25 @@ export class AuthService {
         email: email,
         role: role
       };
-      setDoc(doc(this.firestore, 'users', user.uid), user).then(() => {
+      return setDoc(doc(this.firestore, 'users', user.uid), user).then(() => {
         console.log('User data saved successfully!');
+        return true;
       }).catch((error) => {
         console.error('Error saving user data:', error);
+        return false;
       });
     }).catch((error)=>{
     console.error('Error during sign up:',error);
+    return false;
   });
 }
-
-
-
-
-
+logout(): Promise<boolean> {
+    return this.fireAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      return true;
+    }).catch((error) => {
+      console.error('Error during logout:', error);
+      return false;
+    });
+  }
 }
