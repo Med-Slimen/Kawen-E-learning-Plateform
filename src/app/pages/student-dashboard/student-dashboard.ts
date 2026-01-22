@@ -1,9 +1,11 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { LayoutService } from '../../services/layoutService/layout-service';
 import { AuthService } from '../../services/authService/auth-service';
 import { Router } from '@angular/router';
 import { NavBar } from "../../components/layoutComponents/nav-bar/nav-bar";
+import { User } from 'firebase/auth';
+import { SessionService } from '../../services/sessionService/session-service';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -11,7 +13,13 @@ import { NavBar } from "../../components/layoutComponents/nav-bar/nav-bar";
   templateUrl: './student-dashboard.html',
   styleUrl: './student-dashboard.css',
 })
-export class StudentDashboard {
+export class StudentDashboard implements OnInit {
+  user :User | null=null;
   authService=inject(AuthService)
-  constructor(private layoutService: LayoutService,private router: Router) {}
+  sessionService=inject(SessionService);
+  constructor(private router: Router) {
+    }
+  ngOnInit(): void {
+   
+  }
 }

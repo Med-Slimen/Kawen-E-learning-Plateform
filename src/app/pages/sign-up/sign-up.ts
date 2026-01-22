@@ -3,7 +3,7 @@ import { Router, RouterLink } from "@angular/router";
 import { AuthService } from '../../services/authService/auth-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../models/user';
-import { ToastrService } from 'ngx-toastr';
+import { SessionService } from '../../services/sessionService/session-service';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,12 +15,25 @@ export class SignUp {
   selectedRole: string='Student';
   loading=false;
   private authService= inject(AuthService);
-  toastr = inject(ToastrService);
   private fb= inject(FormBuilder);
   signUpForm!:FormGroup;
   user!:User;
   constructor(private router: Router) {}
+  sessionService = inject(SessionService);
   ngOnInit(){
+    this.sessionService.ready?.then(()=>{
+      if(this.sessionService.isLoggedIn){
+        if(this.sessionService.user?.role==='Student'){
+          this.router.navigate(['/Student_Dashboard']);
+        }
+        else if(this.sessionService.user?.role==='Admin'){
+          this.router.navigate(['/Admin_Dashboard']);
+        }
+        else if(this.sessionService.user?.role==='Instructor'){
+          this.router.navigate(['/Instructor_Dashboard']);
+        }
+      }
+    });
     this.signUpForm=this.fb.group({
       name:['',[Validators.required,Validators.minLength(3)]],
       lastName:['',[Validators.required,Validators.minLength(3)]],
@@ -32,17 +45,9 @@ export class SignUp {
     this.loading = true;
     this.authService.signUp(this.signUpForm.value.name,this.signUpForm.value.lastName,this.signUpForm.value.email,this.signUpForm.value.password,this.selectedRole).then((res)=>{
       if(res){
-        this.toastr.success('Sign up successful! Please log in.', 'Success',{
-          timeOut: 3000,
-        });
-        this.signUpForm.reset();
-        setTimeout(() => {
-          this.router.navigate(['/Login']);
-        }, 3200);
+        this.router.navigate(['/Login']);
       }else{
-        this.toastr.error('Sign up failed! Please try again.', 'Error',{
-          timeOut: 3000,
-        });
+        console.error('Sign up failed');
       }
     }).finally(() => {
       this.loading = false;

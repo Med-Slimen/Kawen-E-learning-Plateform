@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../services/authService/auth-service';
 import { Router, RouterLink } from "@angular/router";
 import { User } from '../../models/user';
-import { ToastrService } from 'ngx-toastr';
+import { SessionService } from '../../services/sessionService/session-service';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +15,23 @@ export class Login {
   loginForm!:FormGroup;
   error:number=0;
   loading=false;
-  toastr = inject(ToastrService);
+  sessionService = inject(SessionService);
   // private authService= Inject(AuthService);
   constructor(private fb:FormBuilder,private authService: AuthService, private router: Router) {}
   ngOnInit(){
+    this.sessionService.ready?.then(()=>{
+      if(this.sessionService.isLoggedIn){
+        if(this.sessionService.user?.role==='Student'){
+          this.router.navigate(['/Student_Dashboard']);
+        }
+        else if(this.sessionService.user?.role==='Admin'){
+          this.router.navigate(['/Admin_Dashboard']);
+        }
+        else if(this.sessionService.user?.role==='Instructor'){
+          this.router.navigate(['/Instructor_Dashboard']);
+        }
+      }
+    });
     this.loginForm=this.fb.group({
       email:['',[Validators.required,Validators.email]],
       password:['',[Validators.required]]
@@ -28,12 +41,7 @@ export class Login {
     this.loading=true;
     this.authService.login(this.loginForm.value.email,this.loginForm.value.password).then((isLoggedIn)=>{
       if(isLoggedIn){
-        setTimeout(() => {
-          this.router.navigate(['/Student_Dashboard']);
-        }, 3000);
-        this.toastr.success('Login Success!', 'Success',{
-          timeOut: 3000,
-        });
+        this.router.navigate(['/Student_Dashboard']);
         }
       else{
         this.error=1;
