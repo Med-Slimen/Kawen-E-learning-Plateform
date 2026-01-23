@@ -26,22 +26,20 @@ export class AuthService {
   }
    signUp(name: string, lastName: string, email: string, password:string, role: string): Promise<boolean> {
     return createUserWithEmailAndPassword(this.fireAuth, email,password).then((cred)=>{
-      const user: User = {
-        uid: cred.user.uid,
+      const user: Omit<User, 'uid'> = {
         name: name,
         lastName: lastName,
         email: email,
         role: role
       };
-      return setDoc(doc(this.firestore, 'users', user.uid), user).then(() => {
-        console.log('User data saved successfully!');
+      return setDoc(doc(this.firestore, 'users', cred.user.uid), user).then(() => {
         return true;
       }).catch((error) => {
-        console.error('Error saving user data:', error);
+        console.error('Error adding user to Firestore:', error);
         return false;
       });
     }).catch((error)=>{
-    console.error('Error during sign up:',error);
+      console.error('Error during sign up:', error);
     return false;
   });
 }

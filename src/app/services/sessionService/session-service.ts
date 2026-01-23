@@ -8,7 +8,7 @@ import { User } from '../../models/user';
   providedIn: 'root',
 })
 export class SessionService {
-  user: User | null = null;
+  user = signal<User | null>(null);
   isLoggedIn =signal(false);
   ready:Promise<void> | null= null;
   private auth = inject(Auth);
@@ -18,18 +18,18 @@ export class SessionService {
     onAuthStateChanged(this.auth, async(currentUser) => {
       if (!currentUser) {
         this.isLoggedIn.set(false);
-        this.user = null;
+        this.user.set(null);
         resolve();
         return;
       }
       else{
         const snap=await getDoc(doc(this.fs, 'users', currentUser.uid));
         if(snap.exists()){
-          this.user= snap.data() as User;
+          this.user.set(snap.data() as User);
           this.isLoggedIn.set(true);
         }
         else{
-          this.user=null;
+          this.user.set(null);
           this.isLoggedIn.set(false);
         }
       }
@@ -37,6 +37,6 @@ export class SessionService {
     });});
   }
   hasRole(roles:string[]): boolean | null {
-    return roles.includes(this.user?.role || '');
+    return roles.includes(this.user()?.role || '');
   }
 }

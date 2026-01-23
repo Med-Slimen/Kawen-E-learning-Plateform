@@ -1,10 +1,10 @@
 <section class="browse_Courses p-5">
     <h3 class="text-2xl font-semibold mb-4">Browse Courses</h3>
-    <div class="header flex items-center gap-10 mb-5 p-5">
-        <form action="" class="">
-            <div class="relative">
+    <div class="header  mb-5 p-5">
+        <form action="" class="flex flex-row flex-wrap items-center gap-10">
+            <div class="relative w-125">
                 <input type="text" placeholder="Search courses..."
-                    class="w-xs rounded-xl border border-gray-300 px-10 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
+                    class="w-full max-w-full rounded-xl border border-gray-300 px-10 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-search-icon lucide-search text-red-700 absolute top-[50%] translate-y-[-50%] left-2">
@@ -12,40 +12,48 @@
                     <circle cx="11" cy="11" r="8" />
                 </svg>
             </div>
-        </form>
-        <select name="courseCategory" id="courseCategory"
-            class=" rounded-xl border border-gray-300 px-3 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200">
-            <option value="" disabled selected>Filter by Category</option>
+            <select name="courseCategory" id="courseCategory"
+            class="w-90 rounded-xl border border-gray-300 px-3 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200">
+            <option value="all" selected>All</option>
             <option value="programming">Programming</option>
             <option value="design">Design</option>
             <option value="marketing">Marketing</option>
             <option value="business">Business</option>
             <option value="photography">Photography</option>
         </select>
+        </form>
+        
     </div>
-    @for (course of courses; track $index) {
-    <div class="course_card  shadow-2xl p-5 w-100 rounded-xl">
-        <div class="flex flex-col gap-3">
-            <div class="imag relative">
-                <img class="img w-100 h-60 rounded-2xl"
-                    src="{{course.thumbnailUrl}}"
-                    alt="">
-                    <p
-                        class="bg-blue-500 text-white px-3 py-1 rounded-2xl absolute top-3 right-3 font-semibold">
-                        {{course.level}}</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-5">
+        @for (course of courses; track $index) {
+        <div class="flex flex-col gap-3 rounded-xl shadow-2xl p-4 bg-white">
+            <div class="w-auto relative">
+                <img class="img h-60 rounded-2xl object-cover w-full" src="{{course.thumbnailUrl}}" alt="">
+                <p class="bg-blue-500 text-white px-3 py-1 rounded-2xl absolute top-3 right-3 font-semibold">
+                    {{course.level}}</p>
+                @if (course.price==0) {
+                    <p class="bg-cyan-500 text-white px-3 py-1 rounded-2xl absolute top-3 left-3 font-semibold">
+                    Free</p>
+                }
+                @else {
+                    <p class="bg-red-500 text-white px-3 py-1 rounded-2xl absolute top-3 left-3 font-semibold">
+                    {{course.price}}</p>
+                }
+                
             </div>
             <div class="details">
                 <h3 class="text-xl font-semibold">{{course.title}}</h3>
                 <p class="text-gray-600 m-1">{{course.description}}</p>
                 <p class="text-green-600 font-semibold m-2">Duration: {{course.duration}} hours</p>
-                <p class="text-blue-600 font-semibold m-2">By {{course.instructor.name}} {{course.instructor.lastName}}</p>
+                <p class="text-blue-600 font-semibold m-2">By {{course.instructor.name}} {{course.instructor.lastName}}
+                </p>
                 <p class="text-purple-600 font-semibold w-fit rounded-2xl m-2">Category: {{course.category.title}}</p>
             </div>
             <div class="button">
                 <button class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600">View Details</button>
             </div>
         </div>
-    </div>
-    }
 
+        }
+    </div>
 </section>

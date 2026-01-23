@@ -21,13 +21,13 @@ export class Login {
   ngOnInit(){
     this.sessionService.ready?.then(()=>{
       if(this.sessionService.isLoggedIn()){
-        if(this.sessionService.user?.role==='Student'){
+        if(this.sessionService.user()?.role==='Student'){
           this.router.navigate(['/Student_Dashboard']);
         }
-        else if(this.sessionService.user?.role==='Admin'){
+        else if(this.sessionService.user()?.role==='Admin'){
           this.router.navigate(['/Admin_Dashboard']);
         }
-        else if(this.sessionService.user?.role==='Instructor'){
+        else if(this.sessionService.user()?.role==='Instructor'){
           this.router.navigate(['/Instructor_Dashboard']);
         }
       }
