@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { LayoutService } from '../../../services/layoutService/layout-service';
 import { AuthService } from '../../../services/authService/auth-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.css',
 })

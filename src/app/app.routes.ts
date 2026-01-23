@@ -8,12 +8,14 @@ import { Forbidden } from './pages/forbidden/forbidden';
 import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
 import { CoursesList } from './components/courses-list/courses-list';
+import { Courses } from './pages/courses/courses';
 
 export const routes: Routes = [
     {path: 'Home', component: HomePage },
     {path:'Login',component:Login},
     {path: 'Sign-Up', component:SignUp},
     {path:'CoursesList',component:CoursesList},
+    {path:'Courses',component:Courses},
     {path: 'Student_Dashboard', component:StudentDashboard,canActivate:
     [authGuard,roleGuard],data: { roles: ['Student'] }},
     {path:'Admin_Dashboard',component:AdminDashboard,canActivate:

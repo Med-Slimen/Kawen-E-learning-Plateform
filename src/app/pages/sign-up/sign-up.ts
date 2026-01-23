@@ -22,7 +22,7 @@ export class SignUp {
   sessionService = inject(SessionService);
   ngOnInit(){
     this.sessionService.ready?.then(()=>{
-      if(this.sessionService.isLoggedIn){
+      if(this.sessionService.isLoggedIn()){
         if(this.sessionService.user?.role==='Student'){
           this.router.navigate(['/Student_Dashboard']);
         }

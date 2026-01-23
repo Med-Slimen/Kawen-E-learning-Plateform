@@ -7,9 +7,11 @@ export const roleGuard: CanActivateFn = async (route, state) => {
   const router = inject(Router);
   const roles = route.data['roles'] as string[];
   await sessionService.ready;
+  if(!sessionService.isLoggedIn()){
+    return router.createUrlTree(['/login']);
+  }
   if(sessionService.hasRole(roles)){
     return true;
   }
-  router.navigate(['/Forbidden']);
-  return false;
+  return router.createUrlTree(['/Forbidden']);
 };

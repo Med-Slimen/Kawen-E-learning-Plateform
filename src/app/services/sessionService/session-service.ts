@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -9,7 +9,7 @@ import { User } from '../../models/user';
 })
 export class SessionService {
   user: User | null = null;
-  isLoggedIn : boolean = false;
+  isLoggedIn =signal(false);
   ready:Promise<void> | null= null;
   private auth = inject(Auth);
   private fs = inject(Firestore);
@@ -17,15 +17,20 @@ export class SessionService {
     this.ready=new Promise<void>((resolve)=>{
     onAuthStateChanged(this.auth, async(currentUser) => {
       if (!currentUser) {
-        this.isLoggedIn = false;
+        this.isLoggedIn.set(false);
         this.user = null;
-        return
+        resolve();
+        return;
       }
       else{
         const snap=await getDoc(doc(this.fs, 'users', currentUser.uid));
         if(snap.exists()){
           this.user= snap.data() as User;
-          this.isLoggedIn = true;
+          this.isLoggedIn.set(true);
+        }
+        else{
+          this.user=null;
+          this.isLoggedIn.set(false);
         }
       }
       resolve();

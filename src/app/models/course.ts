@@ -3,13 +3,14 @@ import { Lesson } from "./lessons";
 import { User } from "./user";
 
 export interface Course {
-    id: string;
+    uid: string;
     title: string;
     description: string;
     duration: number; // duration in hours
-    instructorId: string;
-    categoryId: string;
+    instructor: User;
+    category: Category;
     lessons: Lesson[];
     price: number;
-    thumbnail_url: string;
+    level:string;
+    thumbnailUrl: string;
 }

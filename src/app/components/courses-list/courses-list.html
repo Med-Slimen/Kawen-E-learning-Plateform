@@ -4,11 +4,17 @@
         <form action="" class="">
             <div class="relative">
                 <input type="text" placeholder="Search courses..."
-                class="w-xs rounded-xl border border-gray-300 px-10 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search text-red-700 absolute top-[50%] translate-y-[-50%] left-2"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+                    class="w-xs rounded-xl border border-gray-300 px-10 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-search-icon lucide-search text-red-700 absolute top-[50%] translate-y-[-50%] left-2">
+                    <path d="m21 21-4.34-4.34" />
+                    <circle cx="11" cy="11" r="8" />
+                </svg>
             </div>
         </form>
-        <select name="courseCategory" id="courseCategory" class=" rounded-xl border border-gray-300 px-3 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200">
+        <select name="courseCategory" id="courseCategory"
+            class=" rounded-xl border border-gray-300 px-3 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200">
             <option value="" disabled selected>Filter by Category</option>
             <option value="programming">Programming</option>
             <option value="design">Design</option>
@@ -17,4 +23,29 @@
             <option value="photography">Photography</option>
         </select>
     </div>
+    @for (course of courses; track $index) {
+    <div class="course_card  shadow-2xl p-5 w-100 rounded-xl">
+        <div class="flex flex-col gap-3">
+            <div class="imag relative">
+                <img class="img w-100 h-60 rounded-2xl"
+                    src="{{course.thumbnailUrl}}"
+                    alt="">
+                    <p
+                        class="bg-blue-500 text-white px-3 py-1 rounded-2xl absolute top-3 right-3 font-semibold">
+                        {{course.level}}</p>
+            </div>
+            <div class="details">
+                <h3 class="text-xl font-semibold">{{course.title}}</h3>
+                <p class="text-gray-600 m-1">{{course.description}}</p>
+                <p class="text-green-600 font-semibold m-2">Duration: {{course.duration}} hours</p>
+                <p class="text-blue-600 font-semibold m-2">By {{course.instructor.name}} {{course.instructor.lastName}}</p>
+                <p class="text-purple-600 font-semibold w-fit rounded-2xl m-2">Category: {{course.category.title}}</p>
+            </div>
+            <div class="button">
+                <button class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600">View Details</button>
+            </div>
+        </div>
+    </div>
+    }
+
 </section>

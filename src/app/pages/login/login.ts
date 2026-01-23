@@ -20,7 +20,7 @@ export class Login {
   constructor(private fb:FormBuilder,private authService: AuthService, private router: Router) {}
   ngOnInit(){
     this.sessionService.ready?.then(()=>{
-      if(this.sessionService.isLoggedIn){
+      if(this.sessionService.isLoggedIn()){
         if(this.sessionService.user?.role==='Student'){
           this.router.navigate(['/Student_Dashboard']);
         }

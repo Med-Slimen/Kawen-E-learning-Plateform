@@ -47,7 +47,6 @@ export class AuthService {
 }
 logout(): Promise<boolean> {
     return this.fireAuth.signOut().then(() => {
-      localStorage.removeItem('user');
       return true;
     }).catch((error) => {
       console.error('Error during logout:', error);
