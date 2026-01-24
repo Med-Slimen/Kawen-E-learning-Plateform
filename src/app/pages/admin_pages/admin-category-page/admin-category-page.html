@@ -1,0 +1,144 @@
+<!-- Admin - Categories (Simple CRUD UI, No Visibility) -->
+<div class="p-4 sm:p-6">
+    <!-- Header -->
+    <div>
+            <h1 class="text-2xl font-semibold">Categories</h1>
+            <p class="text-sm text-gray-500 mt-1">Create, update, and delete categories.</p>
+    </div>
+
+    <!-- Total -->
+    <div class="mt-6 rounded-xl border bg-white p-4 flex items-center justify-between">
+        <div>
+            <p class="text-sm text-gray-500">Total categories</p>
+            <p class="text-2xl font-semibold">12</p>
+        </div>
+        <div class="text-sm text-gray-500">
+            Last updated: 2026-01-24
+        </div>
+    </div>
+
+    <!-- Create / Edit Form -->
+    <div class="mt-6 rounded-xl border bg-white p-4">
+        <h2 class="text-lg font-semibold">Create / Edit Category</h2>
+        <p class="text-sm text-gray-500 mt-1">Fill the form then click save.</p>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form action="">
+                <div>
+                    <label class="text-sm text-gray-600">Title</label>
+                    <input class="mt-1 w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring"
+                        placeholder="e.g. Development" value="Development" />
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="text-sm text-gray-600">Description</label>
+                    <textarea class="mt-1 w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring" rows="3"
+                        placeholder="Short description...">Programming, web development, mobile, and backend.</textarea>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+            <button class="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700">
+                Create
+            </button>
+            <button class="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-700">
+                Save Edit
+            </button>
+            <button class="px-4 py-2 rounded-lg border hover:bg-gray-50">
+                Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- Categories List -->
+    <div class="mt-6 rounded-xl border bg-white overflow-hidden">
+        <div class="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <h2 class="text-lg font-semibold">All Categories</h2>
+
+            <input class="w-full sm:w-72 rounded-lg border px-3 py-2 focus:outline-none focus:ring"
+                placeholder="Search category..." value="dev" />
+        </div>
+
+        <!-- Desktop Table -->
+        <div class="hidden md:block border-t">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 text-gray-600 text-sm">
+                    <tr>
+                        <th class="p-3">Title</th>
+                        <th class="p-3">Description</th>
+                        <th class="p-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-t">
+                        <td class="p-3 font-medium">Development</td>
+                        <td class="p-3 text-gray-600">Programming, web development, mobile, and backend.</td>
+                        <td class="p-3">
+                            <div class="flex justify-end gap-2">
+                                <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Edit</button>
+                                <button
+                                    class="px-3 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="border-t">
+                        <td class="p-3 font-medium">Design</td>
+                        <td class="p-3 text-gray-600">UI/UX, product design, and visual identity.</td>
+                        <td class="p-3">
+                            <div class="flex justify-end gap-2">
+                                <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Edit</button>
+                                <button
+                                    class="px-3 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="border-t">
+                        <td class="p-3 font-medium">Business</td>
+                        <td class="p-3 text-gray-600">Entrepreneurship, management, finance, and strategy.</td>
+                        <td class="p-3">
+                            <div class="flex justify-end gap-2">
+                                <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Edit</button>
+                                <button
+                                    class="px-3 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="md:hidden border-t p-4 space-y-3">
+            <div class="rounded-xl border p-4">
+                <p class="font-semibold">Development</p>
+                <p class="text-sm text-gray-600 mt-1">Programming, web development, mobile, and backend.</p>
+                <div class="mt-3 grid grid-cols-2 gap-2">
+                    <button class="px-3 py-2 rounded-lg border hover:bg-gray-50">Edit</button>
+                    <button class="px-3 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                        Delete
+                    </button>
+                </div>
+            </div>
+
+            <div class="rounded-xl border p-4">
+                <p class="font-semibold">Design</p>
+                <p class="text-sm text-gray-600 mt-1">UI/UX, product design, and visual identity.</p>
+                <div class="mt-3 grid grid-cols-2 gap-2">
+                    <button class="px-3 py-2 rounded-lg border hover:bg-gray-50">Edit</button>
+                    <button class="px-3 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Categories Admin Page -->

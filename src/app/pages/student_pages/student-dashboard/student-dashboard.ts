@@ -1,11 +1,11 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { LayoutService } from '../../services/layoutService/layout-service';
-import { AuthService } from '../../services/authService/auth-service';
+import { LayoutService } from '../../../services/layoutService/layout-service';
+import { AuthService } from '../../../services/authService/auth-service';
 import { Router, RouterLink } from '@angular/router';
-import { NavBar } from "../../components/layoutComponents/dashboard-nav-bar/nav-bar";
+import { NavBar } from "../../../components/layoutComponents/dashboard-nav-bar/nav-bar";
 import { User } from 'firebase/auth';
-import { SessionService } from '../../services/sessionService/session-service';
+import { SessionService } from '../../../services/sessionService/session-service';
 
 @Component({
   selector: 'app-student-dashboard',

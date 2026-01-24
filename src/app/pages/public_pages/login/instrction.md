@@ -1,0 +1,5 @@
+- students
+- instructors
+- categories
+- courses
+- messages

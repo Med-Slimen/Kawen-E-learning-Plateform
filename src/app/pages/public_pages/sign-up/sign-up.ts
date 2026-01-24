@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
-import { AuthService } from '../../services/authService/auth-service';
+import { AuthService } from '../../../services/authService/auth-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { User } from '../../models/user';
-import { SessionService } from '../../services/sessionService/session-service';
+import { User } from '../../../models/user';
+import { SessionService } from '../../../services/sessionService/session-service';
 
 @Component({
   selector: 'app-sign-up',

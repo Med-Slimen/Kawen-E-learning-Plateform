@@ -1,0 +1,284 @@
+<!-- Admin - Students Page (Static UI Mock) -->
+<div class="p-4 sm:p-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold">Students</h1>
+            <p class="text-sm text-gray-500 mt-1">Manage student accounts, roles, and access.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+            <button class="px-4 py-2 rounded-lg border hover:bg-gray-50">
+                Export
+            </button>
+            <button class="px-4 py-2 rounded-lg border hover:bg-gray-50">
+                Refresh
+            </button>
+            <button class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+                Add Student
+            </button>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="rounded-xl border bg-white p-4">
+            <p class="text-sm text-gray-500">Total students</p>
+            <p class="text-2xl font-semibold">1,284</p>
+            <p class="text-xs text-gray-500 mt-1">+42 this month</p>
+        </div>
+
+        <div class="rounded-xl border bg-white p-4">
+            <p class="text-sm text-gray-500">Active</p>
+            <p class="text-2xl font-semibold">1,102</p>
+            <p class="text-xs text-gray-500 mt-1">Can access platform</p>
+        </div>
+
+        <div class="rounded-xl border bg-white p-4">
+            <p class="text-sm text-gray-500">Disabled</p>
+            <p class="text-2xl font-semibold">126</p>
+            <p class="text-xs text-gray-500 mt-1">Access blocked</p>
+        </div>
+
+        <div class="rounded-xl border bg-white p-4">
+            <p class="text-sm text-gray-500">New (7 days)</p>
+            <p class="text-2xl font-semibold">56</p>
+            <p class="text-xs text-gray-500 mt-1">Recent signups</p>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="mt-6 rounded-xl border bg-white p-4">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+            <input class="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring"
+                placeholder="Search by name, email, or ID..." value="med" />
+
+            <select class="w-full rounded-lg border px-3 py-2">
+                <option selected>All statuses</option>
+                <option>Active</option>
+                <option>Disabled</option>
+            </select>
+
+            <select class="w-full rounded-lg border px-3 py-2">
+                <option selected>All plans</option>
+                <option>Free</option>
+                <option>Pro</option>
+                <option>Enterprise</option>
+            </select>
+
+            <select class="w-full rounded-lg border px-3 py-2">
+                <option selected>Sort: Recent</option>
+                <option>Sort: A → Z</option>
+                <option>Sort: Progress</option>
+            </select>
+
+            <button class="w-full rounded-lg border px-3 py-2 hover:bg-gray-50">
+                Clear
+            </button>
+        </div>
+    </div>
+
+    <!-- Desktop Table -->
+    <div class="mt-6 hidden lg:block rounded-xl border bg-white overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50 text-gray-600 text-sm">
+                <tr>
+                    <th class="p-3">Student</th>
+                    <th class="p-3">Email</th>
+                    <th class="p-3">Status</th>
+                    <th class="p-3">Role</th>
+                    <th class="p-3 text-right">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- Row 1 -->
+                <tr class="border-t">
+                    <td class="p-3">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                                YB
+                            </div>
+                            <div>
+                                <p class="font-medium">Youssef Ben Ali</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-3 text-gray-600">youssef.b@email.com</td>
+                    <td class="p-3">
+                        <span
+                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100">
+                            active
+                        </span>
+                    </td>
+                    <td class="p-3">
+                        <select class="rounded-lg border px-2 py-1">
+                            <option selected>Student</option>
+                            <option>Instructor</option>
+                            <option>Admin</option>
+                        </select>
+                    </td>
+                    <td class="p-3">
+                        <div class="flex justify-end gap-2">
+                            <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">View</button>
+                            <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Disable</button>
+                            <button
+                                class="px-3 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 2 -->
+                <tr class="border-t">
+                    <td class="p-3">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                                YB
+                            </div>
+                            <div>
+                                <p class="font-medium">Youssef Ben Ali</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-3 text-gray-600">youssef.b@email.com</td>
+                    <td class="p-3">
+                        <span
+                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100">
+                            active
+                        </span>
+                    </td>
+                    <td class="p-3">
+                        <select class="rounded-lg border px-2 py-1">
+                            <option selected>Student</option>
+                            <option>Instructor</option>
+                            <option>Admin</option>
+                        </select>
+                    </td>
+                    <td class="p-3">
+                        <div class="flex justify-end gap-2">
+                            <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">View</button>
+                            <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Disable</button>
+                            <button
+                                class="px-3 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 3 -->
+                <tr class="border-t">
+                    <td class="p-3">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                                YB
+                            </div>
+                            <div>
+                                <p class="font-medium">Youssef Ben Ali</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-3 text-gray-600">youssef.b@email.com</td>
+                    <td class="p-3">
+                        <span
+                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100">
+                            active
+                        </span>
+                    </td>
+                    <td class="p-3">
+                        <select class="rounded-lg border px-2 py-1">
+                            <option selected>Student</option>
+                            <option>Instructor</option>
+                            <option>Admin</option>
+                        </select>
+                    </td>
+                    <td class="p-3">
+                        <div class="flex justify-end gap-2">
+                            <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">View</button>
+                            <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Disable</button>
+                            <button
+                                class="px-3 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Cards -->
+    <div class="mt-6 grid grid-cols-1 gap-4 lg:hidden">
+        <!-- Card 1 -->
+        <div class="rounded-xl border bg-white p-4">
+            <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                        MS
+                    </div>
+                    <div>
+                        <p class="font-semibold">Med Slimene</p>
+                        <p class="text-sm text-gray-600">med.slimene@email.com</p>
+                    </div>
+                </div>
+
+                <span
+                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100">
+                    active
+                </span>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+                <span class="text-sm text-gray-500">Role:</span>
+                <select class="rounded-lg border px-2 py-1">
+                    <option selected>Student</option>
+                    <option>Instructor</option>
+                    <option>Admin</option>
+                </select>
+            </div>
+
+            <div class="mt-4 grid grid-cols-3 gap-2">
+                <button class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">View</button>
+                <button class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Disable</button>
+                <button class="w-full px-3 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                    Delete
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="rounded-xl border bg-white p-4">
+            <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                        SA
+                    </div>
+                    <div>
+                        <p class="font-semibold">Sara Amri</p>
+                        <p class="text-sm text-gray-600">sara.amri@email.com</p>
+                    </div>
+                </div>
+
+                <span
+                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-yellow-50 text-yellow-700 border border-yellow-100">
+                    disabled
+                </span>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+                <span class="text-sm text-gray-500">Role:</span>
+                <select class="rounded-lg border px-2 py-1">
+                    <option selected>Student</option>
+                    <option>Instructor</option>
+                    <option>Admin</option>
+                </select>
+            </div>
+
+            <div class="mt-4 grid grid-cols-3 gap-2">
+                <button class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">View</button>
+                <button class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Activate</button>
+                <button class="w-full px-3 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Students Admin Page -->
