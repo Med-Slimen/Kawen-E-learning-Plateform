@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnInit } from '@angular/core';
 import { doc, Firestore } from '@angular/fire/firestore';
 import { Course } from '../../models/course';
 import { collection, getDoc, getDocs } from 'firebase/firestore';
@@ -9,10 +9,13 @@ import { Lesson } from '../../models/lessons';
 @Injectable({
   providedIn: 'root',
 })
-export class CourseService {
+export class CourseService implements OnInit {
   private firestore = inject(Firestore);
   courses?: Course[];
   constructor() {}
+  async ngOnInit() {
+    this.courses = await this.getCourses();
+  }
   async getCourses() : Promise<Course[]> {
     const snap= await getDocs(collection(this.firestore, 'courses'));
     this.courses=await Promise.all(snap.docs.map(async (courseDoc)=>{
@@ -49,5 +52,9 @@ export class CourseService {
       uid: snap.id,
       ...snap.data() as Omit<Course, 'uid'>
     }
+  }
+  async getCoursesByInstructor(instructorId: string) : Promise<Course[]> {
+    await this.ngOnInit();
+    return this.courses?.filter(course => course.instructor.uid === instructorId) || [];
   }
 }

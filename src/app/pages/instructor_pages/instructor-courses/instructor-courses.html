@@ -1,0 +1,158 @@
+<app-nav-bar></app-nav-bar>
+<!-- Instructor - Manage Courses (Static UI Mock) -->
+<div class="p-4 sm:p-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold">Manage My Courses</h1>
+            <p class="text-sm text-gray-500 mt-1">Create, edit, and manage your courses.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+            <button class="px-4 py-2 rounded-lg border hover:bg-gray-50">
+                Refresh
+            </button>
+            <a routerLink="Instructor_add_course" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+                + New Course
+            </a>
+        </div>
+    </div>
+    <!-- Filters -->
+    <div class="mt-6 rounded-xl border bg-white p-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <input class="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring"
+                placeholder="Search by course title..." value="angular" />
+
+            <select class="w-full rounded-lg border px-3 py-2">
+                <option selected>All levels</option>
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+            </select>
+
+            <select class="w-full rounded-lg border px-3 py-2">
+                <option selected>All categories</option>
+                <option>Development</option>
+                <option>Design</option>
+                <option>Business</option>
+            </select>
+
+            <select class="w-full rounded-lg border px-3 py-2">
+                <option selected>Sort: Recent</option>
+                <option>Sort: A → Z</option>
+                <option>Sort: Most students</option>
+            </select>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+            <button class="px-4 py-2 rounded-lg border hover:bg-gray-50">
+                Clear
+            </button>
+            <button class="px-4 py-2 rounded-lg border hover:bg-gray-50">
+                Export
+            </button>
+        </div>
+    </div>
+
+    <!-- Courses List -->
+    <div class="mt-6 rounded-xl border bg-white overflow-hidden">
+        <div class="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <h2 class="text-lg font-semibold">My Courses</h2>
+            <p class="text-sm text-gray-500">Showing 1 to 3 of 6</p>
+        </div>
+        <!-- Desktop Table -->
+        <div class="hidden lg:block border-t">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 text-gray-600 text-sm">
+                    <tr>
+                        <th class="p-3">Course</th>
+                        <th class="p-3">Category</th>
+                        <th class="p-3">Level</th>
+                        <th class="p-3">Price</th>
+                        <th class="p-3">Lessons</th>
+                        <th class="p-3">Last update</th>
+                        <th class="p-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @for (course of this.courses; track course.uid) {
+                    <tr class="border-t">
+                        <td class="p-3">
+                            <div class="flex items-center gap-3">
+                                <img class="h-12 w-16 rounded-lg object-cover"
+                                    src="{{ course.thumbnailUrl }}"
+                                    alt="Course" />
+                                <div>
+                                    <p class="font-medium">{{ course.title }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3 text-gray-600">{{ course.category.title }}</td>
+                        <td class="p-3">
+                            <span [class.text-blue-700]="course.level=='Beginner'" [class.text-purple-700]="course.level=='Intermediate'"
+                                [class.text-green-700]="course.level=='Advanced'"
+                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-50  border border-blue-100">
+                                {{course.level}}
+                            </span>
+                        </td>
+                        <td [class.hidden]="course.price==0" class="p-3 text-gray-600">{{ course.price }}</td>
+                        <td [class.hidden]="course.price!=0" class="p-3 text-gray-600">Free</td>
+                        <td class="p-3 text-gray-600">{{course.lessons.length}}</td>
+                        <td class="p-3 text-gray-600">2026-01-23</td>
+                        <td class="p-3">
+                            <div class="flex justify-end gap-2">
+                                <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Edit</button>
+                                <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Lessons</button>
+                                <button
+                                    class="px-3 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="lg:hidden border-t p-4 space-y-4">
+            <!-- Card 1 -->
+            <div class="rounded-xl border p-4">
+                <div class="flex items-start gap-3">
+                    <img class="h-16 w-24 rounded-lg object-cover"
+                        src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop"
+                        alt="Course" />
+                    <div class="flex-1">
+                        <p class="font-semibold">Angular Mastery</p>
+                        <p class="text-sm text-gray-600 mt-1">Development • Beginner</p>
+                        <div class="mt-2 grid grid-cols-3 gap-2 text-sm">
+                            <div class="rounded-lg border p-2">
+                                <p class="text-xs text-gray-500">Price</p>
+                                <p class="font-semibold">$19.99</p>
+                            </div>
+                            <div class="rounded-lg border p-2">
+                                <p class="text-xs text-gray-500">Students</p>
+                                <p class="font-semibold">128</p>
+                            </div>
+                            <div class="rounded-lg border p-2">
+                                <p class="text-xs text-gray-500">Updated</p>
+                                <p class="font-semibold">01-23</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 grid grid-cols-3 gap-2">
+                    <button class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Edit</button>
+                    <button class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Lessons</button>
+                    <button class="w-full px-3 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

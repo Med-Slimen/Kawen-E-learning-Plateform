@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeNavBar } from './home-nav-bar';
+import { InstructorCourses } from './instructor-courses';
 
-describe('HomeNavBar', () => {
-  let component: HomeNavBar;
-  let fixture: ComponentFixture<HomeNavBar>;
+describe('InstructorCourses', () => {
+  let component: InstructorCourses;
+  let fixture: ComponentFixture<InstructorCourses>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeNavBar]
+      imports: [InstructorCourses]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HomeNavBar);
+    fixture = TestBed.createComponent(InstructorCourses);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

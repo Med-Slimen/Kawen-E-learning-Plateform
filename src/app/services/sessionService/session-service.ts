@@ -25,7 +25,13 @@ export class SessionService {
       else{
         const snap=await getDoc(doc(this.fs, 'users', currentUser.uid));
         if(snap.exists()){
-          this.user.set(snap.data() as User);
+          const id=snap.id;
+          const u:User={
+            uid: id,
+            ...snap.data() as Omit<User, 'uid'>
+          };
+        
+          this.user.set(u);
           this.isLoggedIn.set(true);
         }
         else{

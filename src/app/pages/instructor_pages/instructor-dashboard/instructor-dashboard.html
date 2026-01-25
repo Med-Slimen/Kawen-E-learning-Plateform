@@ -1,1 +1,130 @@
-<p>instructor-dashboard works!</p>
+<app-nav-bar></app-nav-bar>
+<!-- Instructor Dashboard (Simple & Clean - Basic Only) -->
+<div class="p-4 sm:p-6">
+  <!-- Header -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h1 class="text-2xl font-semibold">Instructor Dashboard</h1>
+      <p class="text-sm text-gray-500 mt-1">Welcome back, John Smith 👋</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <a class="px-4 py-2 rounded-lg border hover:bg-gray-50">
+        View Inbox
+      </a>
+      <a routerLink="Instructor_Courses" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+        Manage My Courses
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div class="rounded-xl border bg-white p-4">
+      <p class="text-sm text-gray-500">My courses</p>
+      <p class="text-2xl font-semibold">6</p>
+      <p class="text-xs text-gray-500 mt-1">Published + Drafts</p>
+    </div>
+
+    <div class="rounded-xl border bg-white p-4">
+      <p class="text-sm text-gray-500">Total students</p>
+      <p class="text-2xl font-semibold">342</p>
+      <p class="text-xs text-gray-500 mt-1">Across all courses</p>
+    </div>
+
+    <div class="rounded-xl border bg-white p-4">
+      <p class="text-sm text-gray-500">New messages</p>
+      <p class="text-2xl font-semibold">9</p>
+      <p class="text-xs text-gray-500 mt-1">Unread in inbox</p>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="mt-6">
+    <!-- Latest Reviews / Comments -->
+    <div class="lg:col-span-2 rounded-xl border bg-white overflow-hidden">
+      <div class="p-4 sm:p-5 flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-semibold">Latest reviews</h2>
+          <p class="text-sm text-gray-500 mt-1">Recent feedback from students</p>
+        </div>
+        <button class="px-3 py-2 rounded-lg border hover:bg-gray-50">
+          View all
+        </button>
+      </div>
+
+      <div class="border-t">
+        <!-- Review 1 -->
+        <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-start gap-4">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-semibold">
+              SA
+            </div>
+            <div>
+              <p class="font-medium">Sara Amri</p>
+              <p class="text-xs text-gray-500">2 hours ago</p>
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-sm font-semibold">Angular Mastery</span>
+              <span class="text-xs text-gray-500">• Lesson 4</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">
+              “The explanation was super clear. Can you add one more example about services and dependency injection?”
+            </p>
+
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button class="px-3 py-2 rounded-lg border hover:bg-gray-50">
+                Reply
+              </button>
+              <button class="px-3 py-2 rounded-lg border hover:bg-gray-50">
+                Open course
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t"></div>
+
+        <!-- Review 2 -->
+        <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-start gap-4">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-semibold">
+              YB
+            </div>
+            <div>
+              <p class="font-medium">Youssef Ben Ali</p>
+              <p class="text-xs text-gray-500">Yesterday</p>
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-sm font-semibold">TypeScript Mastery</span>
+              <span class="text-xs text-gray-500">• Course review</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">
+              “Great content! The pace is perfect. A short quiz after each section would make it even better.”
+            </p>
+
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button class="px-3 py-2 rounded-lg border hover:bg-gray-50">
+                Reply
+              </button>
+              <button class="px-3 py-2 rounded-lg border hover:bg-gray-50">
+                Open course
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Quick Actions -->
+
+  </div>
+</div>
+
+

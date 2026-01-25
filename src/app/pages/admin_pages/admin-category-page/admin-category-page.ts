@@ -3,6 +3,7 @@ import { Category } from '../../../models/category';
 import { collection, Firestore, updateDoc } from '@angular/fire/firestore';
 import { addDoc, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CategoryService } from '../../../services/categoryService/category-service';
 
 @Component({
   selector: 'app-admin-category-page',
@@ -17,6 +18,7 @@ export class AdminCategoryPage implements OnInit {
   addError?:number;
   editMenuOpen=false;
   firestore=inject(Firestore);
+  cateogryService=inject(CategoryService);
   categoryForm: FormGroup;
   editCategoryForm: FormGroup;
   editError?:number;
@@ -34,15 +36,7 @@ export class AdminCategoryPage implements OnInit {
     this.categories=await this.getAllCategories();
   }
   async getAllCategories() : Promise<Category[]> {
-    const snap= await getDocs(collection(this.firestore, 'categories'));
-    this.categories= snap.docs.map((categoryDoc)=>{
-      const categoryDetails=categoryDoc.data() as Omit<Category, 'uid'>;
-      return {
-        uid: categoryDoc.id,
-        ...categoryDetails
-      } as Category;
-    });
-    return this.categories;
+    return await this.cateogryService.getAllCategories();
   }
   async addCategory() : Promise<void> {
     this.category ={

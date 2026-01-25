@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { LayoutService } from '../../../services/layoutService/layout-service';
 import { AuthService } from '../../../services/authService/auth-service';
 import { Router, RouterLink } from '@angular/router';
+import { SessionService } from '../../../services/sessionService/session-service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,7 +13,9 @@ import { Router, RouterLink } from '@angular/router';
 export class NavBar {
   profileMenu = false;
   linksMenu = false;
-  authService=inject(AuthService)
+  mobileMenuOpen = false;
+  authService=inject(AuthService);
+  sessionService=inject(SessionService);
   constructor(private layoutService: LayoutService,private router: Router) {}
   scrollTo(anchor: string): void {
     this.layoutService.scrollTo(anchor);
@@ -22,6 +25,9 @@ export class NavBar {
   }
   toggleLinksMenu() {
     this.linksMenu=this.layoutService.toggleMenu(this.linksMenu);
+  }
+   toggleMenu(menu: boolean): void {
+    menu = this.layoutService.toggleMenu(menu);
   }
   logout() {
     this.authService.logout().then((success) => {

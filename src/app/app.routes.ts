@@ -13,6 +13,9 @@ import { AdminStudentPage } from './pages/admin_pages/admin-student-page/admin-s
 import { AdminInstructorPage } from './pages/admin_pages/admin-instructor-page/admin-instructor-page';
 import { AdminCategoryPage } from './pages/admin_pages/admin-category-page/admin-category-page';
 import { AdminMainPage } from './pages/admin_pages/admin-main-page/admin-main-page';
+import { InstructorDashboard } from './pages/instructor_pages/instructor-dashboard/instructor-dashboard';
+import { InstructorCourses } from './pages/instructor_pages/instructor-courses/instructor-courses';
+import { InstructorAddCourse } from './pages/instructor_pages/instructor-add-course/instructor-add-course';
 
 export const routes: Routes = [
     {path: 'Home', component: HomePage },
@@ -22,6 +25,18 @@ export const routes: Routes = [
     {path:'Courses',component:Courses},
     {path: 'Student_Dashboard', component:StudentDashboard,canActivate:
     [authGuard,roleGuard],data: { roles: ['Student'] }},
+    {path:'Instructor_Dashboard',canActivate:
+    [authGuard,roleGuard],data: { roles: ['Instructor'] },
+    children:[
+        {path:'',component:InstructorDashboard},
+        {path:'Instructor_Courses', 
+            children:[
+                {path:'',component:InstructorCourses},
+                {path:'Instructor_add_course',component:InstructorAddCourse}
+            ]
+        }
+    ]
+    },
     {path:'Admin_Main_Page',canActivate:
     [authGuard,roleGuard],data: { roles: ['Admin'] } ,
     component:AdminMainPage,
