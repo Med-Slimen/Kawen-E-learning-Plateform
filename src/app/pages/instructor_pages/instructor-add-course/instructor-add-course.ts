@@ -8,10 +8,12 @@ import { addDoc, collection } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { Lesson } from '../../../models/lessons';
 import { CategoryService } from '../../../services/categoryService/category-service';
+import { RouterLink } from '@angular/router';
+import { Category } from '../../../models/category';
 
 @Component({
   selector: 'app-instructor-add-course',
-  imports: [NavBar,ReactiveFormsModule],
+  imports: [NavBar,ReactiveFormsModule,RouterLink],
   templateUrl: './instructor-add-course.html',
   styleUrl: './instructor-add-course.css',
 })
@@ -21,6 +23,7 @@ export class InstructorAddCourse {
   firestore=inject(Firestore);
   categoryService=inject(CategoryService);
   addCourseForm:FormGroup;
+  categories?:Category[];
   thumbnailPreview: string | null = null;
   thumbnailFile: File | null = null;
   thumbnailUrl: string | null = null;
@@ -47,8 +50,8 @@ export class InstructorAddCourse {
       courseDuration:['',[Validators.required]],
     });
   }
-  ngOnInit(){
-   
+  async ngOnInit(){
+    this.categories=await this.categoryService.getAllCategories();
   }
   selectThumbnail(event: Event) {
     const input = event.target as HTMLInputElement;

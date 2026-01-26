@@ -5,24 +5,24 @@
         <!-- Header -->
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-2xl font-semibold">Create Course</h1>
+                <h1 class="text-2xl font-semibold">Edit Course</h1>
                 <p class="text-sm text-gray-500 mt-1">Add the course basics. You can add lessons later.</p>
             </div>
 
             <div class="flex flex-wrap gap-2">
-                <a routerLink="../" class="cursor-pointer px-4 py-2 rounded-lg border hover:bg-gray-50">
+                <a routerLink="../../" class="cursor-pointer px-4 py-2 rounded-lg border hover:bg-gray-50">
                     Back
                 </a>
             </div>
         </div>
-        <form [formGroup]="addCourseForm" (ngSubmit)="addCourse()">
+        <form [formGroup]="editCourseForm" (ngSubmit)="editCourse()">
             <!-- Layout -->
             <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Left: Form -->
                 <div class="lg:col-span-2 rounded-2xl border bg-white overflow-hidden">
                     <div class="p-5 border-b">
                         <h2 class="text-lg font-semibold">Course Details</h2>
-                        <p class="text-sm text-gray-500 mt-1">Fill the information below.</p>
+                        <p class="text-sm text-gray-500 mt-1">Edit the information below.</p>
                     </div>
                     <div class="p-5 space-y-5">
                         <!-- Title -->
@@ -31,20 +31,20 @@
                             <input formControlName="courseTitle"
                                 class="mt-1 w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring"
                                 placeholder="e.g. Angular Fundamentals" />
-                            @if (this.addCourseForm.controls['courseTitle'].hasError('required') &&
-                            this.addCourseForm.controls['courseTitle'].touched) {
+                            @if (this.editCourseForm.controls['courseTitle'].hasError('required') &&
+                            this.editCourseForm.controls['courseTitle'].touched) {
                             <div class=" text-red-700 p-2 rounded borde mt-2">
                                 Title is required.
                             </div>
                             }
-                            @if (this.addCourseForm.controls['courseTitle'].hasError('minlength') &&
-                            this.addCourseForm.controls['courseTitle'].touched) {
+                            @if (this.editCourseForm.controls['courseTitle'].hasError('minlength') &&
+                            this.editCourseForm.controls['courseTitle'].touched) {
                             <div class=" text-red-700 p-2 rounded borde mt-2">
                                 Title must be at least 5 characters long.
                             </div>
                             }
-                            @if (this.addCourseForm.controls['courseTitle'].hasError('maxlength') &&
-                            this.addCourseForm.controls['courseTitle'].touched) {
+                            @if (this.editCourseForm.controls['courseTitle'].hasError('maxlength') &&
+                            this.editCourseForm.controls['courseTitle'].touched) {
                             <div class=" text-red-700 p-2 rounded borde mt-2">
                                 Title cannot exceed 100 characters.
                             </div>
@@ -55,14 +55,14 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="text-sm font-medium text-gray-700">Category</label>
-                               <select formControlName="courseCategory"
+                                <select formControlName="courseCategory"
                                     class="mt-1 w-full rounded-xl border px-4 py-3">
                                 @for(category of this.categories ; track category.uid){
                                     <option [value]="category.title">{{category.title}}</option>
                                 }
                                 </select>
-                                @if (this.addCourseForm.controls['courseCategory'].hasError('required') &&
-                                this.addCourseForm.controls['courseCategory'].touched) {
+                                @if (this.editCourseForm.controls['courseCategory'].hasError('required') &&
+                                this.editCourseForm.controls['courseCategory'].touched) {
                                 <div class=" text-red-700 p-2 rounded borde mt-2">
                                     Category is required.
                                 </div>
@@ -76,8 +76,8 @@
                                     <option value="Intermediate">Intermediate</option>
                                     <option value="Advanced">Advanced</option>
                                 </select>
-                                @if (this.addCourseForm.controls['courseLevel'].hasError('required') &&
-                                this.addCourseForm.controls['courseLevel'].touched) {
+                                @if (this.editCourseForm.controls['courseLevel'].hasError('required') &&
+                                this.editCourseForm.controls['courseLevel'].touched) {
                                 <div class=" text-red-700 p-2 rounded borde mt-2">
                                     Level is required.
                                 </div>
@@ -95,20 +95,20 @@
                                 <span>Tip: Write 50–300 characters</span>
                                 <span>120 / 300</span>
                             </div>
-                            @if (this.addCourseForm.controls['courseDescription'].hasError('required') &&
-                            this.addCourseForm.controls['courseDescription'].touched) {
+                            @if (this.editCourseForm.controls['courseDescription'].hasError('required') &&
+                            this.editCourseForm.controls['courseDescription'].touched) {
                             <div class=" text-red-700 p-2 rounded borde mt-2">
                                 Description is required.
                             </div>
                             }
-                            @if (this.addCourseForm.controls['courseDescription'].hasError('minlength') &&
-                            this.addCourseForm.controls['courseDescription'].touched) {
+                            @if (this.editCourseForm.controls['courseDescription'].hasError('minlength') &&
+                            this.editCourseForm.controls['courseDescription'].touched) {
                             <div class=" text-red-700 p-2 rounded borde mt-2">
                                 Description must be at least 20 characters long.
                             </div>
                             }
-                            @if (this.addCourseForm.controls['courseDescription'].hasError('maxlength') &&
-                            this.addCourseForm.controls['courseDescription'].touched) {
+                            @if (this.editCourseForm.controls['courseDescription'].hasError('maxlength') &&
+                            this.editCourseForm.controls['courseDescription'].touched) {
                             <div class=" text-red-700 p-2 rounded borde mt-2">
                                 Description cannot exceed 500 characters.
                             </div>
@@ -126,8 +126,8 @@
                                     
                                 </div>
                                 <p class="text-xs text-gray-500 mt-2">Total duration for the course.</p>
-                                @if(this.addCourseForm.controls['courseDuration'].hasError('required') &&
-                                    this.addCourseForm.controls['courseDuration'].touched){
+                                @if(this.editCourseForm.controls['courseDuration'].hasError('required') &&
+                                    this.editCourseForm.controls['courseDuration'].touched){
                                     <div class=" text-red-700 p-2 rounded borde mt-2">
                                         Duration is required.
                                     </div>
@@ -144,14 +144,14 @@
                                     </div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-2">If It's Free, keep price 0.</p>
-                                @if(this.addCourseForm.controls['coursePrice'].hasError('required') &&
-                                        this.addCourseForm.controls['coursePrice'].touched){
+                                @if(this.editCourseForm.controls['coursePrice'].hasError('required') &&
+                                        this.editCourseForm.controls['coursePrice'].touched){
                                         <div class=" text-red-700 p-2 rounded borde mt-2">
                                             Price is required.
                                         </div>
                                         }
-                                @if(this.addCourseForm.controls['coursePrice'].hasError('min') &&
-                                        this.addCourseForm.controls['coursePrice'].touched){
+                                @if(this.editCourseForm.controls['coursePrice'].hasError('min') &&
+                                        this.editCourseForm.controls['coursePrice'].touched){
                                         <div class=" text-red-700 p-2 rounded borde mt-2">
                                             Price cannot be negative.
                                         </div>
@@ -164,13 +164,13 @@
                                 Reset
                             </button>
                             <button type="submit" 
-                            [disabled]="addCourseForm.invalid"
-                            [class.cursor-not-allowed]="addCourseForm.invalid"
-                            [class.bg-blue-400]="addCourseForm.invalid"
-                            [class.bg-blue-600]="!addCourseForm.invalid"
-                            [class.hover:bg-blue-700]="!addCourseForm.invalid"
+                            [disabled]="editCourseForm.invalid"
+                            [class.cursor-not-allowed]="editCourseForm.invalid"
+                            [class.bg-blue-400]="editCourseForm.invalid"
+                            [class.bg-blue-600]="!editCourseForm.invalid"
+                            [class.hover:bg-blue-700]="!editCourseForm.invalid"
                             class="px-5 py-3 rounded-xl text-white">
-                                Create Course
+                                Edit Course
                             </button>
                         </div>
                     </div>
@@ -205,8 +205,8 @@
                                 <!-- Hidden input + label trick -->
                                 <input formControlName="courseImage" id="thumb" type="file"
                                     (change)="selectThumbnail($event)" accept="image/*" class="hidden" />
-                                @if(this.addCourseForm.controls['courseImage'].hasError('required') &&
-                                this.addCourseForm.controls['courseImage'].touched){
+                                @if(this.editCourseForm.controls['courseImage'].hasError('required') &&
+                                this.editCourseForm.controls['courseImage'].touched){
                                 <p class="text-xs text-red-500 mt-1">Thumbnail is required.</p>
                                 }
                                 <label for="thumb"

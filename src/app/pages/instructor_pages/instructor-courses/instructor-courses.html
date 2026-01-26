@@ -9,9 +9,9 @@
         </div>
 
         <div class="flex flex-wrap gap-2">
-            <button class="px-4 py-2 rounded-lg border hover:bg-gray-50">
-                Refresh
-            </button>
+            <a routerLink="../" class="px-4 py-2 rounded-lg border hover:bg-gray-50">
+                Back
+            </a>
             <a routerLink="Instructor_add_course" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
                 + New Course
             </a>
@@ -96,16 +96,16 @@
                                 {{course.level}}
                             </span>
                         </td>
-                        <td [class.hidden]="course.price==0" class="p-3 text-gray-600">{{ course.price }}</td>
+                        <td [class.hidden]="course.price==0" class="p-3 text-gray-600">{{ course.price }} DT</td>
                         <td [class.hidden]="course.price!=0" class="p-3 text-gray-600">Free</td>
                         <td class="p-3 text-gray-600">{{course.lessons.length}}</td>
                         <td class="p-3 text-gray-600">2026-01-23</td>
                         <td class="p-3">
                             <div class="flex justify-end gap-2">
-                                <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Edit</button>
-                                <button class="px-3 py-1.5 rounded-lg border hover:bg-gray-50">Lessons</button>
-                                <button
-                                    class="px-3 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                                <a [routerLink]="['Instructor_edit_course', course.uid]" class="px-3 py-1.5 cursor-pointer rounded-lg border hover:bg-gray-50">Edit</a>
+                                <button class="px-3 py-1.5 cursor-pointer rounded-lg border hover:bg-gray-50">Lessons</button>
+                                <button (click)="deleteCourse(course.uid)"
+                                    class="px-3 py-1.5 cursor-pointer rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
                                     Delete
                                 </button>
                             </div>
@@ -119,23 +119,24 @@
 
         <!-- Mobile Cards -->
         <div class="lg:hidden border-t p-4 space-y-4">
+            @for (course of this.courses; track course.uid) {
             <!-- Card 1 -->
             <div class="rounded-xl border p-4">
                 <div class="flex items-start gap-3">
                     <img class="h-16 w-24 rounded-lg object-cover"
-                        src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop"
+                        src="{{ course.thumbnailUrl }}"
                         alt="Course" />
                     <div class="flex-1">
-                        <p class="font-semibold">Angular Mastery</p>
-                        <p class="text-sm text-gray-600 mt-1">Development • Beginner</p>
+                        <p class="font-semibold">{{ course.title }}</p>
+                        <p class="text-sm text-gray-600 mt-1">{{ course.category.title }} • {{ course.level }}</p>
                         <div class="mt-2 grid grid-cols-3 gap-2 text-sm">
                             <div class="rounded-lg border p-2">
                                 <p class="text-xs text-gray-500">Price</p>
-                                <p class="font-semibold">$19.99</p>
+                                <p class="font-semibold">{{ course.price }} DT</p>
                             </div>
                             <div class="rounded-lg border p-2">
-                                <p class="text-xs text-gray-500">Students</p>
-                                <p class="font-semibold">128</p>
+                                <p class="text-xs text-gray-500">Lessons</p>
+                                <p class="font-semibold">{{ course.lessons.length }}</p>
                             </div>
                             <div class="rounded-lg border p-2">
                                 <p class="text-xs text-gray-500">Updated</p>
@@ -146,13 +147,15 @@
                 </div>
 
                 <div class="mt-4 grid grid-cols-3 gap-2">
-                    <button class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Edit</button>
+                    <button [routerLink]="['Instructor_edit_course', course.uid]" class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Edit</button>
                     <button class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Lessons</button>
-                    <button class="w-full px-3 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                    <button (click)="deleteCourse(course.uid)" class="cursor-pointerw-full px-3 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
                         Delete
                     </button>
                 </div>
             </div>
+             }
         </div>
+       
     </div>
 </div>

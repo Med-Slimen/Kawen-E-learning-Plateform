@@ -14,17 +14,17 @@ export class CategoryService {
   }
   async getAllCategories() : Promise<Category[]> {
     const snap= await getDocs(collection(this.firestore, 'categories'));
-    this.categories= snap.docs.map((categoryDoc)=>{
+    const categories= snap.docs.map((categoryDoc)=>{
       const categoryDetails=categoryDoc.data() as Omit<Category, 'uid'>;
       return {
         uid: categoryDoc.id,
         ...categoryDetails
       } as Category;
     });
-    return this.categories;
+    return categories;
   }
-  async getCategoryByTitle(title:string): Promise<Category | undefined> {
+    async getCategoryByTitle(title:string): Promise<Category> {
     await this.ngOnInit();
-    return this.categories?.find(category => category.title === title);
+    return this.categories?.find(category => category.title === title) as Category;
   }
 }

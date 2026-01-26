@@ -19,4 +19,18 @@ export class InstructorCourses {
   async ngOnInit() {
     this.courses = await this.courseService.getCoursesByInstructor(this.sessionService.user()!.uid);
   }
+  async deleteCourse(courseId: string): Promise<void> {
+    const conf = confirm('Are you sure you want to delete this course?');
+    if (!conf) {
+      return;
+    }
+    try{
+      await this.courseService.deleteCourse(courseId);
+      alert("Course deleted successfully");
+      await this.ngOnInit();
+    }
+    catch(error){
+      alert("Error deleting course: " + error);
+    }
+  }
 }

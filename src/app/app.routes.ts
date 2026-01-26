@@ -16,6 +16,7 @@ import { AdminMainPage } from './pages/admin_pages/admin-main-page/admin-main-pa
 import { InstructorDashboard } from './pages/instructor_pages/instructor-dashboard/instructor-dashboard';
 import { InstructorCourses } from './pages/instructor_pages/instructor-courses/instructor-courses';
 import { InstructorAddCourse } from './pages/instructor_pages/instructor-add-course/instructor-add-course';
+import { InstructorEditCourse } from './pages/instructor_pages/instructor-edit-course/instructor-edit-course';
 
 export const routes: Routes = [
     {path: 'Home', component: HomePage },
@@ -32,7 +33,8 @@ export const routes: Routes = [
         {path:'Instructor_Courses', 
             children:[
                 {path:'',component:InstructorCourses},
-                {path:'Instructor_add_course',component:InstructorAddCourse}
+                {path:'Instructor_add_course',component:InstructorAddCourse},
+                {path:'Instructor_edit_course/:courseId',component:InstructorEditCourse}
             ]
         }
     ]
