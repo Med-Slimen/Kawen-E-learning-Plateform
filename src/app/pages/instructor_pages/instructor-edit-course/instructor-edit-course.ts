@@ -111,8 +111,11 @@ export class InstructorEditCourse {
     if (!this.thumbnailFile) return;
     this.uploading = true;
     try {
-      this.thumbnailUrl = await this.cloudinaryService.uploadImage(this.thumbnailFile);
-    } finally {
+      this.thumbnailUrl = await this.cloudinaryService.uploadImage(this.thumbnailFile,'kawen_courses_thumbnails','image');
+    }catch (error) {
+      alert('Error uploading thumbnail: ' + (error as Error).message);
+    } 
+    finally {
       this.uploading = false;
     }
   }

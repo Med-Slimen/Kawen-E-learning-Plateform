@@ -17,6 +17,8 @@ import { InstructorDashboard } from './pages/instructor_pages/instructor-dashboa
 import { InstructorCourses } from './pages/instructor_pages/instructor-courses/instructor-courses';
 import { InstructorAddCourse } from './pages/instructor_pages/instructor-add-course/instructor-add-course';
 import { InstructorEditCourse } from './pages/instructor_pages/instructor-edit-course/instructor-edit-course';
+import { InstructorLessonsPage } from './pages/instructor_pages/instructor-lessons-page/instructor-lessons-page';
+import { InstructorAddLesson } from './pages/instructor_pages/instructor-add-lesson/instructor-add-lesson';
 
 export const routes: Routes = [
     {path: 'Home', component: HomePage },
@@ -34,7 +36,13 @@ export const routes: Routes = [
             children:[
                 {path:'',component:InstructorCourses},
                 {path:'Instructor_add_course',component:InstructorAddCourse},
-                {path:'Instructor_edit_course/:courseId',component:InstructorEditCourse}
+                {path:'Instructor_edit_course/:courseId',component:InstructorEditCourse},
+                {path:'Instructor_lessons_page/:courseId',
+                 children:[
+                    {path:'',component:InstructorLessonsPage},
+                    {path:'Instructor_add_lesson',component:InstructorAddLesson}
+                ]
+                }
             ]
         }
     ]

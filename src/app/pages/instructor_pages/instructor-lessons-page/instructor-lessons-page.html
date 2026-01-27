@@ -1,0 +1,175 @@
+<app-nav-bar></app-nav-bar>
+<!-- Instructor - Manage Lessons (Green/White Theme) | Responsive Table -->
+<div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-start gap-4">
+          <img class="w-25 h-18 rounded-2xl" src="{{course?.thumbnailUrl}}" alt="{{ course?.title }}">
+        <div>
+          <p class="text-sm text-gray-500">Course lessons</p>
+          <h1 class="text-2xl font-semibold text-gray-900">{{ course?.title }}</h1>
+          <div class="mt-1 flex flex-wrap gap-2 text-sm text-gray-600">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border">
+              <span class="h-2 w-2 rounded-full bg-green-500"></span>
+              Published
+            </span>
+            <span class="inline-flex items-center px-3 py-1 rounded-full bg-white border">8 Lessons</span>
+            <span class="inline-flex items-center px-3 py-1 rounded-full bg-white border">10h 20m Total</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <a routerLink="../../" class="px-4 py-2 rounded-xl border bg-white hover:bg-green-50">
+          ← Back
+        </a>
+        <a routerLink="Instructor_add_lesson" class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
+          + Add Lesson
+        </a>
+      </div>
+    </div>
+    <!-- Tools -->
+    <div class="mt-6 rounded-2xl border bg-white p-4 sm:p-5">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div class="md:col-span-2">
+          <label class="text-sm font-medium text-gray-700">Search</label>
+          <div class="mt-1 flex items-center rounded-xl border bg-white overflow-hidden">
+            <span class="px-4 text-gray-400">🔎</span>
+            <input
+              class="w-full px-4 py-3 focus:outline-none"
+              placeholder="Search lessons by title..."
+              value="components"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="text-sm font-medium text-gray-700">Sort</label>
+          <select class="mt-1 w-full rounded-xl border px-4 py-3 bg-white">
+            <option selected>Order</option>
+            <option>Newest</option>
+            <option>Duration</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-sm font-medium text-gray-700">Filter</label>
+          <select class="mt-1 w-full rounded-xl border px-4 py-3 bg-white">
+            <option selected>All types</option>
+            <option>Video</option>
+            <option>Article</option>
+            <option>Resource</option>
+            <option>Quiz</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <p class="text-sm text-gray-600">
+          Tip: Use <span class="font-semibold">Reorder</span> then <span class="font-semibold">Save Order</span>.
+        </p>
+
+        <div class="flex flex-wrap gap-2">
+          <button class="px-4 py-2 rounded-xl border bg-white hover:bg-green-50">Reorder</button>
+          <button class="px-4 py-2 rounded-xl border bg-white hover:bg-green-50">Preview Course</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table (desktop) + Stacked rows (mobile) -->
+    <div class="mt-6 rounded-2xl border bg-white overflow-hidden">
+      <div class="p-4 sm:p-5 border-b flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <h2 class="text-lg font-semibold text-gray-900">Lessons</h2>
+        <div class="text-sm text-gray-500">Showing 1–6 of 8</div>
+      </div>
+
+      <!-- Desktop Table -->
+      <div class="hidden md:block">
+        <table class="w-full text-left">
+          <thead class="bg-green-50 text-gray-700 text-sm">
+            <tr>
+              <th class="p-4">Order</th>
+              <th class="p-4">Title</th>
+              <th class="p-4">Type</th>
+              <th class="p-4 text-right">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody class="text-sm">
+            @for(lesson of this.lessons ; track lesson.uid){
+            <tr class="border-t hover:bg-gray-50">
+              <td class="p-4">
+                <span class="inline-flex items-center justify-center h-8 w-8 rounded-xl bg-green-50 text-green-700 font-semibold">
+                  {{lesson.order}}
+                </span>
+              </td>
+              <td class="p-4">
+                <div class="font-semibold text-gray-900">{{lesson.title}}</div>
+              </td>
+              <td class="p-4">
+                <span class="px-2 py-1 rounded-full text-xs font-semibold bg-white border">{{lesson.contentType}}</span>
+              </td>
+              
+              <td class="p-4">
+                <div class="flex justify-end gap-2">
+                  <button class="px-3 py-2 rounded-xl border hover:bg-green-50">Edit</button>
+                  <button (click)="deleteLesson(lesson.uid)" class="cursor-pointer px-3 py-2 rounded-xl border border-red-200 text-red-700 hover:bg-red-50">
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            }
+            @empty {
+            <tr>
+              <td colspan="4" class="p-4 text-center text-gray-500">
+                No lessons found.
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile (stacked cards but still "table-like") -->
+      <div class="md:hidden divide-y">
+        <!-- Row -->
+         @for(lesson of this.lessons ; track lesson.uid){
+        <div class="p-4">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-start gap-3">
+              <div class="h-10 w-10 rounded-xl bg-green-50 text-green-700 flex items-center justify-center font-semibold">
+                1
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">{{lesson.title}}</p>
+                <p class="text-sm text-gray-500 mt-1">{{lesson.contentType}}</p>
+              </div>
+            </div>
+            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100">
+              Ready
+            </span>
+          </div>
+          <div class="mt-3 grid grid-cols-2 gap-2">
+            <a class="cursor-pointer px-4 py-2 rounded-xl border bg-white hover:bg-green-50">Edit</a>
+            <button (click)="deleteLesson(lesson.uid)" class="cursor-pointer px-4 py-2 rounded-xl border border-red-200 text-red-700 hover:bg-red-50">Delete</button>
+          </div>
+        </div>
+      }
+      @empty {
+        <div class="p-4 text-center text-gray-500">
+          No lessons found.
+        </div>
+      }
+      <!-- Footer -->
+      <div class="p-4 sm:p-5 border-t bg-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <p class="text-sm text-gray-600">
+          Need to change lesson order? Use <span class="font-semibold">Reorder</span> then click
+          <span class="font-semibold">Save Order</span>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

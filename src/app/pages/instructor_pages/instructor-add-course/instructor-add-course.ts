@@ -68,7 +68,7 @@ export class InstructorAddCourse {
     if (!this.thumbnailFile) return;
     this.uploading = true;
     try {
-      this.thumbnailUrl = await this.cloudinaryService.uploadImage(this.thumbnailFile);
+      this.thumbnailUrl = await this.cloudinaryService.uploadImage(this.thumbnailFile,'kawen_courses_thumbnails','image');
     } finally {
       this.uploading = false;
     }

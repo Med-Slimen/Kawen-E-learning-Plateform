@@ -1,0 +1,207 @@
+<!-- Instructor - Add Lesson (Green/White Theme) | Static UI -->
+ <app-nav-bar></app-nav-bar>
+ <div class="fixed top-0 bg-black w-full h-full opacity-50 z-10"
+   [class.hidden]="!loading" [class.block]="loading">
+
+    </div>
+ <svg fill="#03D33CFF" viewBox="0 0 24 24" width="50" height="50" [class.hidden]="!loading" [class.fixed]="loading" class="left-[48%] top-[50%] z-11" xmlns="http://www.w3.org/2000/svg"><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg>
+
+<div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-start gap-4">
+                <img class="w-25 h-18 rounded-2xl" src="{{course?.thumbnailUrl}}" alt="{{ course?.title }}">
+                <div>
+                    <p class="text-sm text-gray-500">Add lesson to</p>
+                    <h1 class="text-2xl font-semibold text-gray-900">{{ course?.title }}</h1>
+                    <p class="text-sm text-gray-500 mt-1">Create a new lesson (link or file content).</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                <a routerLink="../" class="cursor-pointer px-4 py-2 rounded-xl border bg-white hover:bg-green-50">
+                    ← Back
+                </a>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="this.addLessonFormGroup" (submit)="addLesson()">
+            <div class="mt-6 rounded-2xl border bg-white overflow-hidden">
+                <div class="p-5 border-b bg-white">
+                    <h2 class="text-lg font-semibold text-gray-900">Lesson Details</h2>
+                    <p class="text-sm text-gray-500 mt-1">Fill the lesson information below.</p>
+                </div>
+
+                <div class="p-5 space-y-6">
+                    <!-- Title -->
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Lesson Title</label>
+                        <input formControlName="lessonTitle"
+                            class="mt-1 w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring"
+                            placeholder="e.g. Services & Dependency Injection"
+                            value="Services & Dependency Injection" />
+                        <p class="text-xs text-gray-500 mt-2">Keep it short and clear.</p>
+                    </div>
+                    @if (this.addLessonFormGroup.controls['lessonTitle'].hasError('required') &&
+                    this.addLessonFormGroup.controls['lessonTitle'].touched) {
+                    <div class=" text-red-700 p-2 rounded borde mt-2">
+                        Title is required.
+                    </div>
+                    }
+                    @if (this.addLessonFormGroup.controls['lessonTitle'].hasError('minlength') &&
+                    this.addLessonFormGroup.controls['lessonTitle'].touched) {
+                    <div class=" text-red-700 p-2 rounded borde mt-2">
+                        Title must be at least 3 characters long.
+                    </div>
+                    }
+                    <!-- Type + Duration -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Lesson Type</label>
+                            <select (change)="toggleTypeContentFn($event)"
+                                class="mt-1 w-full rounded-xl border px-4 py-3 bg-white">
+                                <option value="video" [selected]="typeContent === 'video'">Video</option>
+                                <option value="pdf" [selected]="typeContent === 'pdf'">PDF</option>
+                            </select>
+                        </div>
+                        <div [class.hidden]="typeContent === 'pdf'" [class.block]="typeContent === 'video'">
+                            <label class="text-sm font-medium text-gray-700">Duration</label>
+                            <div class="mt-1 flex items-center rounded-xl border bg-white overflow-hidden">
+                                <span class="px-4 text-gray-400">⏱</span>
+                                <input formControlName="lessonDuration" type="number"
+                                    class="w-full px-4 py-3 focus:outline-none" placeholder="Minutes" value="22" />
+                                <span class="px-4 text-gray-500 text-sm">min</span>
+                            </div>
+                            @if (this.addLessonFormGroup.controls['lessonDuration'].hasError('required') &&
+                            this.addLessonFormGroup.controls['lessonDuration'].touched) {
+                            <div class=" text-red-700 p-2 rounded borde mt-2">
+                                Duration is required.
+                            </div>
+                            }
+                            @if (this.addLessonFormGroup.controls['lessonDuration'].hasError('min') &&
+                            this.addLessonFormGroup.controls['lessonDuration'].touched) {
+                            <div class=" text-red-700 p-2 rounded borde mt-2">
+                                Duration must be at least 1 minute.
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Content Source -->
+                    <div class="rounded-2xl border p-4">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <p class="font-semibold text-gray-900">Lesson Content</p>
+                                <p class="text-sm text-gray-500 mt-1">
+                                    Choose how students will access the lesson content.
+                                </p>
+                            </div>
+
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100">
+                                Required
+                            </span>
+                        </div>
+
+                        <!-- Radios -->
+                        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label
+                                class="flex items-start gap-3 rounded-2xl border p-4 cursor-pointer hover:bg-green-50">
+                                <input (change)="toggleContentFn()" type="radio" name="contentType"
+                                    class="mt-1 h-4 w-4" [checked]="!toggleContent" />
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-900">Link</p>
+                                    <p class="text-xs text-gray-500 mt-1">Paste a URL (YouTube, Drive, Vimeo, etc.)</p>
+                                </div>
+                            </label>
+
+                            <label
+                                class="flex items-start gap-3 rounded-2xl border p-4 cursor-pointer hover:bg-green-50">
+                                <input (change)="toggleContentFn()" type="radio" name="contentType"
+                                    class="mt-1 h-4 w-4" [checked]="toggleContent" />
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-900">File</p>
+                                    <p class="text-xs text-gray-500 mt-1">Upload a PDF, ZIP, or MP4 file</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Link input (shown when Link selected) -->
+                        <div [class.hidden]="toggleContent" [class.block]="!toggleContent" class="mt-4">
+                            <label class="text-sm font-medium text-gray-700">Content Link</label>
+                            <textarea class="mt-1 w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring"
+                                rows="3" formControlName="lessonContentUrl"
+                                placeholder="https://...">https://youtu.be/example-video-link</textarea>
+                            <p class="text-xs text-gray-500 mt-2">
+                                Make sure the link is public or accessible by your students.
+                            </p>
+                            @if (this.addLessonFormGroup.controls['lessonContentUrl'].hasError('required') &&
+                            this.addLessonFormGroup.controls['lessonContentUrl'].touched) {
+                            <div class=" text-red-700 p-2 rounded borde mt-2">
+                                Content URL is required.
+                            </div>
+                            }
+                            @if (this.addLessonFormGroup.controls['lessonContentUrl'].hasError('pattern') &&
+                            this.addLessonFormGroup.controls['lessonContentUrl'].touched) {
+                            <div class=" text-red-700 p-2 rounded borde mt-2">
+                                Please enter a valid URL.
+                            </div>
+                            }
+                        </div>
+
+                        <!-- File input (shown when File selected) -->
+                        <div [class.hidden]="!toggleContent" [class.block]="toggleContent" class="mt-4">
+                            <label class="text-sm font-medium text-gray-700">Upload File</label>
+
+                            <div class="mt-2 rounded-2xl border border-dashed p-5 bg-gray-50">
+                                <div class="flex flex-col items-center text-center gap-2">
+                                    <div class="h-11 w-11 rounded-2xl bg-white border flex items-center justify-center">
+                                        📎
+                                    </div>
+                                    <p class="text-sm font-semibold text-gray-900">Select a file from your device</p>
+                                    <p class="text-xs text-gray-500">PDF, ZIP, MP4 • Max 50MB</p>
+                                    @if (typeContent === 'video') {
+                                    <input id="lessonFile" (change)="selectFile($event)" type="file" accept="video/*"
+                                        class="hidden" />
+                                    }
+                                    @else if(typeContent === 'pdf') {
+                                    <input id="lessonFile" (change)="selectFile($event)" type="file"
+                                        accept="application/pdf" class="hidden" />
+                                    }
+                                    <label for="lessonFile"
+                                        class="mt-2 inline-flex items-center justify-center px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700 cursor-pointer">
+                                        Browse files
+                                    </label>
+
+                                    <p class="text-xs text-gray-500 mt-2">Example: lesson-resources.pdf</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="pt-2 flex flex-col sm:flex-row gap-2 sm:justify-end">
+                        <button type="reset" class="px-5 py-3 rounded-xl border bg-white hover:bg-green-50">
+                            Reset
+                        </button>
+                        <button [class.cursor-not-allowed]="this.addLessonFormGroup.invalid || loading"
+                            [class.cursor-pointer]="!this.addLessonFormGroup.invalid && !loading"
+                            [class.bg-green-600]="!this.addLessonFormGroup.invalid && !loading"
+                            [class.bg-green-400]="this.addLessonFormGroup.invalid || loading"
+                            [class.hover:bg-green-700]="!this.addLessonFormGroup.invalid && !loading"
+                            [disabled]="this.addLessonFormGroup.invalid || loading" type="submit"
+                            class="px-5 py-3 rounded-xl  text-white ">
+                            Create Lesson
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- Small footer -->
+        <div class="mt-4 text-sm text-gray-500">
+            Tip: After creating the lesson, you can reorder lessons from the lessons page.
+        </div>
+    </div>
+</div>

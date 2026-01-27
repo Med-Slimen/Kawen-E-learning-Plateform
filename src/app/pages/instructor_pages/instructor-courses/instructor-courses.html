@@ -103,7 +103,7 @@
                         <td class="p-3">
                             <div class="flex justify-end gap-2">
                                 <a [routerLink]="['Instructor_edit_course', course.uid]" class="px-3 py-1.5 cursor-pointer rounded-lg border hover:bg-gray-50">Edit</a>
-                                <button class="px-3 py-1.5 cursor-pointer rounded-lg border hover:bg-gray-50">Lessons</button>
+                                <a [routerLink]="['Instructor_lessons_page', course.uid]" class="px-3 py-1.5 cursor-pointer rounded-lg border hover:bg-gray-50">Lessons</a>
                                 <button (click)="deleteCourse(course.uid)"
                                     class="px-3 py-1.5 cursor-pointer rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
                                     Delete
@@ -112,7 +112,10 @@
                         </td>
                     </tr>
                     }
-
+                    @empty {
+                    <tr>
+                        <td class="p-3 text-center text-gray-500" colspan="7">No courses found.</td>
+                    }
                 </tbody>
             </table>
         </div>
@@ -148,13 +151,16 @@
 
                 <div class="mt-4 grid grid-cols-3 gap-2">
                     <button [routerLink]="['Instructor_edit_course', course.uid]" class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Edit</button>
-                    <button class="w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Lessons</button>
-                    <button (click)="deleteCourse(course.uid)" class="cursor-pointerw-full px-3 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
+                    <a [routerLink]="['Instructor_lessons_page', course.uid]" class="cursor-pointer w-full px-3 py-2 rounded-lg border hover:bg-gray-50">Lessons</a>
+                    <button (click)="deleteCourse(course.uid)" class="cursor-pointer w-full px-3 py-2 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">
                         Delete
                     </button>
                 </div>
             </div>
              }
+            @empty {
+            <p class="text-center text-gray-500">No courses found.</p>
+            }
         </div>
        
     </div>

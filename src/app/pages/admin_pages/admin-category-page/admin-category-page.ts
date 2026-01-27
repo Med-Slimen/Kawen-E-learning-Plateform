@@ -59,7 +59,7 @@ export class AdminCategoryPage implements OnInit {
     const confirmDelete = confirm("Are you sure you want to delete this category?");
     if (confirmDelete) {
       if (!category) {
-        console.error("Category not found: ", category);
+        alert("Category not found: ");
         return;
       }
       deleteDoc(doc(this.firestore, `categories/${category.uid}`)).then(() => {
