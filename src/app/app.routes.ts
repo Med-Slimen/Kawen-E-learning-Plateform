@@ -8,7 +8,6 @@ import { Forbidden } from './pages/public_pages/forbidden/forbidden';
 import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
 import { CoursesList } from './components/courses-list/courses-list';
-import { Courses } from './pages/public_pages/courses/courses';
 import { AdminStudentPage } from './pages/admin_pages/admin-student-page/admin-student-page';
 import { AdminInstructorPage } from './pages/admin_pages/admin-instructor-page/admin-instructor-page';
 import { AdminCategoryPage } from './pages/admin_pages/admin-category-page/admin-category-page';
@@ -19,13 +18,13 @@ import { InstructorAddCourse } from './pages/instructor_pages/instructor-add-cou
 import { InstructorEditCourse } from './pages/instructor_pages/instructor-edit-course/instructor-edit-course';
 import { InstructorLessonsPage } from './pages/instructor_pages/instructor-lessons-page/instructor-lessons-page';
 import { InstructorAddLesson } from './pages/instructor_pages/instructor-add-lesson/instructor-add-lesson';
+import { InstructorEditLesson } from './pages/instructor_pages/instructor-edit-lesson/instructor-edit-lesson';
 
 export const routes: Routes = [
     {path: 'Home', component: HomePage },
     {path:'Login',component:Login},
     {path: 'Sign-Up', component:SignUp},
     {path:'CoursesList',component:CoursesList},
-    {path:'Courses',component:Courses},
     {path: 'Student_Dashboard', component:StudentDashboard,canActivate:
     [authGuard,roleGuard],data: { roles: ['Student'] }},
     {path:'Instructor_Dashboard',canActivate:
@@ -40,7 +39,8 @@ export const routes: Routes = [
                 {path:'Instructor_lessons_page/:courseId',
                  children:[
                     {path:'',component:InstructorLessonsPage},
-                    {path:'Instructor_add_lesson',component:InstructorAddLesson}
+                    {path:'Instructor_add_lesson',component:InstructorAddLesson},
+                    {path:'Instructor_edit_lesson/:lessonId',component:InstructorEditLesson}
                 ]
                 }
             ]

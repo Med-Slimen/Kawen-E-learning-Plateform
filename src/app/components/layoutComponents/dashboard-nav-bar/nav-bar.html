@@ -28,25 +28,24 @@
                         </div>
                         <div class="links absolute top-8 right-0 bg-white border border-gray-200 rounded shadow-lg w-40 "
                             [class.hidden]="!linksMenu" [class.block]="linksMenu">
-                            <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">Dashboard</a>
+                            <a routerLink="{{this.sessionService.user()?.role + '_Dashboard'}}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">Dashboard</a>
                             <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">My Courses</a>
                             <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">Browse Courses</a>
                         </div>
                     </div>
                     <ul class="hidden space-x-4 md:flex">
                         <li>
-                            <a routerLink="/Student_Dashboard"
+                            <a routerLink="{{this.sessionService.user()?.role ==='Student' ? '/Student_Dashboard' : '/Instructor_Dashboard'}}"
                                 class="inline-block text-lg font-medium text-green-700 hover:scale-102 hover:bg-green-700 p-1 hover:text-[white] rounded transition-transform duration-500 cursor-pointer">Dashboard</a>
                         </li>
                         <li>
-                            <a
+                            <a routerLink="{{this.sessionService.user()?.role ==='Student' ? '/Student_Dashboard/Student_Courses' : '/Instructor_Dashboard/Instructor_Courses'}}"
                                 class="inline-block text-lg font-medium text-green-700 hover:scale-102 hover:bg-green-700 p-1 hover:text-[white] rounded transition-transform duration-500 cursor-pointer">My
                                 Courses</a>
                         </li>
                         <li>
-                            <a routerLink="/Courses"
-                                class="inline-block text-lg font-medium text-green-700 hover:scale-102 hover:bg-green-700 p-1 hover:text-[white] rounded transition-transform duration-500 cursor-pointer">Browse
-                                Courses</a>
+                            <a routerLink="{{this.sessionService.user()?.role ==='Student' ? '/Student_Dashboard/Student_Messages' : '/Instructor_Dashboard/Instructor_Messages'}}"
+                                class="inline-block text-lg font-medium text-green-700 hover:scale-102 hover:bg-green-700 p-1 hover:text-[white] rounded transition-transform duration-500 cursor-pointer">View Messages</a>
                         </li>
                     </ul>
                     <div class="w-auto  relative">

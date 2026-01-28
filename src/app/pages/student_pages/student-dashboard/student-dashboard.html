@@ -1,89 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
+<app-nav-bar></app-nav-bar>
+<section class="p-3">
+    <div class="welcome">
+        <h1 class="text-3xl font-bold p-5">Welcome, {{this.sessionService.user()?.name}} 👋</h1>
+    </div>
+    <div class="stats grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
+        <div
+            class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
+            <div class="flex items-center justify-between mb-5">
+                <p class="font-semibold">Enrolled Courses</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-book-open-icon lucide-book-open text-green-700">
+                    <path d="M12 7v14" />
+                    <path
+                        d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+                </svg>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body class="min-h-screen bg-gray-100">
-    <app-nav-bar></app-nav-bar>
-    <section class="p-3">
-        <div class="welcome">
-            <h1 class="text-3xl font-bold p-5">Welcome, {{this.sessionService.user()?.name}} 👋</h1>
+            </div>
+            <h3 class="font-bold text-3xl">0</h3>
         </div>
-        <div class="stats grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
-            <div class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
-                <div class="flex items-center justify-between mb-5">
-                    <p class="font-semibold">Enrolled Courses</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-book-open-icon lucide-book-open text-green-700">
-                        <path d="M12 7v14" />
-                        <path
-                            d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
-                    </svg>
-
-                </div>
-                <h3 class="font-bold text-3xl">0</h3>
+        <div
+            class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
+            <div class="flex items-center justify-between mb-5">
+                <p class="font-semibold">Completed Courses</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-circle-check-big-icon lucide-circle-check-big text-green-700">
+                    <path d="M21.801 10A10 10 0 1 1 17 3.335" />
+                    <path d="m9 11 3 3L22 4" />
+                </svg>
             </div>
-            <div class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
-                <div class="flex items-center justify-between mb-5">
-                    <p class="font-semibold">Completed Courses</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-circle-check-big-icon lucide-circle-check-big text-green-700">
-                        <path d="M21.801 10A10 10 0 1 1 17 3.335" />
-                        <path d="m9 11 3 3L22 4" />
-                    </svg>
-                </div>
-                <h3 class="font-bold text-3xl">0</h3>
-            </div>
-            <div class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
-                <div class="flex items-center justify-between mb-5">
-                    <p class="font-semibold">In Progress Courses</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-history-icon lucide-history text-green-700">
-                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                        <path d="M3 3v5h5" />
-                        <path d="M12 7v5l4 2" />
-                    </svg>
-
-                </div>
-                <h3 class="font-bold text-3xl">0</h3>
-            </div>
-            <div class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
-                <div class="flex items-center justify-between mb-5">
-                    <p class="font-semibold">Messages</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-mail-icon lucide-mail text-green-700">
-                        <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
-                        <rect x="2" y="4" width="20" height="16" rx="2" />
-                    </svg>
-
-                </div>
-                <h3 class="font-bold text-3xl">0</h3>
-            </div>
+            <h3 class="font-bold text-3xl">0</h3>
         </div>
-        <a
-            class="flex cursor-pointer gap-2 shadow-lg w-fit bg-green-700 text-white font-bold py-2 px-4 rounded hover:bg-green-800 transition-colors duration-300 m-5 items-center"
-            routerLink="/Courses">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-search h-4 w-4 mr-2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-            </svg>
-            Browse Courses
-        </a>
-        <div class="enrolledCourses bg-white p-5 m-5 rounded shadow-lg">
-            <h2 class="text-2xl font-bold p-5">Your Enrolled Courses</h2>
-            <p class="p-5">You have not enrolled in any courses yet.</p>
-        </div>
-    </section>
-</body>
+        <div
+            class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
+            <div class="flex items-center justify-between mb-5">
+                <p class="font-semibold">In Progress Courses</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-history-icon lucide-history text-green-700">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                    <path d="M3 3v5h5" />
+                    <path d="M12 7v5l4 2" />
+                </svg>
 
-</html>
+            </div>
+            <h3 class="font-bold text-3xl">0</h3>
+        </div>
+        <div
+            class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
+            <div class="flex items-center justify-between mb-5">
+                <p class="font-semibold">Messages</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-mail-icon lucide-mail text-green-700">
+                    <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                </svg>
+
+            </div>
+            <h3 class="font-bold text-3xl">0</h3>
+        </div>
+    </div>
+    <a class="flex cursor-pointer gap-2 shadow-lg w-fit bg-green-700 text-white font-bold py-2 px-4 rounded hover:bg-green-800 transition-colors duration-300 m-5 items-center"
+        routerLink="/CoursesList">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-search h-4 w-4 mr-2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        Browse Courses
+    </a>
+    <div class="enrolledCourses bg-white p-5 m-5 rounded shadow-lg">
+        <h2 class="text-2xl font-bold p-5">Your Enrolled Courses</h2>
+        <p class="p-5">You have not enrolled in any courses yet.</p>
+    </div>
+</section>

@@ -113,8 +113,16 @@
                     </tr>
                     }
                     @empty {
-                    <tr>
+                        @if(loadingCourses){
+                        <tr>
+                            <td class="p-3 text-center text-gray-500" colspan="7">Loading courses...</td>
+                        </tr>
+                    }
+                    @else {
+                        <tr>
                         <td class="p-3 text-center text-gray-500" colspan="7">No courses found.</td>
+                        </tr>
+                    }
                     }
                 </tbody>
             </table>
@@ -159,7 +167,14 @@
             </div>
              }
             @empty {
-            <p class="text-center text-gray-500">No courses found.</p>
+                @if(loadingCourses){
+                    <p class="text-center text-gray-500">Loading courses...</p>
+
+                }
+                @else{
+                    <p class="text-center text-gray-500">No courses found.</p>
+                }
+            
             }
         </div>
        

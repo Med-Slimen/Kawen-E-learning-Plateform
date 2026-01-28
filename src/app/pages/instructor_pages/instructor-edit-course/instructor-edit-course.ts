@@ -24,7 +24,8 @@ export class InstructorEditCourse {
   firestore=inject(Firestore);
   categoryService=inject(CategoryService);
   categories?:Category[];
-  editCourseForm:FormGroup
+  editCourseForm:FormGroup;
+  loading=false;
   thumbnailPreview: string | null = this.course?.thumbnailUrl || null;
   thumbnailFile: File | null = null;
   thumbnailUrl: string | null = null;
@@ -43,6 +44,7 @@ export class InstructorEditCourse {
       courseImage:[''],
     })}
   async ngOnInit(){
+    this.loading=true;
     this.categories=await this.categoryService.getAllCategories();
     this.courseId=this.route.snapshot.paramMap.get('courseId') as string;
     try{
@@ -61,6 +63,8 @@ export class InstructorEditCourse {
   }
     catch (error) {
       alert('Error fetching course details: ' + (error as Error).message);
+    }finally{
+      this.loading=false;
     }
   }
   async editCourse():Promise<void>{
@@ -69,6 +73,7 @@ export class InstructorEditCourse {
       return;
     }
     try{
+      this.loading=true;
       const cateogry=await this.categoryService.getCategoryByTitle(this.editCourseForm.value.courseCategory);
       const editedCourse={
       title:this.editCourseForm.value.courseTitle,
@@ -86,6 +91,8 @@ export class InstructorEditCourse {
     }catch(error){
       alert("Error editing course: " + (error as Error).message);
       return;
+    }finally{
+      this.loading=false;
     }
     
   }

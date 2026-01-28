@@ -40,8 +40,16 @@ export class InstructorAddLesson {
   }
   async ngOnInit() {
     const courseId = this.route.snapshot.paramMap.get('courseId') as string;
-    this.course=await this.courseService.getCourseById(courseId);
+    try{
+      this.loading = true;
+      this.course=await this.courseService.getCourseById(courseId);
     this.lessons = await this.lessonService.getCourseLessons(courseId);
+    }catch(error){
+      alert("Error fetching course or lessons: " + error);
+    }finally{
+      this.loading = false;
+    }
+    
   }
   selectFile(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0] || null;

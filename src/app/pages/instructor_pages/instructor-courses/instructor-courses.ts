@@ -14,10 +14,21 @@ import { RouterLink } from "@angular/router";
 export class InstructorCourses {
   courseService=inject(CourseService);
   sessionService=inject(SessionService);
+  loadingCourses = false;
   courses?: Course[];
   constructor() {}
   async ngOnInit() {
-    this.courses = await this.courseService.getCoursesByInstructor(this.sessionService.user()!.uid);
+    await this.getCourseByInstructorId(this.sessionService.user()!.uid);
+  }
+  async getCourseByInstructorId(instructorId: string): Promise<void> {
+    try{
+      this.loadingCourses = true;
+    this.courses = await this.courseService.getCoursesByInstructor(instructorId);
+    }catch(error){
+      alert("Error fetching courses: " + error);
+    }finally{
+      this.loadingCourses = false;
+    }
   }
   async deleteCourse(courseId: string): Promise<void> {
     const conf = confirm('Are you sure you want to delete this course?');
