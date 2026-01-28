@@ -6,6 +6,9 @@ import { Router, RouterLink } from '@angular/router';
 import { NavBar } from "../../../components/layoutComponents/dashboard-nav-bar/nav-bar";
 import { User } from 'firebase/auth';
 import { SessionService } from '../../../services/sessionService/session-service';
+import { CourseService } from '../../../services/courseService/course-service';
+import { Course } from '../../../models/course';
+import { EnrolledCourse } from '../../../models/enrolledCourse';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -17,8 +20,20 @@ export class StudentDashboard implements OnInit {
   user :User | null=null;
   authService=inject(AuthService)
   sessionService=inject(SessionService);
+  courseService=inject(CourseService);
+  loadingEnrolledCourses:boolean=false;
+  enrolledCourses:EnrolledCourse[]=[];
   constructor(private router: Router) {
     }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    try{
+      this.loadingEnrolledCourses = true;
+      this.enrolledCourses = await this.courseService.getEnrolledCoursesByStudentId(this.sessionService.user()?.uid || '');
+    }catch(error){
+      alert("Error loading enrolled courses: " + error);
+    } 
+    finally {
+      this.loadingEnrolledCourses = false;
+    }
   }
 }

@@ -1,10 +1,11 @@
 import { inject, Injectable, OnInit } from '@angular/core';
 import { doc, Firestore } from '@angular/fire/firestore';
 import { Course } from '../../models/course';
-import { collection, deleteDoc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, deleteDoc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { User } from '../../models/user';
 import { Category } from '../../models/category';
 import { Lesson } from '../../models/lessons';
+import { EnrolledCourse } from '../../models/enrolledCourse';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,7 @@ export class CourseService implements OnInit {
           price: courseDetails['price'] as number,
           level: courseDetails['level'] as string,
           thumbnailUrl: courseDetails['thumbnailUrl'] as string,
+          lessonsCount: courseDetails['lessonsCount'] as number,
         } as Course;
       }),
     );
@@ -54,6 +56,21 @@ export class CourseService implements OnInit {
   async getCoursesByInstructor(instructorId: string): Promise<Course[]> {
     await this.ngOnInit();
     return this.courses?.filter((course) => course.instructor.uid === instructorId) || [];
+  }
+  async getEnrolledCoursesByStudentId(studentId: string): Promise<EnrolledCourse[]> {
+    const queryGet =query(collection(this.firestore, `courses_enrolls`),where("studentId","==",studentId));
+    const querySnap=await getDocs(queryGet);
+    return Promise.all(querySnap.docs.map(async (docSnap)=>{
+      const courseId=docSnap.data()['courseId'] as string;
+      const course = await this.getCourseById(courseId);
+      return{
+        uid:docSnap.id,
+        course:course,
+        enrollmentDate: docSnap.data()['enrollmentDate'] ,
+        studentId:docSnap.data()['studentId'] as string,
+        completedLessons:docSnap.data()['completedLessons'] as number,
+      } as EnrolledCourse;
+    }));
   }
   async deleteCourse(courseId: string): Promise<boolean> {
     try {

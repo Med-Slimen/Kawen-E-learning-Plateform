@@ -72,8 +72,64 @@
         </svg>
         Browse Courses
     </a>
-    <div class="enrolledCourses bg-white p-5 m-5 rounded shadow-lg">
-        <h2 class="text-2xl font-bold p-5">Your Enrolled Courses</h2>
-        <p class="p-5">You have not enrolled in any courses yet.</p>
+    <div class="enrolledCourses bg-white p-5 m-5 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold mb-6">Your Enrolled Courses</h2>
+        <!-- Course Card -->
+         @for (enrolledCourse of enrolledCourses;track enrolledCourse.uid) {
+        <div class="flex flex-col sm:flex-row gap-4 border rounded-2xl p-4 hover:shadow-md transition">
+
+            <!-- Course Thumbnail -->
+            <div class="w-full sm:w-56 h-36 rounded-xl overflow-hidden bg-gray-100">
+                <img src="{{enrolledCourse.course.thumbnailUrl}}" alt="{{enrolledCourse.course.title}} Thumbnail"
+                    class="w-full h-full object-cover" />
+            </div>
+
+            <!-- Course Info -->
+            <div class="flex-1 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900">
+                        {{enrolledCourse.course.title}}
+                    </h3>
+
+                    <p class="text-sm text-gray-500 mt-1">
+                        Instructor: <span class="font-medium text-gray-700">{{enrolledCourse.course.instructor.name}} {{enrolledCourse.course.instructor.lastName}}</span>
+                    </p>
+
+                    <p class="text-sm text-gray-500 mt-1">
+                        Category: {{enrolledCourse.course.category.title}}
+                    </p>
+                </div>
+
+                <!-- Progress -->
+                <div class="mt-4">
+                    <div class="flex items-center justify-between text-sm mb-1">
+                        <span class="text-gray-600">Completed Lessons</span>
+                        <span class="font-medium text-green-600">{{enrolledCourse.completedLessons}}</span>
+                    </div>
+
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 45%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action -->
+            <div class="flex sm:flex-col justify-end sm:justify-center">
+                <button
+                    class="w-full sm:w-auto px-5 py-2 rounded-xl bg-green-600 text-white font-medium hover:bg-green-700 transition">
+                    View Course
+                </button>
+            </div>
+        </div>
+        }
+        @empty {
+            @if(loadingEnrolledCourses) {
+                <p>Loading your enrolled courses...</p>
+            } 
+            @else {
+                <p class="text-gray-600">You are not enrolled in any courses yet. Browse courses to get started!</p>
+            }
+        }
     </div>
+
 </section>

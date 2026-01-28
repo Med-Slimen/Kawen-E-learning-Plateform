@@ -34,10 +34,10 @@ export class InstructorAddCourse {
     duration:number;
     instructorId:string;
     categoryId:string;
-    lessons:Lesson[];
     price:number;
     level:string;
     thumbnailUrl:string;
+    lessonsCount:number;
   };
   constructor(private formBuilder: FormBuilder) {
      this.addCourseForm=this.formBuilder.group({
@@ -85,10 +85,10 @@ export class InstructorAddCourse {
       duration:this.addCourseForm.value.courseDuration,
       instructorId:this.sessionService.user()?.uid as string,
       categoryId:category?.uid as string,
-      lessons:[],
       price:this.addCourseForm.value.coursePrice,
       level:this.addCourseForm.value.courseLevel,
       thumbnailUrl:this.thumbnailUrl,
+      lessonsCount:0
     };
     addDoc(collection(this.firestore,'courses'),this.addedCourse).then((docRef)=>{
       if(docRef){

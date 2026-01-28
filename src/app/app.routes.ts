@@ -19,12 +19,16 @@ import { InstructorEditCourse } from './pages/instructor_pages/instructor-edit-c
 import { InstructorLessonsPage } from './pages/instructor_pages/instructor-lessons-page/instructor-lessons-page';
 import { InstructorAddLesson } from './pages/instructor_pages/instructor-add-lesson/instructor-add-lesson';
 import { InstructorEditLesson } from './pages/instructor_pages/instructor-edit-lesson/instructor-edit-lesson';
+import { CourseView } from './pages/public_pages/course-view/course-view';
 
 export const routes: Routes = [
     {path: 'Home', component: HomePage },
     {path:'Login',component:Login},
     {path: 'Sign-Up', component:SignUp},
-    {path:'CoursesList',component:CoursesList},
+    {path:'CoursesList',children:[
+        {path:'',component:CoursesList},
+        {path:'CourseView/:courseId',component:CourseView}
+    ]},
     {path: 'Student_Dashboard', component:StudentDashboard,canActivate:
     [authGuard,roleGuard],data: { roles: ['Student'] }},
     {path:'Instructor_Dashboard',canActivate:

@@ -51,7 +51,7 @@
                 <p class="text-purple-600 font-semibold w-fit rounded-2xl m-2">Category: {{course.category.title}}</p>
             </div>
             <div class="button">
-                <button class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600">View Details</button>
+                <button [routerLink]="['CourseView', course.uid]" class="w-full cursor-pointer bg-green-500 text-white py-2 rounded-lg hover:bg-green-600">View Details</button>
             </div>
         </div>
 

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, doc, Firestore, getDoc, getDocs, query } from '@angular/fire/firestore';
+import { collection, doc, Firestore, getDoc, getDocs, limit, query } from '@angular/fire/firestore';
 import { Lesson } from '../../models/lessons';
 import { orderBy } from '@angular/fire/firestore';
 @Injectable({
@@ -8,8 +8,15 @@ import { orderBy } from '@angular/fire/firestore';
 export class LessonService {
   firestore = inject(Firestore);
   constructor() {}
-  async getCourseLessons(courseId:string): Promise<Lesson[]> {
-    const snap=await getDocs(query(collection(this.firestore,`courses/${courseId}/lessons`),orderBy("order")));
+  async getCourseLessons(courseId:string,limitLessons?:number): Promise<Lesson[]> {
+    let querySnap;
+    if(limitLessons){
+       querySnap=query(collection(this.firestore,`courses/${courseId}/lessons`),orderBy("order"),limit(limitLessons));
+    }
+    else{
+     querySnap=query(collection(this.firestore,`courses/${courseId}/lessons`),orderBy("order"));
+    }
+    const snap=await getDocs(querySnap);
     return snap.docs.map((lessonDoc)=>{
       const lessonData=lessonDoc.data();
       return {

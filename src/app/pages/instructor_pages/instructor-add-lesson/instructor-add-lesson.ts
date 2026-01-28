@@ -3,7 +3,7 @@ import { Cloudinary } from '../../../services/cloudinaryService/cloudinary';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Lesson } from '../../../models/lessons';
 import { addDoc, collection } from 'firebase/firestore';
-import { Firestore } from '@angular/fire/firestore';
+import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NavBar } from '../../../components/layoutComponents/dashboard-nav-bar/nav-bar';
 import { LessonService } from '../../../services/lessonService/lesson-service';
@@ -84,6 +84,9 @@ export class InstructorAddLesson {
       };
       const courseId = this.route.snapshot.paramMap.get('courseId') as string;
       await addDoc(collection(this.firestore, `courses/${courseId}/lessons`), Lesson);
+      await updateDoc(doc(this.firestore, 'courses', courseId), {
+        lessonsCount: this.course!.lessonsCount! + 1
+      });
       this.addLessonFormGroup.reset();
       alert('Lesson added successfully');
     } catch (error) {

@@ -9,8 +9,8 @@ export interface Course {
     duration: number; // duration in hours
     instructor: User;
     category: Category;
-    lessons: Lesson[];
     price: number;
     level:string;
     thumbnailUrl: string;
+    lessonsCount: number;
 }

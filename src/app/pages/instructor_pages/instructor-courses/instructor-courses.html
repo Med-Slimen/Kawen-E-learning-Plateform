@@ -98,7 +98,7 @@
                         </td>
                         <td [class.hidden]="course.price==0" class="p-3 text-gray-600">{{ course.price }} DT</td>
                         <td [class.hidden]="course.price!=0" class="p-3 text-gray-600">Free</td>
-                        <td class="p-3 text-gray-600">{{course.lessons.length}}</td>
+                        <td class="p-3 text-gray-600">{{ course.lessonsCount }}</td>
                         <td class="p-3 text-gray-600">2026-01-23</td>
                         <td class="p-3">
                             <div class="flex justify-end gap-2">
@@ -147,7 +147,7 @@
                             </div>
                             <div class="rounded-lg border p-2">
                                 <p class="text-xs text-gray-500">Lessons</p>
-                                <p class="font-semibold">{{ course.lessons.length }}</p>
+                                <p class="font-semibold">{{ course.lessonsCount }}</p>
                             </div>
                             <div class="rounded-lg border p-2">
                                 <p class="text-xs text-gray-500">Updated</p>

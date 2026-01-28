@@ -3,7 +3,7 @@ import { NavBar } from '../../../components/layoutComponents/dashboard-nav-bar/n
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { Course } from '../../../models/course';
 import { collection, deleteDoc, doc } from 'firebase/firestore';
-import { Firestore, getDoc, getDocs } from '@angular/fire/firestore';
+import { Firestore, getDoc, getDocs, updateDoc } from '@angular/fire/firestore';
 import { CourseService } from '../../../services/courseService/course-service';
 import { Lesson } from '../../../models/lessons';
 import { LessonService } from '../../../services/lessonService/lesson-service';
@@ -66,6 +66,9 @@ export class InstructorLessonsPage {
       this.loadingLessons=true;
       await deleteDoc(doc(this.firestore,`courses/${this.courseId}/lessons`,lessonId));
       await this.getCourseLessons();
+      await updateDoc(doc(this.firestore, 'courses', this.courseId), {
+        lessonsCount: this.course!.lessonsCount! - 1
+      });
       alert('Lesson deleted successfully');
     } catch (error) {
       alert('Error deleting lesson:' + error);

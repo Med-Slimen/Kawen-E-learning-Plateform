@@ -4,6 +4,8 @@ import { CourseService } from '../../../services/courseService/course-service';
 import { Course } from '../../../models/course';
 import { SessionService } from '../../../services/sessionService/session-service';
 import { RouterLink } from "@angular/router";
+import { Lesson } from '../../../models/lessons';
+import { LessonService } from '../../../services/lessonService/lesson-service';
 
 @Component({
   selector: 'app-instructor-courses',
@@ -14,13 +16,14 @@ import { RouterLink } from "@angular/router";
 export class InstructorCourses {
   courseService=inject(CourseService);
   sessionService=inject(SessionService);
+  lessonsService=inject(LessonService);
   loadingCourses = false;
   courses?: Course[];
   constructor() {}
   async ngOnInit() {
-    await this.getCourseByInstructorId(this.sessionService.user()!.uid);
+    await this.getCoursesByInstructorId(this.sessionService.user()!.uid);
   }
-  async getCourseByInstructorId(instructorId: string): Promise<void> {
+  async getCoursesByInstructorId(instructorId: string): Promise<void> {
     try{
       this.loadingCourses = true;
     this.courses = await this.courseService.getCoursesByInstructor(instructorId);
