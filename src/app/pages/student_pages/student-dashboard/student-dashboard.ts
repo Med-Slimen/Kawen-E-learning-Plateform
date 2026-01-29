@@ -9,6 +9,7 @@ import { SessionService } from '../../../services/sessionService/session-service
 import { CourseService } from '../../../services/courseService/course-service';
 import { Course } from '../../../models/course';
 import { EnrolledCourse } from '../../../models/enrolledCourse';
+import { collection, Firestore, getDocs } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -21,6 +22,7 @@ export class StudentDashboard implements OnInit {
   authService=inject(AuthService)
   sessionService=inject(SessionService);
   courseService=inject(CourseService);
+  firestore=inject(Firestore);
   loadingEnrolledCourses:boolean=false;
   enrolledCourses:EnrolledCourse[]=[];
   constructor(private router: Router) {

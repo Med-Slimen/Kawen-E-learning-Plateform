@@ -33,7 +33,7 @@ export const routes: Routes = [
     {path: 'Student_Dashboard', canActivate:
     [authGuard,roleGuard],data: { roles: ['Student'] },children:[
         {path:'',component:StudentDashboard},
-        {path:'View_Course/:courseId',component:ViewCourse}
+        {path:'View_Course/:EnrolledCourseId',component:ViewCourse}
     ]},
     {path:'Instructor_Dashboard',canActivate:
     [authGuard,roleGuard],data: { roles: ['Instructor'] },

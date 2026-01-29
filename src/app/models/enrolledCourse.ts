@@ -1,4 +1,6 @@
 import { Course } from "./course";
+import { EnrolledCourselessons } from "./EnrolledCourselessons";
+import { Lesson } from "./lessons";
 import { User } from "./user";
 
 export interface EnrolledCourse {
@@ -6,4 +8,6 @@ export interface EnrolledCourse {
     course: Course;
     enrollmentDate: Date;
     studentId: string;
+    enrolledCourselessons: EnrolledCourselessons[];
+    percentageCompleted?: number;
 }

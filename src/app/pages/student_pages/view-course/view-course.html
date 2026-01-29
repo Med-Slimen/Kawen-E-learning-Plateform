@@ -4,12 +4,12 @@
   <div class="bg-white border-b">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <button class="px-3 py-2 rounded-xl border bg-white hover:bg-green-50">
+        <button routerLink="../../" class="cursor-pointer px-3 py-2 rounded-xl border bg-white hover:bg-green-50">
           ← Back
         </button>
         <div>
           <p class="text-xs text-gray-500">Enrolled course</p>
-          <h1 class="text-lg sm:text-xl font-semibold text-gray-900">Angular Fundamentals</h1>
+          <h1 class="text-lg sm:text-xl font-semibold text-gray-900">{{ enrolledCourse?.course?.title }}</h1>
         </div>
       </div>
 
@@ -21,10 +21,10 @@
         <div class="hidden md:block w-56">
           <div class="flex items-center justify-between text-xs text-gray-500 mb-1">
             <span>Progress</span>
-            <span class="font-semibold text-green-700">45%</span>
+            <span class="font-semibold text-green-700">{{percentageCompleted}}%</span>
           </div>
           <div class="w-full bg-gray-200 rounded-full h-2">
-            <div class="bg-green-500 h-2 rounded-full" style="width: 45%;"></div>
+            <div class="bg-green-500 h-2 rounded-full" [style.width.%]="percentageCompleted"></div>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
         <div class="p-4 border-b flex items-center justify-between">
           <div>
             <h2 class="font-semibold text-gray-900">Lessons</h2>
-            <p class="text-sm text-gray-500">8 lessons • 10h total</p>
+            <p class="text-sm text-gray-500">{{ enrolledCourse?.enrolledCourselessons?.length }} lessons • {{ enrolledCourse?.course?.duration }} H total</p>
           </div>
           <button class="px-3 py-2 rounded-xl border bg-white hover:bg-green-50 text-sm">
             Filter
@@ -58,21 +58,27 @@
         
         <div class="p-2 " >
           <!-- Lesson Item (Active) -->
-           @for(lesson of lessons ; track lesson.uid; let i = $index) {
+           @for(lessonDetails of enrolledCourse?.enrolledCourselessons ; track lessonDetails.uid; let i = $index) {
           <button 
-          (click)="selectLesson(lesson)" class="w-full text-left mb-3 p-4 border border-black rounded-2xl  cursor-pointer"
-          [class.bg-green-100]="selectedLesson?.uid === lesson.uid"
-                  [class.bg-white]="selectedLesson?.uid !== lesson.uid" [class.hover:bg-gray-100]="selectedLesson?.uid !== lesson.uid"
+          (click)="selectEnrolledCourselesson(lessonDetails)" class="w-full text-left mb-3 p-4 border border-black rounded-2xl  cursor-pointer"
+          [class.bg-green-100]="selectedLesson?.uid === lessonDetails.uid"
+                  [class.bg-white]="selectedLesson?.uid !== lessonDetails.uid" [class.hover:bg-gray-100]="selectedLesson?.uid !== lessonDetails.uid"
           >
             <div class="flex items-start gap-3">
-              <input type="checkbox" class="mt-1 h-4 w-4 accent-green-600" readonly />
+              <div [class.hidden]="lessonDetails.completed" class="h-6 w-6 border-3 border-green-600"></div>
+<svg xmlns="http://www.w3.org/2000/svg" [class.hidden]="!lessonDetails.completed" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="25" height="25" viewBox="0 0 256 256" xml:space="preserve">
+<g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+	<path d="M 85 90 H 5 c -2.761 0 -5 -2.238 -5 -5 V 5 c 0 -2.761 2.239 -5 5 -5 h 80 c 2.762 0 5 2.239 5 5 v 80 C 90 87.762 87.762 90 85 90 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(39,196,72); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+	<path d="M 38.269 64.615 c -1.28 0 -2.559 -0.488 -3.536 -1.465 L 18.964 47.383 c -1.953 -1.953 -1.953 -5.119 0 -7.071 c 1.953 -1.952 5.118 -1.952 7.071 0 l 12.233 12.232 l 25.696 -25.695 c 1.951 -1.952 5.119 -1.952 7.07 0 c 1.953 1.953 1.953 5.119 0 7.071 L 41.804 63.15 C 40.828 64.127 39.548 64.615 38.269 64.615 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+</g>
+</svg>
               <div class="flex-1">
                 <div class="flex items-start justify-between gap-2">
-                  <p class="font-semibold text-gray-900">{{i + 1}}. {{lesson.title}}</p>
-                  <span class="text-xs px-2 py-1 rounded-full bg-white border text-gray-700">{{lesson.duration}}
+                  <p class="font-semibold text-gray-900">{{i + 1}}. {{lessonDetails.lesson?.title}}</p>
+                  <span class="text-xs px-2 py-1 rounded-full bg-white border text-gray-700">{{lessonDetails.lesson?.duration}}
                     mn</span>
                 </div>
-                <p class="text-sm text-gray-500 mt-1">• {{lesson.contentType}} • </p>
+                <p class="text-sm text-gray-500 mt-1">• {{lessonDetails.lesson?.contentType}} • </p>
               </div>
             </div>
           </button>
@@ -83,10 +89,10 @@
         <div class="p-4 border-t bg-white">
           <div class="flex items-center justify-between text-sm text-gray-600">
             <span>Completed</span>
-            <span class="font-semibold text-gray-900">2 / 8</span>
+            <span class="font-semibold text-gray-900">{{completedLessons}} / {{enrolledCourse?.enrolledCourselessons?.length}}</span>
           </div>
           <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
-            <div class="bg-green-500 h-2 rounded-full" style="width: 25%;"></div>
+            <div class="bg-green-500 h-2 rounded-full" [style.width.%]="percentageCompleted"></div>
           </div>
         </div>
       </div>
@@ -97,20 +103,19 @@
       @if(selectedLesson) {
       <!-- Lesson Header -->
       <div class="bg-white border rounded-2xl p-5 sm:p-6">
-        
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <p class="text-sm text-gray-500">Current lesson</p>
             <h2 class="text-2xl font-semibold text-gray-900 mt-1">
-              {{selectedLesson.order}}. {{selectedLesson.title}}
+              {{selectedLesson.lesson?.order}}. {{selectedLesson.lesson?.title}}
             </h2>
             <div class="mt-2 flex flex-wrap gap-2 text-sm text-gray-600">
               <span
                 class="inline-flex items-center px-3 py-1 rounded-full bg-green-50 text-green-700 border border-green-100">
-                {{selectedLesson.contentType}}
+                {{selectedLesson.lesson?.contentType}}
               </span>
               <span class="inline-flex items-center px-3 py-1 rounded-full bg-white border">
-                {{selectedLesson.duration}} minutes
+                {{selectedLesson.lesson?.duration}} minutes
               </span>
               <span class="inline-flex items-center px-3 py-1 rounded-full bg-white border">
                 Instructor: Med Sm
@@ -119,12 +124,18 @@
           </div>
 
           <div class="flex flex-col sm:items-end gap-2">
-            <label
+            @if (!selectedLesson.completed) {
+            <button (click)="markAsComplete(selectedLesson.uid)"
               class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border bg-white hover:bg-green-50 cursor-pointer w-fit">
-              <input type="checkbox" class="h-4 w-4 accent-green-600" checked />
               <span class="text-sm font-semibold text-gray-900">Mark as completed</span>
-            </label>
-
+            </button>
+            }
+            @else{
+             <button (click)="markAsUncomplete(selectedLesson.uid)"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border bg-white hover:bg-green-50 cursor-pointer w-fit">
+              <span class="text-sm font-semibold text-gray-900">Mark as uncompleted</span>
+            </button>
+            }
             <div class="flex gap-2">
               <button class="px-4 py-2 rounded-xl border bg-white hover:bg-green-50">
                 Previous
@@ -142,18 +153,17 @@
           <p class="font-semibold text-gray-900">Lesson content</p>
           <span class="text-xs px-3 py-1 rounded-full bg-gray-50 border text-gray-700">Video link</span>
         </div>
-
         <div class="p-4 sm:p-6">
           <div class="rounded-2xl overflow-hidden border bg-black">
             <!-- Static video placeholder -->
             <div class="w-full aspect-video text-white/90">
-                @if(isYoutubeUrl(selectedLesson.contentUrl)) {
+                @if(isYoutubeUrl(selectedLesson.lesson!.contentUrl)) {
                 <iframe  class="w-full m-0 h-full aspect-video rounded-2xl"   allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen [src]="safeUrl" frameborder="0">
                   </iframe>
                 }
                 @else {
                   <video class="w-full h-full aspect-video rounded-2xl" controls>
-                    <source [src]="selectedLesson.contentUrl" type="video/mp4" />
+                    <source [src]="selectedLesson.lesson?.contentUrl" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 }

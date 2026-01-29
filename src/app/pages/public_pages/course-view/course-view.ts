@@ -23,7 +23,12 @@ export class CourseView {
   loadingEnroll=false;
   courseId?:string;
   course?:Course;
+  Limitedlessons:Lesson[]=[];
   lessons:Lesson[]=[];
+  lessonsProgress?:{
+    lessonId:string;
+    completed:boolean;
+  }[];
   constructor(private route:ActivatedRoute) {}
   async ngOnInit() {
     try{
@@ -54,7 +59,8 @@ export class CourseView {
   }
   async getLessons(courseId:string): Promise<void> {
     try{
-      this.lessons = await this.lessonsService.getCourseLessons(courseId,3);
+      this.Limitedlessons = await this.lessonsService.getCourseLessons(courseId,3);
+      this.lessons = await this.lessonsService.getCourseLessons(courseId);
     }
     catch(error){
       console.error('Error fetching lessons:', error);
@@ -64,12 +70,20 @@ export class CourseView {
     try{
     this.loadingContent=true;
     const studentId=this.sessionService.user()?.uid;
+    this.lessonsProgress= this.lessons.map(lesson=>({
+      lessonId:lesson.uid,
+      completed:false,
+    }));
     const enrolled={
       courseId: this.courseId,
       studentId:studentId,
       enrolledAt: new Date(),
+      percentageCompleted:0,
     }
-    await addDoc(collection(this.firestore,'courses_enrolls'),enrolled);
+    const enrolledSnap=await addDoc(collection(this.firestore,'courses_enrolls'),enrolled);
+    this.lessonsProgress.map(async(lessonProgress)=>{
+      await addDoc(collection(this.firestore,`courses_enrolls/${enrolledSnap.id}/lessons_progress`), lessonProgress);
+    });
     alert('Enrolled successfully in the course! Check your dashboard for access.');
     }
     catch(error){

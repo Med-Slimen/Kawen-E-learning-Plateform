@@ -3,60 +3,57 @@ import { CourseService } from '../../../services/courseService/course-service';
 import { LessonService } from '../../../services/lessonService/lesson-service';
 import { Lesson } from '../../../models/lessons';
 import { Course } from '../../../models/course';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { EnrolledCourse } from '../../../models/enrolledCourse';
+import { EnrolledCourselessons } from '../../../models/EnrolledCourselessons';
+import { updateDoc } from 'firebase/firestore';
+import { doc, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-view-course',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './view-course.html',
   styleUrl: './view-course.css',
 })
 export class ViewCourse {
   courseService = inject(CourseService);
   lessonService = inject(LessonService);
+  firestore = inject(Firestore);
   sanitizer = inject(DomSanitizer);
-  lessons: Lesson[] = [];
   loading: boolean = false;
-  course: Course | null = null;
-  selectedLesson: Lesson | null = null;
+  completedLessons: number = 0;
+  enrolledCourse: EnrolledCourse | null = null;
+  selectedLesson: EnrolledCourselessons | null = null;
   safeUrl:SafeResourceUrl | null = null;
+  percentageCompleted: number = 0;
   constructor(private route: ActivatedRoute) {}
   async ngOnInit() {
-    const courseId = this.route.snapshot.paramMap.get('courseId');
-    if (courseId) {
-      await this.getCourse(courseId);
-      await this.getLessons(courseId);
+    const enrolledCourseId = this.route.snapshot.paramMap.get('EnrolledCourseId');
+    if (enrolledCourseId) {
+      await this.getEnrolledCourseById(enrolledCourseId);
+      this.completedLessons = this.enrolledCourse?.enrolledCourselessons.filter(lesson => lesson.completed).length || 0;
+      this.percentageCompleted = parseInt(this.enrolledCourse?.enrolledCourselessons.length ? ((this.completedLessons / this.enrolledCourse.enrolledCourselessons.length) * 100).toString() : '0');
     }
     else{
-      alert('No courseId provided in route.');
+      alert('No enrolledCourseId provided in route.');
       return;
     }
   }
-  async getCourse(courseId: string): Promise<void> {
+  async getEnrolledCourseById(enrolledCourseId: string): Promise<void> {
     try {
       this.loading = true;
-      this.course = await this.courseService.getCourseById(courseId);
+      this.enrolledCourse = await this.courseService.getEnrolledCourseById(enrolledCourseId);
     } catch (error) {
-      alert('Error fetching course:' + error);
+      alert('Error fetching enrolled course:' + error);
     } finally {
       this.loading = false;
     }
   }
-  async getLessons(courseId: string): Promise<void> {
-    try {
-      this.loading = true;
-      this.lessons = await this.lessonService.getCourseLessons(courseId);
-    } catch (error) {
-      alert('Error fetching lessons: ' + error);
-    } finally {
-      this.loading = false;
-    }
-  }
-  selectLesson(lesson: Lesson): void {
-    this.selectedLesson = lesson;
-    if(lesson && lesson.contentUrl){
-      this.setIframeUrl(lesson.contentUrl);
+  selectEnrolledCourselesson(enrolledCourselessons: EnrolledCourselessons): void {
+    this.selectedLesson = enrolledCourselessons ?? null;
+    if(enrolledCourselessons.lesson && enrolledCourselessons.lesson.contentUrl){
+      this.setIframeUrl(enrolledCourselessons.lesson.contentUrl);
     }
     else{
       alert('Lesson is invalid.');
@@ -86,7 +83,7 @@ toYoutubeEmbedUrl(url: string): string {
   // already embed or unknown
   return url;
 }
-isYoutubeUrl(url: string): boolean {
+isYoutubeUrl(url: string): boolean  {
   return /youtube\.com|youtu\.be/.test(url);
 }
 setIframeUrl(url: string) {
@@ -95,5 +92,39 @@ setIframeUrl(url: string) {
     return;
   }
   this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.toYoutubeEmbedUrl(url));
+}
+async markAsComplete(selectedLessonId:string):Promise<void>{
+  const confirm=window.confirm('Are you sure you want to mark this lesson as complete?');
+  if(!confirm){
+    return;
+  }
+  try{
+    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourse?.uid}/lessons_progress/${selectedLessonId}`),{
+      completed:true
+    });
+    await this.ngOnInit();
+    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourse?.uid}`),{
+      percentageCompleted: this.percentageCompleted
+    });
+  }catch(error){
+    alert('Error marking lesson as complete:' + error);
+  }
+}
+async markAsUncomplete(selectedLessonId:string):Promise<void>{
+   const confirm=window.confirm('Are you sure you want to mark this lesson as uncomplete?');
+  if(!confirm){
+    return;
+  }
+  try{
+    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourse?.uid}/lessons_progress/${selectedLessonId}`),{
+      completed:false
+    });
+    await this.ngOnInit();
+    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourse?.uid}`),{
+      percentageCompleted: this.percentageCompleted
+    });
+  }catch(error){
+    alert('Error marking lesson as uncomplete:' + error);
+  }
 }
 }
