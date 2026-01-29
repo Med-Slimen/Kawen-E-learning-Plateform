@@ -115,7 +115,7 @@
 
             <!-- Action -->
             <div class="flex sm:flex-col justify-end sm:justify-center">
-                <button
+                <button [routerLink]="['View_Course', enrolledCourse.course.uid]"
                     class="w-full sm:w-auto px-5 py-2 rounded-xl bg-green-600 text-white font-medium hover:bg-green-700 transition">
                     View Course
                 </button>

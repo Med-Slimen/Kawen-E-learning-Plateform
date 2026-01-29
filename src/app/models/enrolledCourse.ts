@@ -6,5 +6,4 @@ export interface EnrolledCourse {
     course: Course;
     enrollmentDate: Date;
     studentId: string;
-    completedLessons: number;
 }

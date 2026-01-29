@@ -20,6 +20,7 @@ import { InstructorLessonsPage } from './pages/instructor_pages/instructor-lesso
 import { InstructorAddLesson } from './pages/instructor_pages/instructor-add-lesson/instructor-add-lesson';
 import { InstructorEditLesson } from './pages/instructor_pages/instructor-edit-lesson/instructor-edit-lesson';
 import { CourseView } from './pages/public_pages/course-view/course-view';
+import { ViewCourse } from './pages/student_pages/view-course/view-course';
 
 export const routes: Routes = [
     {path: 'Home', component: HomePage },
@@ -29,8 +30,11 @@ export const routes: Routes = [
         {path:'',component:CoursesList},
         {path:'CourseView/:courseId',component:CourseView}
     ]},
-    {path: 'Student_Dashboard', component:StudentDashboard,canActivate:
-    [authGuard,roleGuard],data: { roles: ['Student'] }},
+    {path: 'Student_Dashboard', canActivate:
+    [authGuard,roleGuard],data: { roles: ['Student'] },children:[
+        {path:'',component:StudentDashboard},
+        {path:'View_Course/:courseId',component:ViewCourse}
+    ]},
     {path:'Instructor_Dashboard',canActivate:
     [authGuard,roleGuard],data: { roles: ['Instructor'] },
     children:[

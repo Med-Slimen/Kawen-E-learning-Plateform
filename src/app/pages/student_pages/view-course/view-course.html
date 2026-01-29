@@ -1,0 +1,254 @@
+<!-- Student - Enrolled Course Player (Green/White Theme) | Static Responsive UI -->
+<div class="min-h-screen bg-gray-50">
+  <!-- Top Bar -->
+  <div class="bg-white border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <button class="px-3 py-2 rounded-xl border bg-white hover:bg-green-50">
+          ← Back
+        </button>
+        <div>
+          <p class="text-xs text-gray-500">Enrolled course</p>
+          <h1 class="text-lg sm:text-xl font-semibold text-gray-900">Angular Fundamentals</h1>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span
+          class="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-100">
+          Active
+        </span>
+        <div class="hidden md:block w-56">
+          <div class="flex items-center justify-between text-xs text-gray-500 mb-1">
+            <span>Progress</span>
+            <span class="font-semibold text-green-700">45%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-green-500 h-2 rounded-full" style="width: 45%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Sidebar Lessons -->
+    <aside class="lg:col-span-4 xl:col-span-3">
+      <div class="bg-white border rounded-2xl overflow-hidden">
+        <div class="p-4 border-b flex items-center justify-between">
+          <div>
+            <h2 class="font-semibold text-gray-900">Lessons</h2>
+            <p class="text-sm text-gray-500">8 lessons • 10h total</p>
+          </div>
+          <button class="px-3 py-2 rounded-xl border bg-white hover:bg-green-50 text-sm">
+            Filter
+          </button>
+        </div>
+
+        <!-- Search -->
+        <div class="p-4 border-b">
+          <div class="flex items-center rounded-xl border bg-white overflow-hidden">
+            <span class="px-4 text-gray-400">🔎</span>
+            <input class="w-full px-4 py-3 focus:outline-none" placeholder="Search lessons..." value="" />
+          </div>
+        </div>
+
+        <!-- Lesson list -->
+        
+        <div class="p-2 " >
+          <!-- Lesson Item (Active) -->
+           @for(lesson of lessons ; track lesson.uid; let i = $index) {
+          <button 
+          (click)="selectLesson(lesson)" class="w-full text-left mb-3 p-4 border border-black rounded-2xl  cursor-pointer"
+          [class.bg-green-100]="selectedLesson?.uid === lesson.uid"
+                  [class.bg-white]="selectedLesson?.uid !== lesson.uid" [class.hover:bg-gray-100]="selectedLesson?.uid !== lesson.uid"
+          >
+            <div class="flex items-start gap-3">
+              <input type="checkbox" class="mt-1 h-4 w-4 accent-green-600" readonly />
+              <div class="flex-1">
+                <div class="flex items-start justify-between gap-2">
+                  <p class="font-semibold text-gray-900">{{i + 1}}. {{lesson.title}}</p>
+                  <span class="text-xs px-2 py-1 rounded-full bg-white border text-gray-700">{{lesson.duration}}
+                    mn</span>
+                </div>
+                <p class="text-sm text-gray-500 mt-1">• {{lesson.contentType}} • </p>
+              </div>
+            </div>
+          </button>
+          }
+        </div>
+        
+        <!-- Sidebar footer -->
+        <div class="p-4 border-t bg-white">
+          <div class="flex items-center justify-between text-sm text-gray-600">
+            <span>Completed</span>
+            <span class="font-semibold text-gray-900">2 / 8</span>
+          </div>
+          <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-green-500 h-2 rounded-full" style="width: 25%;"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="lg:col-span-8 xl:col-span-9 space-y-6">
+      @if(selectedLesson) {
+      <!-- Lesson Header -->
+      <div class="bg-white border rounded-2xl p-5 sm:p-6">
+        
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div>
+            <p class="text-sm text-gray-500">Current lesson</p>
+            <h2 class="text-2xl font-semibold text-gray-900 mt-1">
+              {{selectedLesson.order}}. {{selectedLesson.title}}
+            </h2>
+            <div class="mt-2 flex flex-wrap gap-2 text-sm text-gray-600">
+              <span
+                class="inline-flex items-center px-3 py-1 rounded-full bg-green-50 text-green-700 border border-green-100">
+                {{selectedLesson.contentType}}
+              </span>
+              <span class="inline-flex items-center px-3 py-1 rounded-full bg-white border">
+                {{selectedLesson.duration}} minutes
+              </span>
+              <span class="inline-flex items-center px-3 py-1 rounded-full bg-white border">
+                Instructor: Med Sm
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:items-end gap-2">
+            <label
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border bg-white hover:bg-green-50 cursor-pointer w-fit">
+              <input type="checkbox" class="h-4 w-4 accent-green-600" checked />
+              <span class="text-sm font-semibold text-gray-900">Mark as completed</span>
+            </label>
+
+            <div class="flex gap-2">
+              <button class="px-4 py-2 rounded-xl border bg-white hover:bg-green-50">
+                Previous
+              </button>
+              <button class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Video Player Card -->
+      <div class="bg-white border rounded-2xl overflow-hidden">
+        <div class="p-4 border-b flex items-center justify-between">
+          <p class="font-semibold text-gray-900">Lesson content</p>
+          <span class="text-xs px-3 py-1 rounded-full bg-gray-50 border text-gray-700">Video link</span>
+        </div>
+
+        <div class="p-4 sm:p-6">
+          <div class="rounded-2xl overflow-hidden border bg-black">
+            <!-- Static video placeholder -->
+            <div class="w-full aspect-video text-white/90">
+                @if(isYoutubeUrl(selectedLesson.contentUrl)) {
+                <iframe  class="w-full m-0 h-full aspect-video rounded-2xl"   allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen [src]="safeUrl" frameborder="0">
+                  </iframe>
+                }
+                @else {
+                  <video class="w-full h-full aspect-video rounded-2xl" controls>
+                    <source [src]="selectedLesson.contentUrl" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                }
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="mt-5 rounded-2xl bg-green-50 border border-green-100 p-4">
+            <p class="font-semibold text-gray-900">Lesson notes</p>
+            <p class="text-sm text-gray-700 mt-2 leading-relaxed">
+              Download the starter project and follow along. Make sure your Angular CLI is installed before continuing.
+            </p>
+          </div>
+
+          <!-- Resources -->
+          <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button class="rounded-2xl border bg-white hover:bg-green-50 p-4 text-left">
+              <p class="font-semibold text-gray-900">Starter Project</p>
+              <p class="text-sm text-gray-500 mt-1">ZIP • Download</p>
+            </button>
+            <button class="rounded-2xl border bg-white hover:bg-green-50 p-4 text-left">
+              <p class="font-semibold text-gray-900">Lesson Slides</p>
+              <p class="text-sm text-gray-500 mt-1">PDF • Open</p>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments / Q&A -->
+      <div class="bg-white border rounded-2xl overflow-hidden">
+        <div class="p-4 sm:p-5 border-b">
+          <h3 class="text-lg font-semibold text-gray-900">Questions & comments</h3>
+          <p class="text-sm text-gray-500 mt-1">Ask the instructor or discuss with other students.</p>
+        </div>
+
+        <div class="p-4 sm:p-5 space-y-4">
+          <!-- Add comment -->
+          <div class="rounded-2xl border bg-gray-50 p-4">
+            <div class="flex items-start gap-3">
+              <div class="h-10 w-10 rounded-2xl bg-white border flex items-center justify-center">🙂</div>
+              <div class="flex-1">
+                <textarea class="w-full rounded-2xl border bg-white px-4 py-3 focus:outline-none focus:ring" rows="3"
+                  placeholder="Write a question or comment..."></textarea>
+                <div class="mt-3 flex justify-end">
+                  <button class="px-5 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
+                    Post
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comment -->
+          <div class="rounded-2xl border p-4">
+            <div class="flex items-start gap-3">
+              <div class="h-10 w-10 rounded-2xl bg-green-50 border border-green-100 flex items-center justify-center">
+                👤
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between">
+                  <p class="font-semibold text-gray-900">Sarah M.</p>
+                  <p class="text-xs text-gray-500">2 days ago</p>
+                </div>
+                <p class="text-sm text-gray-700 mt-2">
+                  The setup was clear. Can you also show the recommended folder structure for larger projects?
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <!-- Mobile Progress Bar -->
+      <div class="md:hidden bg-white border rounded-2xl p-4">
+        <div class="flex items-center justify-between text-xs text-gray-500 mb-1">
+          <span>Progress</span>
+          <span class="font-semibold text-green-700">45%</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="bg-green-500 h-2 rounded-full" style="width: 45%;"></div>
+        </div>
+
+      </div>
+    }
+    @else {
+      <div class="bg-white border rounded-2xl p-10 flex flex-col items-center justify-center gap-4">
+        <div class="text-6xl">📚</div>
+        <h2 class="text-2xl font-semibold text-gray-900">Select a lesson to start learning</h2>
+        <p class="text-sm text-gray-600 text-center">Browse through the lessons on the left and click to begin your
+          journey!</p>
+      </div>
+    }
+    </main>
+  </div>
+</div>

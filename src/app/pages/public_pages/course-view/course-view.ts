@@ -63,13 +63,11 @@ export class CourseView {
   async enrollCourse() : Promise<void> {
     try{
     this.loadingContent=true;
-    const completedLessons=0;
     const studentId=this.sessionService.user()?.uid;
     const enrolled={
       courseId: this.courseId,
       studentId:studentId,
       enrolledAt: new Date(),
-      completedLessons:completedLessons,
     }
     await addDoc(collection(this.firestore,'courses_enrolls'),enrolled);
     alert('Enrolled successfully in the course! Check your dashboard for access.');
