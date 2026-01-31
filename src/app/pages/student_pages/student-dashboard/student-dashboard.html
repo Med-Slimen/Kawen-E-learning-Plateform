@@ -1,135 +1,205 @@
 <app-nav-bar></app-nav-bar>
 <section class="p-3">
-    <div class="welcome">
-        <h1 class="text-3xl font-bold p-5">Welcome, {{this.sessionService.user()?.name}} 👋</h1>
-    </div>
-    <div class="stats grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
-        <div
-            class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
-            <div class="flex items-center justify-between mb-5">
-                <p class="font-semibold">Enrolled Courses</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-book-open-icon lucide-book-open text-green-700">
-                    <path d="M12 7v14" />
-                    <path
-                        d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
-                </svg>
-
-            </div>
-            <h3 class="font-bold text-3xl">0</h3>
-        </div>
-        <div
-            class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
-            <div class="flex items-center justify-between mb-5">
-                <p class="font-semibold">Completed Courses</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-circle-check-big-icon lucide-circle-check-big text-green-700">
-                    <path d="M21.801 10A10 10 0 1 1 17 3.335" />
-                    <path d="m9 11 3 3L22 4" />
-                </svg>
-            </div>
-            <h3 class="font-bold text-3xl">0</h3>
-        </div>
-        <div
-            class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
-            <div class="flex items-center justify-between mb-5">
-                <p class="font-semibold">In Progress Courses</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-history-icon lucide-history text-green-700">
-                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                    <path d="M3 3v5h5" />
-                    <path d="M12 7v5l4 2" />
-                </svg>
-
-            </div>
-            <h3 class="font-bold text-3xl">0</h3>
-        </div>
-        <div
-            class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer">
-            <div class="flex items-center justify-between mb-5">
-                <p class="font-semibold">Messages</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-mail-icon lucide-mail text-green-700">
-                    <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
-                    <rect x="2" y="4" width="20" height="16" rx="2" />
-                </svg>
-
-            </div>
-            <h3 class="font-bold text-3xl">0</h3>
-        </div>
-    </div>
-    <a class="flex cursor-pointer gap-2 shadow-lg w-fit bg-green-700 text-white font-bold py-2 px-4 rounded hover:bg-green-800 transition-colors duration-300 m-5 items-center"
-        routerLink="/CoursesList">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-search h-4 w-4 mr-2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
+  <div class="welcome">
+    <h1 class="text-3xl font-bold p-5">Welcome, {{ this.sessionService.user()?.name }} 👋</h1>
+  </div>
+  <div class="stats grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
+    <div
+      class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer"
+    >
+      <div class="flex items-center justify-between mb-5">
+        <p class="font-semibold">Enrolled Courses</p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-book-open-icon lucide-book-open text-green-700"
+        >
+          <path d="M12 7v14" />
+          <path
+            d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+          />
         </svg>
-        Browse Courses
-    </a>
-    <div class="enrolledCourses bg-white p-5 m-5 rounded-2xl shadow-lg">
-        <h2 class="text-2xl font-bold mb-6">Your Enrolled Courses</h2>
-        <!-- Course Card -->
-         @for (enrolledCourse of enrolledCourses;track enrolledCourse.uid) {
-        <div class="flex flex-col sm:flex-row gap-4 border rounded-2xl p-4 hover:shadow-md transition">
-
-            <!-- Course Thumbnail -->
-            <div class="w-full sm:w-56 h-36 rounded-xl overflow-hidden bg-gray-100">
-                <img src="{{enrolledCourse.course.thumbnailUrl}}" alt="{{enrolledCourse.course.title}} Thumbnail"
-                    class="w-full h-full object-cover" />
-            </div>
-
-            <!-- Course Info -->
-            <div class="flex-1 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-xl font-semibold text-gray-900">
-                        {{enrolledCourse.course.title}}
-                    </h3>
-
-                    <p class="text-sm text-gray-500 mt-1">
-                        Instructor: <span class="font-medium text-gray-700">{{enrolledCourse.course.instructor.name}} {{enrolledCourse.course.instructor.lastName}}</span>
-                    </p>
-
-                    <p class="text-sm text-gray-500 mt-1">
-                        Category: {{enrolledCourse.course.category.title}}
-                    </p>
-                </div>
-
-                <!-- Progress -->
-                <div class="mt-4">
-                    <div class="flex items-center justify-between text-sm mb-1">
-                        <span class="text-gray-600">Completed Lessons</span>
-                        <span class="font-medium text-green-600">{{enrolledCourse.percentageCompleted ?? 0}}%</span>
-                    </div>
-
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-green-500 h-2 rounded-full" [style.width.%]="enrolledCourse.percentageCompleted ?? 0"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Action -->
-            <div class="flex sm:flex-col justify-end sm:justify-center">
-                <button [routerLink]="['View_Course', enrolledCourse.uid]"
-                    class="w-full sm:w-auto px-5 py-2 rounded-xl bg-green-600 text-white font-medium hover:bg-green-700 transition">
-                    View Course
-                </button>
-            </div>
-        </div>
-        }
-        @empty {
-            @if(loadingEnrolledCourses) {
-                <p>Loading your enrolled courses...</p>
-            } 
-            @else {
-                <p class="text-gray-600">You are not enrolled in any courses yet. Browse courses to get started!</p>
-            }
-        }
+      </div>
+      <h3 class="font-bold text-3xl">0</h3>
     </div>
+    <div
+      class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer"
+    >
+      <div class="flex items-center justify-between mb-5">
+        <p class="font-semibold">Completed Courses</p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-circle-check-big-icon lucide-circle-check-big text-green-700"
+        >
+          <path d="M21.801 10A10 10 0 1 1 17 3.335" />
+          <path d="m9 11 3 3L22 4" />
+        </svg>
+      </div>
+      <h3 class="font-bold text-3xl">0</h3>
+    </div>
+    <div
+      class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer"
+    >
+      <div class="flex items-center justify-between mb-5">
+        <p class="font-semibold">In Progress Courses</p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-history-icon lucide-history text-green-700"
+        >
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+          <path d="M3 3v5h5" />
+          <path d="M12 7v5l4 2" />
+        </svg>
+      </div>
+      <h3 class="font-bold text-3xl">0</h3>
+    </div>
+    <div
+      class="bg-white p-5 rounded shadow-lg w-full hover:scale-102 transition-transform duration-300 cursor-pointer"
+    >
+      <div class="flex items-center justify-between mb-5">
+        <p class="font-semibold">Messages</p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-mail-icon lucide-mail text-green-700"
+        >
+          <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+        </svg>
+      </div>
+      <h3 class="font-bold text-3xl">0</h3>
+    </div>
+  </div>
+  <a
+    class="flex cursor-pointer gap-2 shadow-lg w-fit bg-green-700 text-white font-bold py-2 px-4 rounded hover:bg-green-800 transition-colors duration-300 m-5 items-center"
+    routerLink="/CoursesList"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-search h-4 w-4 mr-2"
+    >
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    Browse Courses
+  </a>
+  <div class="enrolledCourses bg-white p-5 m-5 rounded-2xl shadow-lg">
+    <h2 class="text-2xl font-bold mb-6">Your Enrolled Courses</h2>
+    <!-- Course Card -->
+    @for (enrolledCourse of enrolledCourses; track enrolledCourse.uid) {
+      <div
+        class="flex flex-col sm:flex-row gap-4 border rounded-2xl p-4 hover:shadow-md transition"
+      >
+        <!-- Course Thumbnail -->
+        <div class="w-full sm:w-56 h-36 rounded-xl overflow-hidden bg-gray-100">
+          <img
+            src="{{ enrolledCourse.course.thumbnailUrl }}"
+            alt="{{ enrolledCourse.course.title }} Thumbnail"
+            class="w-full h-full object-cover"
+          />
+        </div>
 
+        <!-- Course Info -->
+        <div class="flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900">
+              {{ enrolledCourse.course.title }}
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-1">
+              Instructor:
+              <span class="font-medium text-gray-700"
+                >{{ enrolledCourse.course.instructor.name }}
+                {{ enrolledCourse.course.instructor.lastName }}</span
+              >
+            </p>
+
+            <p class="text-sm text-gray-500 mt-1">
+              Category: {{ enrolledCourse.course.category.title }}
+            </p>
+            <button
+              (click)="createConversation(enrolledCourse.course.instructor.uid)"
+              class="bg-green-600 cursor-pointer font-semibold text-white text-sm p-1 mt-1 rounded hover:bg-green-700 transition"
+            >
+              Contact Instructor
+            </button>
+          </div>
+
+          <!-- Progress -->
+          <div class="mt-4">
+            <div class="flex items-center justify-between text-sm mb-1">
+              <span class="text-gray-600">Completed Lessons</span>
+              <span class="font-medium text-green-600"
+                >{{ enrolledCourse.percentageCompleted ?? 0 }}%</span
+              >
+            </div>
+
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div
+                class="bg-green-500 h-2 rounded-full"
+                [style.width.%]="enrolledCourse.percentageCompleted ?? 0"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action -->
+        <div class="flex sm:flex-col justify-end sm:justify-center">
+          <button
+            [routerLink]="['View_Course', enrolledCourse.uid]"
+            class="w-full sm:w-auto px-5 py-2 rounded-xl bg-green-600 text-white font-medium hover:bg-green-700 transition"
+          >
+            View Course
+          </button>
+        </div>
+      </div>
+    } @empty {
+      @if (loadingEnrolledCourses) {
+        <p>Loading your enrolled courses...</p>
+      } @else {
+        <p class="text-gray-600">
+          You are not enrolled in any courses yet. Browse courses to get started!
+        </p>
+      }
+    }
+  </div>
+  <!-- Messages Section -->
 </section>

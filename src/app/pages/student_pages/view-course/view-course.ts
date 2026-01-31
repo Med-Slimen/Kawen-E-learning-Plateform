@@ -23,21 +23,26 @@ export class ViewCourse {
   sanitizer = inject(DomSanitizer);
   loading: boolean = false;
   completedLessons: number = 0;
+  percentageCompleted: number = 0;
   enrolledCourse: EnrolledCourse | null = null;
+  enrolledCourselessons: EnrolledCourselessons[] = [];
+  private enrolledCourseId:string|null = null;
   selectedLesson: EnrolledCourselessons | null = null;
   safeUrl:SafeResourceUrl | null = null;
-  percentageCompleted: number = 0;
   constructor(private route: ActivatedRoute) {}
   async ngOnInit() {
-    const enrolledCourseId = this.route.snapshot.paramMap.get('EnrolledCourseId');
-    if (enrolledCourseId) {
-      await this.getEnrolledCourseById(enrolledCourseId);
-      this.completedLessons = this.enrolledCourse?.enrolledCourselessons.filter(lesson => lesson.completed).length || 0;
-      this.percentageCompleted = parseInt(this.enrolledCourse?.enrolledCourselessons.length ? ((this.completedLessons / this.enrolledCourse.enrolledCourselessons.length) * 100).toString() : '0');
+    try{
+    this.enrolledCourseId = this.route.snapshot.paramMap.get('EnrolledCourseId');
+    if (this.enrolledCourseId) {
+      await this.getEnrolledCourseById(this.enrolledCourseId);
+      await this.getEnrolledCourselessonsById(this.enrolledCourseId);
     }
     else{
       alert('No enrolledCourseId provided in route.');
       return;
+    }
+    }catch(error){
+      alert('Error initializing view course page:' + error);
     }
   }
   async getEnrolledCourseById(enrolledCourseId: string): Promise<void> {
@@ -50,12 +55,27 @@ export class ViewCourse {
       this.loading = false;
     }
   }
+  async getEnrolledCourselessonsById(enrolledCourseId:string):Promise<void>{
+    try {
+      this.loading = true;
+      this.enrolledCourselessons = await this.courseService.getEnrolledCourseLessonsById(enrolledCourseId,this.enrolledCourse!.course.uid);
+      this.enrolledCourselessons.sort((a,b)=> (a.lesson && b.lesson) ? a.lesson.order - b.lesson.order : 0);
+      this.completedLessons = this.enrolledCourselessons.filter(lesson => lesson.completed).length;
+      this.percentageCompleted =Math.round((this.completedLessons / this.enrolledCourselessons.length) * 100);
+    } catch (error) {
+      alert('Error fetching enrolled course lessons:' + error);
+    } finally {
+      this.loading = false;
+    }
+  }
   selectEnrolledCourselesson(enrolledCourselessons: EnrolledCourselessons): void {
     this.selectedLesson = enrolledCourselessons ?? null;
     if(enrolledCourselessons.lesson && enrolledCourselessons.lesson.contentUrl){
       this.setIframeUrl(enrolledCourselessons.lesson.contentUrl);
     }
     else{
+      this.safeUrl=null;
+      this.selectedLesson=null;
       alert('Lesson is invalid.');
       return;
     }
@@ -98,15 +118,22 @@ async markAsComplete(selectedLessonId:string):Promise<void>{
   if(!confirm){
     return;
   }
+  const oldCompletedLessons=this.completedLessons;
+  const oldPercentageCompleted=this.percentageCompleted;
   try{
-    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourse?.uid}/lessons_progress/${selectedLessonId}`),{
+    this.selectedLesson!.completed=true;
+    this.completedLessons = this.completedLessons + 1;
+    this.percentageCompleted =Math.round((this.completedLessons / this.enrolledCourselessons.length) * 100);
+    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourseId}/lessons_progress/${selectedLessonId}`),{
       completed:true
     });
-    await this.ngOnInit();
-    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourse?.uid}`),{
+    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourseId}`),{
       percentageCompleted: this.percentageCompleted
     });
   }catch(error){
+    this.selectedLesson!.completed=false;
+    this.completedLessons=oldCompletedLessons;
+    this.percentageCompleted=oldPercentageCompleted;
     alert('Error marking lesson as complete:' + error);
   }
 }
@@ -115,15 +142,22 @@ async markAsUncomplete(selectedLessonId:string):Promise<void>{
   if(!confirm){
     return;
   }
+  const oldCompletedLessons=this.completedLessons;
+  const oldPercentageCompleted=this.percentageCompleted;
   try{
-    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourse?.uid}/lessons_progress/${selectedLessonId}`),{
+    this.selectedLesson!.completed=false;
+    this.completedLessons = this.completedLessons - 1;
+    this.percentageCompleted =Math.round((this.completedLessons / this.enrolledCourselessons.length) * 100);
+    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourseId}/lessons_progress/${selectedLessonId}`),{
       completed:false
     });
-    await this.ngOnInit();
-    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourse?.uid}`),{
+    await updateDoc(doc(this.firestore,`courses_enrolls/${this.enrolledCourseId}`),{
       percentageCompleted: this.percentageCompleted
     });
   }catch(error){
+    this.selectedLesson!.completed=true;
+    this.completedLessons=oldCompletedLessons;
+    this.percentageCompleted=oldPercentageCompleted;
     alert('Error marking lesson as uncomplete:' + error);
   }
 }

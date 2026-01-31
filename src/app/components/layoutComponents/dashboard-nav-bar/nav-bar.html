@@ -44,7 +44,7 @@
                                 Courses</a>
                         </li>
                         <li>
-                            <a routerLink="{{this.sessionService.user()?.role ==='Student' ? '/Student_Dashboard/Student_Messages' : '/Instructor_Dashboard/Instructor_Messages'}}"
+                            <a routerLink="{{this.sessionService.user()?.role ==='Student' ? '/Student_Dashboard/Messages' : '/Instructor_Dashboard/Messages'}}"
                                 class="inline-block text-lg font-medium text-green-700 hover:scale-102 hover:bg-green-700 p-1 hover:text-[white] rounded transition-transform duration-500 cursor-pointer">View Messages</a>
                         </li>
                     </ul>

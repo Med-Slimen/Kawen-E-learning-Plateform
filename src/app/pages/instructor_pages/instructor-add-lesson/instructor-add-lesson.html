@@ -191,13 +191,14 @@
                         <button type="reset" class="px-5 py-3 rounded-xl border bg-white hover:bg-green-50">
                             Reset
                         </button>
-                        <button [class.cursor-not-allowed]="this.addLessonFormGroup.invalid || loading"
+                        <button 
+                            class="px-5 py-3 rounded-xl  text-white "
+                            [class.cursor-not-allowed]="this.addLessonFormGroup.invalid || loading"
                             [class.cursor-pointer]="!this.addLessonFormGroup.invalid && !loading"
                             [class.bg-green-600]="!this.addLessonFormGroup.invalid && !loading"
                             [class.bg-green-400]="this.addLessonFormGroup.invalid || loading"
                             [class.hover:bg-green-700]="!this.addLessonFormGroup.invalid && !loading"
-                            [disabled]="this.addLessonFormGroup.invalid || loading" type="submit"
-                            class="px-5 py-3 rounded-xl  text-white ">
+                            [disabled]="this.addLessonFormGroup.invalid || loading" type="submit">
                             Create Lesson
                         </button>
                     </div>

@@ -21,6 +21,7 @@ import { InstructorAddLesson } from './pages/instructor_pages/instructor-add-les
 import { InstructorEditLesson } from './pages/instructor_pages/instructor-edit-lesson/instructor-edit-lesson';
 import { CourseView } from './pages/public_pages/course-view/course-view';
 import { ViewCourse } from './pages/student_pages/view-course/view-course';
+import { Messages } from './pages/public_pages/messages/messages';
 
 export const routes: Routes = [
     {path: 'Home', component: HomePage },
@@ -33,12 +34,14 @@ export const routes: Routes = [
     {path: 'Student_Dashboard', canActivate:
     [authGuard,roleGuard],data: { roles: ['Student'] },children:[
         {path:'',component:StudentDashboard},
-        {path:'View_Course/:EnrolledCourseId',component:ViewCourse}
+        {path:'View_Course/:EnrolledCourseId',component:ViewCourse},
+        {path:'Messages',component:Messages}
     ]},
     {path:'Instructor_Dashboard',canActivate:
     [authGuard,roleGuard],data: { roles: ['Instructor'] },
     children:[
         {path:'',component:InstructorDashboard},
+        {path:'Messages',component:Messages},
         {path:'Instructor_Courses', 
             children:[
                 {path:'',component:InstructorCourses},

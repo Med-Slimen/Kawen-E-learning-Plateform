@@ -21,10 +21,10 @@
         <div class="hidden md:block w-56">
           <div class="flex items-center justify-between text-xs text-gray-500 mb-1">
             <span>Progress</span>
-            <span class="font-semibold text-green-700">{{percentageCompleted}}%</span>
+            <span class="font-semibold text-green-700">{{this.percentageCompleted}}%</span>
           </div>
           <div class="w-full bg-gray-200 rounded-full h-2">
-            <div class="bg-green-500 h-2 rounded-full" [style.width.%]="percentageCompleted"></div>
+            <div class="bg-green-500 h-2 rounded-full" [style.width.%]="this.percentageCompleted"></div>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
         <div class="p-4 border-b flex items-center justify-between">
           <div>
             <h2 class="font-semibold text-gray-900">Lessons</h2>
-            <p class="text-sm text-gray-500">{{ enrolledCourse?.enrolledCourselessons?.length }} lessons • {{ enrolledCourse?.course?.duration }} H total</p>
+            <p class="text-sm text-gray-500">{{ enrolledCourselessons.length }} lessons • {{ enrolledCourse?.course?.duration }} H total</p>
           </div>
           <button class="px-3 py-2 rounded-xl border bg-white hover:bg-green-50 text-sm">
             Filter
@@ -58,7 +58,7 @@
         
         <div class="p-2 " >
           <!-- Lesson Item (Active) -->
-           @for(lessonDetails of enrolledCourse?.enrolledCourselessons ; track lessonDetails.uid; let i = $index) {
+           @for(lessonDetails of this.enrolledCourselessons ; track lessonDetails.uid; let i = $index) {
           <button 
           (click)="selectEnrolledCourselesson(lessonDetails)" class="w-full text-left mb-3 p-4 border border-black rounded-2xl  cursor-pointer"
           [class.bg-green-100]="selectedLesson?.uid === lessonDetails.uid"
@@ -89,10 +89,10 @@
         <div class="p-4 border-t bg-white">
           <div class="flex items-center justify-between text-sm text-gray-600">
             <span>Completed</span>
-            <span class="font-semibold text-gray-900">{{completedLessons}} / {{enrolledCourse?.enrolledCourselessons?.length}}</span>
+            <span class="font-semibold text-gray-900">{{completedLessons}} / {{enrolledCourselessons.length}}</span>
           </div>
           <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
-            <div class="bg-green-500 h-2 rounded-full" [style.width.%]="percentageCompleted"></div>
+            <div class="bg-green-500 h-2 rounded-full" [style.width.%]="this.percentageCompleted"></div>
           </div>
         </div>
       </div>

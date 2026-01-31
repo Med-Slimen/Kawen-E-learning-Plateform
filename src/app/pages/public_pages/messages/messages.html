@@ -1,0 +1,254 @@
+<app-nav-bar></app-nav-bar>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kawen • Messages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gray-50">
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-30 border-b bg-white/90 backdrop-blur">
+        <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-green-600 to-emerald-400"></div>
+                    <div>
+                        <p class="text-sm font-extrabold text-gray-900">Kawen</p>
+                        <p class="text-xs font-semibold text-gray-500">Messages</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <div class="hidden sm:flex items-center gap-2 rounded-xl border bg-white px-3 py-2 shadow-sm">
+                        <svg class="h-4 w-4 text-gray-400" viewBox="0 0 24 24" fill="none">
+                            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor"
+                                stroke-width="2" />
+                            <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <input class="w-72 bg-transparent text-sm outline-none placeholder:text-gray-400"
+                            placeholder="Search conversations..." />
+                    </div>
+
+                    <button
+                        class="rounded-xl border bg-white px-3 py-2 text-sm font-bold text-gray-700 shadow-sm hover:bg-green-50">
+                        New message
+                    </button>
+
+                    <button
+                        class="rounded-xl bg-green-600 px-3 py-2 text-sm font-bold text-white shadow-sm hover:bg-green-700">
+                        Compose
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
+            <!-- Left: Threads -->
+            <aside class="lg:col-span-4">
+                <div class="rounded-2xl border bg-white shadow-sm">
+                    <div class="border-b p-4">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-sm font-extrabold text-gray-900">Inbox</p>
+                                <p class="text-xs font-semibold text-gray-500">4 conversations • 2 unread</p>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="rounded-full border bg-green-50 px-3 py-1 text-xs font-extrabold text-green-700">All</span>
+                                <span
+                                    class="rounded-full border bg-white px-3 py-1 text-xs font-extrabold text-gray-600">Unread</span>
+                            </div>
+                        </div>
+
+                        <div
+                            class="mt-3 flex sm:hidden items-center gap-2 rounded-xl border bg-white px-3 py-2 shadow-sm">
+                            <svg class="h-4 w-4 text-gray-400" viewBox="0 0 24 24" fill="none">
+                                <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor"
+                                    stroke-width="2" />
+                                <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                            <input class="w-full bg-transparent text-sm outline-none placeholder:text-gray-400"
+                                placeholder="Search..." />
+                        </div>
+                    </div>
+
+                    <div class="p-2">
+                        <!-- Active thread -->
+                        @for (conversation of conversations; track conversation.uid) {
+                        <button (click)="selectConversation(conversation)"
+                            class="w-full cursor-pointer rounded-2xl border border-green-200 p-3 text-left shadow-sm"
+                            [class.bg-green-50]="selectedConversation?.uid === conversation.uid">
+                            <div class="flex items-center gap-3">
+                                <img [src]="conversation.receiver.pfpUrl" alt="{{ conversation.receiver.name }}"
+                                    class="relative h-11 w-11 rounded-2xl bg-gradient-to-br from-green-200 to-emerald-100 grid place-items-center font-extrabold text-green-800" />
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <p class="truncate text-sm font-extrabold text-gray-900">
+                                            {{ conversation.receiver.name }} {{ conversation.receiver.lastName }}
+                                            <span
+                                                class="ml-2 inline-flex items-center rounded-full bg-green-600 px-2 py-0.5 text-[11px] font-extrabold text-white">2</span>
+                                        </p>
+                                        <p class="text-xs font-bold text-gray-500">2m</p>
+                                    </div>
+                                    <p class="truncate text-xs font-semibold text-gray-600">
+                                        {{ conversation.lastMessage }}
+                                    </p>
+                                </div>
+                                <span
+                                    class="rounded-full border bg-white px-2.5 py-1 text-[11px] font-extrabold text-gray-600">{{
+                                    conversation.receiver.role }}</span>
+                            </div>
+                        </button>
+                        }
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right: Chat -->
+            <section class="lg:col-span-8">
+                @if (selectedConversation === null) {
+                <div class="rounded-2xl border bg-white shadow-sm p-6 text-center">
+                    <p class="text-sm font-semibold text-gray-500">
+                        Select a conversation to view messages.
+                    </p>
+                </div>
+                } @else {
+                <div class="rounded-2xl border bg-white shadow-sm">
+                    <!-- Chat header -->
+                    <div class="flex items-center justify-between gap-3 border-b p-4">
+                        <div class="flex items-center gap-3">
+                            <img [src]="selectedConversation.receiver.pfpUrl"
+                                alt="{{ selectedConversation.receiver.name }}"
+                                class="relative h-11 w-11 rounded-2xl bg-gradient-to-br from-green-200 to-emerald-100 grid place-items-center font-extrabold text-green-800" />
+                            <div class="min-w-0">
+                                <p class="truncate text-sm font-extrabold text-gray-900">
+                                    {{ selectedConversation.receiver.name }}
+                                    {{ selectedConversation.receiver.lastName }}
+                                </p>
+                                <div class="mt-1 flex flex-wrap items-center gap-2">
+                                    <span
+                                        class="rounded-full border bg-green-50 px-2.5 py-1 text-[11px] font-extrabold text-green-700">{{
+                                        selectedConversation.receiver.role }}</span>
+                                    <span class="text-xs font-semibold text-gray-500">Online • replies fast</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hidden sm:flex items-center gap-2">
+                            <button
+                                class="rounded-xl border bg-white px-3 py-2 text-sm font-bold text-gray-700 hover:bg-green-50">
+                                Profile
+                            </button>
+                            <button
+                                class="rounded-xl border bg-white px-3 py-2 text-sm font-bold text-gray-700 hover:bg-green-50">
+                                Mark as solved
+                            </button>
+                            <button
+                                class="rounded-xl border bg-white px-3 py-2 text-sm font-bold text-gray-700 hover:bg-red-50">
+                                Report
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Messages -->
+
+                    <div class="h-[60vh] overflow-auto bg-gradient-to-b from-white to-green-50/30 p-4">
+                        <div
+                            class="mx-auto mb-4 w-fit rounded-full border bg-white px-3 py-1 text-xs font-extrabold text-gray-500 shadow-sm">
+                            today dated {{ today | date:'fullDate' }}
+                        </div>
+                        @for (message of messages; track message.uid) {
+                        <!-- Incoming -->
+                        <div class="mb-3 ml-auto flex max-w-[85%] flex-row-reverse items-end gap-2"
+                            [class.ml-auto]="message.sender.uid === this.sessionService.user()!.uid"
+                            [class.ml-0]="message.sender.uid !== this.sessionService.user()!.uid"
+                            [class.flex-row-reverse]="message.sender.uid === this.sessionService.user()!.uid"
+                            [class.flex-row]="message.sender.uid !== this.sessionService.user()!.uid">
+                            <img [src]="message.sender.pfpUrl" [alt]="message.sender.name"
+                                class="relative h-8 w-8 rounded-2xl bg-linear-to-br from-green-200 to-emerald-100 grid place-items-center font-extrabold text-green-800" />
+                            <div class="rounded-2xl border border-green-200 bg-green-50 p-3 shadow-sm"
+                                [class.bg-white]="message.sender.uid !== this.sessionService.user()!.uid"
+                                [class.bg-green-100]="message.sender.uid === this.sessionService.user()!.uid">
+                                <p class="text-sm font-semibold text-gray-800">
+                                    {{ message.content }}
+                                </p>
+                                <div
+                                    class="mt-2 flex items-center justify-between gap-4 text-[11px] font-bold text-gray-500">
+                                    <span>{{ message.deliveredAt | date:'shortTime' }}</span>
+                                    <span class="inline-flex items-center gap-1">
+                                        <span class="h-3 w-3 rounded-md bg-green-200 ring-1 ring-green-300"></span>
+                                        Delivered
+                                    </span>
+                                </div>
+                            </div>
+                            <div class=" p-2 text-gray-400 relative hover:text-gray-600 my-auto "
+                            [class.block]="message.sender.uid === this.sessionService.user()!.uid"
+                            [class.hidden]="message.sender.uid !== this.sessionService.user()!.uid"
+                            >
+                                <svg (click)="showMessageActions(message.uid)" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical cursor-pointer"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                                <div
+                                [class.block]="this.showMessageActionsMenu && this.showMessageActionsMenuId === message.uid"
+                            [class.hidden]="!this.showMessageActionsMenu || this.showMessageActionsMenuId !== message.uid"
+                                class="absolute top-1 right-8 bg-gray-100 w-20 h-fit rounded-md shadow-lg  py-2">
+                                    <a  (click)="deleteMessage(message)" class="text-red-700 cursor-pointer  hover:bg-gray-200 px-2 w-full" [class.hidden]="loadingDelete" [class.inline-block]="!loadingDelete">Delete</a>
+                                    <svg [class.block]="loadingDelete" [class.hidden]="!loadingDelete" xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="m-auto" viewBox="0 0 200 200"><radialGradient id="a10" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="#FF156D"></stop><stop offset=".3" stop-color="#FF156D" stop-opacity=".9"></stop><stop offset=".6" stop-color="#FF156D" stop-opacity=".6"></stop><stop offset=".8" stop-color="#FF156D" stop-opacity=".3"></stop><stop offset="1" stop-color="#FF156D" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a10)" stroke-width="15" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="#FF156D" stroke-width="15" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        }
+                    </div>
+
+                    <!-- Composer -->
+                    <div class="border-t p-4">
+                        <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+                            <div class="flex items-center gap-2">
+
+                                <button
+                                    class="rounded-xl border bg-white px-3 py-2 text-sm font-bold text-gray-700 shadow-sm hover:bg-green-50">
+                                    + Attach
+                                </button>
+
+                                <div class="flex-1 rounded-2xl border bg-white px-3 py-2 shadow-sm">
+                                    <input class="w-full bg-transparent text-sm outline-none placeholder:text-gray-400"
+                                        placeholder="Write a message…" formControlName="messageContent" />
+                                </div>
+                                
+                                <button type="submit"
+                                    class="rounded-2xl bg-green-600 px-4 py-2 text-sm font-extrabold text-white shadow-sm hover:bg-green-700"
+                                    [class.cursor-not-allowed]="this.messageForm.invalid || loading"
+                                    [class.cursor-pointer]="!this.messageForm.invalid && !loading"
+                                    [class.bg-green-600]="!this.messageForm.invalid && !loading"
+                                    [class.bg-green-400]="this.messageForm.invalid || loading"
+                                    [class.hover:bg-green-700]="!this.messageForm.invalid && !loading">
+                                    Send
+                                </button>
+
+                            </div>
+                            @if(messageForm.controls['messageContent'].hasError('required') &&
+                                messageForm.controls['messageContent'].touched) {
+                                <p class="text-xs text-red-500">Message cannot be empty.</p>
+                                }
+                        </form>
+                        <p class="mt-2 text-xs font-semibold text-gray-500">
+                            Tip: you can reuse this page for Admin / Student / Instructor — same layout, only
+                            the role badge + actions change.
+                        </p>
+                    </div>
+                </div>
+                }
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

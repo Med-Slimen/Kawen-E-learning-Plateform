@@ -24,13 +24,14 @@ export class AuthService {
         return false;
       });
   }
-   signUp(name: string, lastName: string, email: string, password:string, role: string): Promise<boolean> {
+   signUp(name: string, lastName: string, email: string, password:string, role: string, pfpUrl: string): Promise<boolean> {
     return createUserWithEmailAndPassword(this.fireAuth, email,password).then((cred)=>{
       const user: Omit<User, 'uid'> = {
         name: name,
         lastName: lastName,
         email: email,
-        role: role
+        role: role,
+        pfpUrl: pfpUrl
       };
       return setDoc(doc(this.firestore, 'users', cred.user.uid), user).then(() => {
         return true;

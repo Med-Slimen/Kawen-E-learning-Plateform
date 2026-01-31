@@ -43,7 +43,8 @@ export class SignUp {
   }
   singUp(): void {
     this.loading = true;
-    this.authService.signUp(this.signUpForm.value.name,this.signUpForm.value.lastName,this.signUpForm.value.email,this.signUpForm.value.password,this.selectedRole).then((res)=>{
+    const pfpUrl='https://res.cloudinary.com/dtz3cpe37/image/upload/v1769806630/default-avatar-icon-of-social-media-user-vector_wnmdy5.jpg';
+    this.authService.signUp(this.signUpForm.value.name,this.signUpForm.value.lastName,this.signUpForm.value.email,this.signUpForm.value.password,this.selectedRole,pfpUrl).then((res)=>{
       if(res){
         this.router.navigate(['/Login']);
       }else{
