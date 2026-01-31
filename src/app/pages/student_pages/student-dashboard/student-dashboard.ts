@@ -8,15 +8,12 @@ import { SessionService } from '../../../services/sessionService/session-service
 import { CourseService } from '../../../services/courseService/course-service';
 import { Course } from '../../../models/course';
 import { EnrolledCourse } from '../../../models/enrolledCourse';
-import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import { addDoc, collection, doc, Firestore, getDoc, getDocs, query, where } from '@angular/fire/firestore';
 import { User } from '../../../models/user';
-import { addDoc } from 'firebase/firestore';
-import { Message } from '../../../models/message';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-student-dashboard',
-  imports: [NavBar,RouterLink,ReactiveFormsModule],
+  imports: [NavBar,RouterLink],
   templateUrl: './student-dashboard.html',
   styleUrl: './student-dashboard.css',
 })
@@ -49,21 +46,30 @@ export class StudentDashboard implements OnInit {
     }
     try{
       this.loadingMessages = true;
+      const participants=[this.sessionService.user()?.uid, instructorUid];
+      const queryGet=query(collection(this.firestore,'conversations'),where('participants','==',participants));
+      const querySnapshot = await getDocs(queryGet);
+      if(!querySnapshot.empty){
+        alert("A conversation with this instructor already exists.");
+        this.router.navigate(['/Student_Dashboard/Messages']);
+        return;
+      }
       const conversation={
         participants: [this.sessionService.user()?.uid, instructorUid],
         createdAt: new Date(),
         updatedAt: new Date(),
         lastMessage: "",
         lastMessageSenderId: "",
+        status:"pending"
       }
       await addDoc(collection(this.firestore, 'conversations'),conversation);
+      alert("Conversation created successfully.Wait for the instructor to accept your request.");
+      this.router.navigate(['/Student_Dashboard/Messages']);
     }
     catch (error) {
       alert("Error creating conversation: " + error);
     }finally {
       this.loadingMessages = false;
-      alert("Conversation created successfully!");
-      this.router.navigate(['/Student_Dashboard/Messages']);
     }
   }
 }

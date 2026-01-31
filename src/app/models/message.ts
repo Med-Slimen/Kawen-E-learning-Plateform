@@ -6,5 +6,6 @@ export interface Message {
     sender: User;
     content: string;
     deliveredAt: Date;
+    status:string;
     isRead: boolean;
 }

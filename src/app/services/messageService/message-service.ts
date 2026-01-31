@@ -27,6 +27,7 @@ export class MessageService {
        createdAt: data['createdAt'].toDate(),
        updatedAt: data['updatedAt'].toDate(),
        lastMessage: data['lastMessage'],
+        status: data['status']
      } as Conversation;
    }));
    return result;
@@ -52,6 +53,7 @@ export class MessageService {
         content: data['content'],
         deliveredAt: data['deliveredAt'].toDate(),
         isRead: data['isRead'],
+        status: data['status']
       } as Message;
     }));
     return result;

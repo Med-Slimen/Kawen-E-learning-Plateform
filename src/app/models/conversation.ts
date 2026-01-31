@@ -6,4 +6,5 @@ export interface Conversation{
     createdAt: Date;
     updatedAt: Date;
     lastMessage: string;
+    status: string;
 }
