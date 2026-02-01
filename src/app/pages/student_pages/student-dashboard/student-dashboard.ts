@@ -26,12 +26,16 @@ export class StudentDashboard implements OnInit {
   loadingEnrolledCourses:boolean=false;
   loadingMessages:boolean=false;
   enrolledCourses:EnrolledCourse[]=[];
+  completedCoursesCount:number=0;
+  inProgressCoursesCount:number=0;
   constructor(private router: Router) {
   }
   async ngOnInit(): Promise<void> {
     try{
       this.loadingEnrolledCourses = true;
       this.enrolledCourses = await this.courseService.getEnrolledCoursesByStudentId(this.sessionService.user()?.uid || '');
+      this.completedCoursesCount=this.enrolledCourses.filter(ec=>ec.percentageCompleted && ec.percentageCompleted>=100).length;
+      this.inProgressCoursesCount=this.enrolledCourses.filter(ec=>ec.percentageCompleted && ec.percentageCompleted<100).length;
     }catch(error){
       alert("Error loading enrolled courses: " + error);
     } 

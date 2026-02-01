@@ -27,9 +27,9 @@
             <div class="p-8 sm:p-10">
                 <h1 class="text-2xl font-bold text-gray-900">Sign in</h1>
                 <p class="mt-1 text-gray-600">Use your email and password.</p>
-                @if (this.error==1) {
+                @if (errorMessage()) {
                     <div class="bg-red-200 text-black p-2 rounded border border-red-700 mt-2">
-                        Invalid email or password.
+                        {{ errorMessage() }}
                     </div>
                 }
                 <form [formGroup]="loginForm" class="mt-5 space-y-5" (ngSubmit)="login()">

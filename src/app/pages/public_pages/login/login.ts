@@ -15,9 +15,12 @@ export class Login {
   loginForm!:FormGroup;
   error:number=0;
   loading=false;
+  authService= inject(AuthService);
+  errorMessage=this.authService.errorMessage;
   sessionService = inject(SessionService);
+  errorType:Error | null = null;
   // private authService= Inject(AuthService);
-  constructor(private fb:FormBuilder,private authService: AuthService, private router: Router) {}
+  constructor(private fb:FormBuilder, private router: Router) {}
   ngOnInit(){
     this.sessionService.ready?.then(()=>{
       if(this.sessionService.isLoggedIn()){
@@ -39,6 +42,7 @@ export class Login {
   }
   login():void{
     this.loading=true;
+    this.authService.clearErrorMessage();
     this.authService.login(this.loginForm.value.email,this.loginForm.value.password).then((isLoggedIn)=>{
       this.sessionService.ready?.then(()=>{
       if(this.sessionService.isLoggedIn()){
@@ -53,11 +57,10 @@ export class Login {
         }
       }
     }).catch((error)=>{
-      console.error('Error during session initialization:', error);
+      return;
     });
   }).catch((error)=>{
-    console.error('Login error:', error);
-    this.error=1;
+    return;
   })
   .finally(() => {
     this.loading = false;

@@ -10,6 +10,7 @@ export class AuthService {
   private fireAuth = inject(Auth);
   private firestore = inject(Firestore);
   private cloudinaryService = inject(Cloudinary);
+  errorMessage = signal<string | null>(null);
   public constructor() {}
   login(email: string, password: string): Promise<boolean> {
     return signInWithEmailAndPassword(this.fireAuth, email, password)
@@ -17,13 +18,13 @@ export class AuthService {
         const userRef= doc(this.firestore, 'users', userCredential.user.uid);
         return getDoc(userRef).then((docSnap)=>{
           if(!docSnap.exists())return false;
-          const userData= docSnap.data() as User;
-          localStorage.setItem('user', JSON.stringify(userData));
           return true;
         });
       })
       .catch((error) => {
+        this.errorMessage.set(this.errorMessageSetter(error.message));
         return false;
+        
       });
   }
    signUp(name: string, lastName: string, email: string, password:string, role: string, pfpUrl: string, cvFile: File, linkedinProfileUrl?: string, portfolioUrl?: string): Promise<boolean> {
@@ -52,18 +53,18 @@ export class AuthService {
           return addDoc(collection(this.firestore, 'verifications'), verificiationData).then(() => {
             return true;
           }).catch((error) => {
-            console.error('Error adding verification request:', error);
+            this.errorMessage.set(this.errorMessageSetter(error.message));
             return false;
           });
         }else{
           return true;
         }
       }).catch((error) => {
-        console.error('Error adding user to Firestore:', error);
+        this.errorMessage.set(this.errorMessageSetter(error.message));
         return false;
       });
     }).catch((error)=>{
-      console.error('Error during sign up:', error);
+      this.errorMessage.set(this.errorMessageSetter(error.message));
     return false;
   });
 }
@@ -71,8 +72,27 @@ async logout(): Promise<boolean> {
     return this.fireAuth.signOut().then(() => {
       return true;
     }).catch((error) => {
-      console.error('Error during logout:', error);
+      this.errorMessage.set(this.errorMessageSetter(error.message));
       return false;
     });
+  }
+  errorMessageSetter(message: string | null): string {
+    switch (message) {
+      case 'Firebase: Error (auth/invalid-credential).':
+      case 'Firebase: Error (auth/wrong-password).':
+      case 'Firebase: Error (auth/user-not-found).':
+        return 'Incorrect email or password.'; // (security-friendly)
+      case 'Firebase: Error (auth/user-disabled).':
+        return 'This account has been disabled.';
+      case 'Firebase: Error (auth/too-many-requests).':
+        return 'Too many attempts. Please try again later.';
+      case 'Firebase: Error (auth/invalid-email).':
+        return 'Please enter a valid email address.';
+      default:
+        return 'Something went wrong. Please try again.';
+    }
+  }
+  clearErrorMessage(): void {
+    this.errorMessage.set(null);
   }
 }

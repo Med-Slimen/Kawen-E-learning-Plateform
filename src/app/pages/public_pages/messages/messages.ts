@@ -57,7 +57,6 @@ export class Messages {
   async sendMessage() {
     const oldlastMessage = this.selectedConversation?.lastMessage;
     try {
-      this.loading = true;
       if (this.selectedConversation && this.messageForm.valid) {
         const newMessageContent = this.messageForm.value['messageContent'];
         const message = {
@@ -85,7 +84,6 @@ export class Messages {
       alert('Error sending message:' + error);
       this.selectedConversation!.lastMessage = oldlastMessage!;
     } finally {
-      this.loading = false;
     }
   }
   async deleteMessage(message: Message) {

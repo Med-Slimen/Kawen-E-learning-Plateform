@@ -138,6 +138,7 @@ export class CourseService {
           enrollmentDate: docSnap.data()['enrollmentDate'],
           studentId: docSnap.data()['studentId'] as string,
           percentageCompleted: docSnap.data()['percentageCompleted'] as number | undefined,
+          instructorId: docSnap.data()['instructorId'] as string,
         } as EnrolledCourse;
       }),
     );
@@ -164,6 +165,7 @@ export class CourseService {
         enrollmentDate: enrolledCourseSnap.data()['enrollmentDate'],
         studentId: enrolledCourseSnap.data()['studentId'] as string,
         percentageCompleted: enrolledCourseSnap.data()['percentageCompleted'] as number | undefined,
+        instructorId: enrolledCourseSnap.data()['instructorId'] as string,
       };
     } else {
       throw new Error('Enrolled course not found');
@@ -198,6 +200,18 @@ export class CourseService {
       return querySnap.size;
     } catch (error) {
       throw new Error('Error fetching courses count by instructor: ' + error);
+    }
+  }
+  async getStudentsCountByInstructorId(instructorId: string) : Promise<number> {
+    try {
+      const queryGet = query(
+        collection(this.firestore, `courses_enrolls`),
+        where('instructorId', '==', instructorId),
+      );
+      const querySnap = await getDocs(queryGet);
+      return querySnap.size;
+    } catch (error) {
+      throw new Error('Error fetching students count by instructor: ' + error);
     }
   }
 }

@@ -79,6 +79,7 @@ export class CourseView {
       studentId:studentId,
       enrolledAt: new Date(),
       percentageCompleted:0,
+      instructorId: this.course?.instructor.uid,
     }
     const enrolledSnap=await addDoc(collection(this.firestore,'courses_enrolls'),enrolled);
     this.lessonsProgress.map(async(lessonProgress)=>{
