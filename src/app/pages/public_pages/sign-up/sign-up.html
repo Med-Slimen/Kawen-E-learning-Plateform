@@ -6,14 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    <a routerLink="/Login" class="w-20 cursor text-center z m-1 p-1 md:m-5 md:p-2 flex gap-1 items-center font-bold bg-gray-100 shadow-lg absolute left-0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+    <a routerLink="/Login"
+        class="w-20 cursor text-center z m-1 p-1 md:m-5 md:p-2 flex gap-1 items-center font-bold bg-gray-100 shadow-lg absolute left-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-arrow-left-icon lucide-arrow-left">
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+        </svg>
         Back
     </a>
     <div class="min-h-screen bg-gray-200 flex items-center justify-center p-4">
         <!-- Outer card -->
-        <div class="w-full max-w-5xl max-h-150 bg-white rounded-2xl shadow-lg overflow-y-scroll grid grid-cols-1 md:grid-cols-2">
+        <div
+            class="w-full max-w-5xl max-h-150 bg-white rounded-2xl shadow-lg overflow-y-scroll grid grid-cols-1 md:grid-cols-2">
             <!-- Left: Image -->
             <div class="hidden md:block relative">
                 <img src="public/assets/images/tog.jpg" alt="Login" class="h-full w-full object-cover" />
@@ -38,29 +46,31 @@
                             class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
                     </div>
                     @if(signUpForm.controls['name'].hasError('required') && signUpForm.controls['name'].touched){
-                        <span class="text-red-700 ">
-                            Name is required.
-                        </span>
+                    <span class="text-red-700 ">
+                        Name is required.
+                    </span>
                     }
                     @if(signUpForm.controls['name'].hasError('minlength') && signUpForm.controls['name'].touched){
-                        <span class="text-red-700 ">
-                            Name must be at least 3 characters long.
-                        </span>
+                    <span class="text-red-700 ">
+                        Name must be at least 3 characters long.
+                    </span>
                     }
                     <div class="m-1">
                         <label class="block text-sm font-medium text-gray-700">Last Name</label>
                         <input type="text" placeholder="Your last name" required formControlName="lastName"
                             class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
                     </div>
-                    @if(signUpForm.controls['lastName'].hasError('required') && signUpForm.controls['lastName'].touched){
-                        <span class="text-red-700 ">
-                            Last Name is required.
-                        </span>
+                    @if(signUpForm.controls['lastName'].hasError('required') &&
+                    signUpForm.controls['lastName'].touched){
+                    <span class="text-red-700 ">
+                        Last Name is required.
+                    </span>
                     }
-                    @if(signUpForm.controls['lastName'].hasError('minlength') && signUpForm.controls['lastName'].touched){
-                        <span class="text-red-700 ">
-                            Last Name must be at least 3 characters long.
-                        </span>
+                    @if(signUpForm.controls['lastName'].hasError('minlength') &&
+                    signUpForm.controls['lastName'].touched){
+                    <span class="text-red-700 ">
+                        Last Name must be at least 3 characters long.
+                    </span>
                     }
                     <div class="m-1">
                         <label class="block text-sm font-medium text-gray-700">Email</label>
@@ -68,73 +78,159 @@
                             class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
                     </div>
                     @if(signUpForm.controls['email'].hasError('required') && signUpForm.controls['email'].touched){
-                        <span class="text-red-700 ">
-                            Email is required.
-                        </span>
+                    <span class="text-red-700 ">
+                        Email is required.
+                    </span>
                     }
                     @if(signUpForm.controls['email'].hasError('email') && signUpForm.controls['email'].touched){
-                        <span class="text-red-700 ">
-                            Please enter a valid email address.
-                        </span>
+                    <span class="text-red-700 ">
+                        Please enter a valid email address.
+                    </span>
                     }
                     <div class="m-1">
                         <label class="block text-sm font-medium text-gray-700">Password</label>
                         <input type="password" placeholder="••••••••" required formControlName="password"
                             class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
                     </div>
-                    @if(signUpForm.controls['password'].hasError('required') && signUpForm.controls['password'].touched){
-                        <span class="text-red-700 ">
-                            Password is required.
-                        </span>
+                    @if(signUpForm.controls['password'].hasError('required') &&
+                    signUpForm.controls['password'].touched){
+                    <span class="text-red-700 ">
+                        Password is required.
+                    </span>
                     }
-                    @if(signUpForm.controls['password'].hasError('minlength') && signUpForm.controls['password'].touched){
-                        <span class="text-red-700 ">
-                            Password must be at least 6 characters long.
-                        </span>
+                    @if(signUpForm.controls['password'].hasError('minlength') &&
+                    signUpForm.controls['password'].touched){
+                    <span class="text-red-700 ">
+                        Password must be at least 6 characters long.
+                    </span>
                     }
+                    <!-- Teacher +inputs -->
+                    <div [class.hidden]="selectedRole !== 'Instructor'" [class.block]="selectedRole === 'Instructor'">
+                        <div class="m-1">
+                            <label class="block text-sm font-medium text-gray-700">Linkedin Profile Url</label>
+                            <input type="text" placeholder="https://www.linkedin.com/in/yourprofile"
+                                formControlName="linkedinProfileUrl"
+                                class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
+                        </div>
+                        @if(this.signUpForm.controls['linkedinProfileUrl'].hasError('required') &&
+                        this.signUpForm.controls['linkedinProfileUrl'].touched){
+                        <p class="text-xs text-red-500 mt-1">Linkedin Profile Url is required.</p>
+                        }
+                        <div class="m-1">
+                            <label class="block text-sm font-medium text-gray-700">Portfolio Url (
+                                Github/Behance....)</label>
+                            <input type="text" placeholder="https://www.yourportfolio.com"
+                                formControlName="portfolioUrl"
+                                class="mt-1 w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200" />
+                        </div>
+                        @if(this.signUpForm.controls['portfolioUrl'].hasError('required') &&
+                        this.signUpForm.controls['portfolioUrl'].touched){
+                        <p class="text-xs text-red-500 mt-1">Portfolio Url is required.</p>
+                        }
+                        <!-- Real File Picker -->
+                        <div class="rounded-2xl border border-dashed p-4 mt-2">
+                            <div class="flex flex-col items-center text-center gap-2">
+                                <div
+                                    class="h-12 w-12 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-xl">
+                                    🖼️
+                                </div>
+                                <p class="font-semibold">Upload CV</p>
+                                <p class="text-sm text-gray-500">
+                                    PNG, JPG, JPEG • Recommended format
+                                </p>
+
+                                <!-- Hidden input + label trick -->
+                                <input formControlName="cvFile" id="thumb" type="file" (change)="selectCV($event)"
+                                    accept="image/*" class="hidden" />
+                                @if(this.signUpForm.controls['cvFile'].hasError('required') &&
+                                this.signUpForm.controls['cvFile'].touched){
+                                <p class="text-xs text-red-500 mt-1">Cv is required.</p>
+                                }
+                                <label for="thumb"
+                                    class="mt-2 inline-flex items-center justify-center px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 cursor-pointer">
+                                    Choose file
+                                </label>
+                                <p class="text-sm text-gray-500">Selected File : {{ cvFile?.name ?? 'No file chosen' }}</p>
+                            </div>
+                        </div>
+                        @if(this.signUpForm.controls['cvFile'].hasError('required') &&
+                        this.signUpForm.controls['cvFile'].touched){
+                        <p class="text-xs text-red-500 mt-1">CV is required.</p>
+                        }
+                    </div>
                     <p>I want to join as :</p>
                     <div class="grid grid-cols-2 items-center justify-center p-3 gap-4">
                         <button type="button" (click)="selectRole('Student')">
-                            <div id="Student" class="bg-gray-100 text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition"
-                            [class.bg-green-200]="selectedRole==='Student'"
-                            [class.bg-gray-100]="selectedRole!=='Student'"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users m-auto"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
-                                
-                                    Student
-                                
+                            <div id="Student"
+                                class=" text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition"
+                                [class.bg-green-200]="selectedRole==='Student'"
+                                [class.bg-gray-100]="selectedRole!=='Student'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-users-icon lucide-users m-auto">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                    <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                    <circle cx="9" cy="7" r="4" />
+                                </svg>
+
+                                Student
+
                             </div>
                         </button>
                         <button type="button" (click)="selectRole('Instructor')">
-                        <div id="Instructor" class="bg-gray-100 text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition"
-                        [class.bg-green-200]="selectedRole==='Instructor'"
-                        [class.bg-gray-100]="selectedRole!=='Instructor'"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap-icon lucide-graduation-cap m-auto"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
-                            
+                            <div id="Instructor"
+                                class="bg-gray-100 text-center p-6 border-green-500 border-2 rounded-lg cursor-pointer hover:bg-green-100 transition"
+                                [class.bg-green-200]="selectedRole==='Instructor'"
+                                [class.bg-gray-100]="selectedRole!=='Instructor'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-graduation-cap-icon lucide-graduation-cap m-auto">
+                                    <path
+                                        d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+                                    <path d="M22 10v6" />
+                                    <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+                                </svg>
+
                                 Instructor
-                            
-                        </div>
+
+                            </div>
                         </button>
                     </div>
-                    <button type="submit"
-                        class="w-full rounded-xl py-3 font-semibold text-white transition"
-                        [disabled]="signUpForm.invalid"
-                        [class.bg-green-600]="!signUpForm.invalid"
-                        [class.hover:bg-green-700]="!signUpForm.invalid"
-                        [class.cursor-pointer]="!signUpForm.invalid"
+                    <button type="submit" class="w-full rounded-xl py-3 font-semibold text-white transition"
+                        [disabled]="signUpForm.invalid" [class.bg-green-600]="!signUpForm.invalid"
+                        [class.hover:bg-green-700]="!signUpForm.invalid" [class.cursor-pointer]="!signUpForm.invalid"
                         [class.bg-green-300]="signUpForm.invalid || loading"
-                        [class.cursor-not-allowed]="signUpForm.invalid"
-                        >
-                        
+                        [class.cursor-not-allowed]="signUpForm.invalid">
+
                         @if(loading){
-                            <svg xmlns="http://www.w3.org/2000/svg" widht="30" height="30" class="m-auto" viewBox="0 0 200 200"><radialGradient id="a9" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="#FFFFFF"></stop><stop offset=".3" stop-color="#FFFFFF" stop-opacity=".9"></stop><stop offset=".6" stop-color="#FFFFFF" stop-opacity=".6"></stop><stop offset=".8" stop-color="#FFFFFF" stop-opacity=".3"></stop><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a9)" stroke-width="30" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" widht="30" height="30" class="m-auto"
+                            viewBox="0 0 200 200">
+                            <radialGradient id="a9" cx=".66" fx=".66" cy=".3125" fy=".3125"
+                                gradientTransform="scale(1.5)">
+                                <stop offset="0" stop-color="#FFFFFF"></stop>
+                                <stop offset=".3" stop-color="#FFFFFF" stop-opacity=".9"></stop>
+                                <stop offset=".6" stop-color="#FFFFFF" stop-opacity=".6"></stop>
+                                <stop offset=".8" stop-color="#FFFFFF" stop-opacity=".3"></stop>
+                                <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"></stop>
+                            </radialGradient>
+                            <circle transform-origin="center" fill="none" stroke="url(#a9)" stroke-width="30"
+                                stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100"
+                                cy="100" r="70">
+                                <animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2"
+                                    values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite">
+                                </animateTransform>
+                            </circle>
+                            <circle transform-origin="center" fill="none" opacity=".2" stroke="#FFFFFF"
+                                stroke-width="30" stroke-linecap="round" cx="100" cy="100" r="70"></circle>
+                        </svg>
                         }
                         @else{
-                            Sign up
+                        Sign up
                         }
                     </button>
-                    
+
                     <!-- Divider -->
                     <div class="flex items-center gap-3">
                         <div class="h-px flex-1 bg-gray-200"></div>

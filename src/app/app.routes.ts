@@ -22,6 +22,10 @@ import { InstructorEditLesson } from './pages/instructor_pages/instructor-edit-l
 import { CourseView } from './pages/public_pages/course-view/course-view';
 import { ViewCourse } from './pages/student_pages/view-course/view-course';
 import { Messages } from './pages/public_pages/messages/messages';
+import { isVerifiedGuard } from './guards/is-verified-guard';
+import { UnderVerification } from './pages/instructor_pages/under-verification/under-verification';
+import { Rejected } from './pages/instructor_pages/rejected/rejected';
+import { ReviewInstructor } from './pages/admin_pages/review-instructor/review-instructor';
 
 export const routes: Routes = [
     {path: 'Home', component: HomePage },
@@ -37,8 +41,10 @@ export const routes: Routes = [
         {path:'View_Course/:EnrolledCourseId',component:ViewCourse},
         {path:'Messages',component:Messages}
     ]},
+    {path:'Under_Verification',component:UnderVerification,canActivate:[authGuard]},
+    {path:'Rejected',component:Rejected},
     {path:'Instructor_Dashboard',canActivate:
-    [authGuard,roleGuard],data: { roles: ['Instructor'] },
+    [authGuard,roleGuard,isVerifiedGuard],data: { roles: ['Instructor'] },
     children:[
         {path:'',component:InstructorDashboard},
         {path:'Messages',component:Messages},
@@ -64,7 +70,11 @@ export const routes: Routes = [
 children:[
     {path:'',component:AdminDashboard},
     {path:'Admin_Students_Page',component:AdminStudentPage},
-    {path:'Admin_Instructors_Page',component:AdminInstructorPage},
+    {path:'Admin_Instructors_Page',children:[
+        {path:'',component:AdminInstructorPage},
+        {path:'review/:verificationId',component:ReviewInstructor}
+    ]
+    },
     {path:'Admin_Categories_Page',component:AdminCategoryPage}
 ]},
     {path: 'Forbidden', component:Forbidden },

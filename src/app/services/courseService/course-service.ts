@@ -188,4 +188,16 @@ export class CourseService {
       throw new Error('Error fetching enrolled course lessons: ' + error);
     }
   }
+  async getCoursesCountByInstructorId(instructorId: string): Promise<number> {
+    try {
+      const queryGet = query(
+        collection(this.firestore, `courses`),
+        where('instructorId', '==', instructorId),
+      );
+      const querySnap = await getDocs(queryGet);
+      return querySnap.size;
+    } catch (error) {
+      throw new Error('Error fetching courses count by instructor: ' + error);
+    }
+  }
 }

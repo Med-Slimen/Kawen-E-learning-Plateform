@@ -46,6 +46,7 @@ export class MessageService {
         email: senderSnap.data()?.['email'],
         role: senderSnap.data()?.['role'],
         pfpUrl: senderSnap.data()?.['pfpUrl'],
+        status: senderSnap.data()?.['status']
       };
       return {
         uid: docSnapshot.id,

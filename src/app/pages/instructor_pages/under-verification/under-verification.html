@@ -1,0 +1,85 @@
+<!-- Background -->
+  <div class="pointer-events-none fixed inset-0 -z-10">
+    <div class="absolute -top-24 left-[-7rem] h-80 w-80 rounded-full bg-green-200/45 blur-3xl"></div>
+    <div class="absolute top-10 right-[-7rem] h-80 w-80 rounded-full bg-emerald-200/35 blur-3xl"></div>
+    <div class="absolute bottom-[-10rem] left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-lime-200/25 blur-3xl"></div>
+  </div>
+
+  <!-- Center Card -->
+  <main class="flex min-h-screen items-center justify-center px-4 py-10">
+    <div class="w-full max-w-md">
+      <div class="rounded-3xl border bg-white/90 p-8 shadow-sm backdrop-blur">
+        <!-- Icon -->
+         <img src="public/assets/images/logo.png" class="w-62.5 m-auto mb-5" alt="">
+        <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-green-700">
+          <!-- hourglass/clock icon -->
+          <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Brand -->
+        <div class="mt-6 text-center">
+          <h1 class="text-xl font-extrabold text-gray-900">Verification Pending</h1>
+          <p class="mt-2 text-sm font-semibold text-gray-600">
+            Your instructor account is still under verification.
+            Please wait while an admin reviews your application.
+          </p>
+        </div>
+
+        <!-- Status badge -->
+        <div class="mt-6 flex justify-center">
+          <span class="inline-flex items-center gap-2 rounded-full border border-yellow-200 bg-yellow-50 px-4 py-2 text-xs font-extrabold text-yellow-700">
+            <span class="h-2.5 w-2.5 rounded-full bg-yellow-500"></span>
+            Status: Pending
+          </span>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-7 h-px w-full bg-gray-100"></div>
+
+        <!-- Logout only -->
+        <button
+          type="button"
+          class="w-full cursor-pointer rounded-2xl bg-green-600 px-4 py-3 text-sm font-extrabold text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-100"
+          (click)="logout()"
+        >
+        @if(loading){
+            <svg xmlns="http://www.w3.org/2000/svg" widht="30" height="30" class="m-auto"
+                            viewBox="0 0 200 200">
+                            <radialGradient id="a9" cx=".66" fx=".66" cy=".3125" fy=".3125"
+                                gradientTransform="scale(1.5)">
+                                <stop offset="0" stop-color="#FFFFFF"></stop>
+                                <stop offset=".3" stop-color="#FFFFFF" stop-opacity=".9"></stop>
+                                <stop offset=".6" stop-color="#FFFFFF" stop-opacity=".6"></stop>
+                                <stop offset=".8" stop-color="#FFFFFF" stop-opacity=".3"></stop>
+                                <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"></stop>
+                            </radialGradient>
+                            <circle transform-origin="center" fill="none" stroke="url(#a9)" stroke-width="30"
+                                stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100"
+                                cy="100" r="70">
+                                <animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2"
+                                    values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite">
+                                </animateTransform>
+                            </circle>
+                            <circle transform-origin="center" fill="none" opacity=".2" stroke="#FFFFFF"
+                                stroke-width="30" stroke-linecap="round" cx="100" cy="100" r="70"></circle>
+                        </svg>
+        }
+        @else{
+            Log out
+        }
+        </button>
+
+        <p class="mt-4 text-center text-xs font-semibold text-gray-500">
+          You’ll get access automatically once your account is approved.
+        </p>
+      </div>
+
+      <!-- Tiny footer -->
+      <p class="mt-6 text-center text-xs font-semibold text-gray-400">
+        © Kawen • E-learning platform
+      </p>
+    </div>
+  </main>
