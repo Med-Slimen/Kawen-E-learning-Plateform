@@ -87,7 +87,7 @@ export class MessageService {
     );
     const unsubscribe = onSnapshot(queryNotifications, async (snapshot) => {
       const messagesNotifications =await  Promise.all(snapshot.docs.map(async (docSnapshot) => {
-        if(selectedConversationId && docSnapshot.data()['conversationId']===selectedConversationId){
+        if(selectedConversationId && docSnapshot.data()['conversationId']===selectedConversationId && userId!==docSnapshot.data()['senderId'] && !docSnapshot.data()['read']){
           await updateDoc(doc(this.firestore, 'messageNotifications', docSnapshot.id), {
             read: true,
           });
