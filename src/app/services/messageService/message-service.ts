@@ -8,6 +8,7 @@ import {
   getDocs,
   onSnapshot,
   query,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { Message } from '../../models/message';
@@ -77,21 +78,26 @@ export class MessageService {
     return unsubscribe;
   }
   listenForMessagesNotifications(
-    userId: string,
+    userId: string,selectedConversationId:string,
     callback: (notifications: Notification[]) => void,
   ) {
     const queryNotifications = query(
       collection(this.firestore, 'messageNotifications'),
       where('userId', '==', userId),
     );
-    const unsubscribe = onSnapshot(queryNotifications, (snapshot) => {
-      const messagesNotifications = snapshot.docs.map((docSnapshot) => {
+    const unsubscribe = onSnapshot(queryNotifications, async (snapshot) => {
+      const messagesNotifications =await  Promise.all(snapshot.docs.map(async (docSnapshot) => {
+        if(selectedConversationId && docSnapshot.data()['conversationId']===selectedConversationId){
+          await updateDoc(doc(this.firestore, 'messageNotifications', docSnapshot.id), {
+            read: true,
+          });
+        }
         const notification = {
           uid: docSnapshot.id,
           ...docSnapshot.data(),
         };
         return notification;
-      });
+      }));
       callback(messagesNotifications as Notification[]);
     });
     

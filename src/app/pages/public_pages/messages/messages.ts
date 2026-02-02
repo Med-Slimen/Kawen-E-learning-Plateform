@@ -62,16 +62,18 @@ export class Messages {
     this.conversations = await this.messageService.getConversationsByUserId(
       this.sessionService.user()!.uid,
     );
+    this.listenForMessagesNotifications();
   }
   notificationCount(conversationId: string): number {
     return this.notifications.filter(
       (notification) => notification.conversationId === conversationId && !notification.read,
     ).length;
   }
-  async selectConversation(conversation: Conversation) {
+  selectConversation(conversation: Conversation) {
+    this.unsubscribeForMessages?.();
     this.selectedConversation = conversation;
     if (conversation.status === 'open') {
-      await this.listenForMessages();
+      this.listenForMessages();
     } else {
       this.unsubscribeForMessages?.();
       this.messages = [];
@@ -250,18 +252,9 @@ export class Messages {
     });
   }
   listenForMessagesNotifications(): void {
-    this.unsubscribeForMessagesNotifications = this.messageService.listenForMessagesNotifications(this.sessionService.user()!.uid, (notifications) => {
+    this.unsubscribeForMessagesNotifications = this.messageService.listenForMessagesNotifications(this.sessionService.user()!.uid,this.selectedConversation!.uid ,(notifications) => {
       this.notifications = notifications;
     });
-  }
-  async listenForNotifications(): Promise<void> {
-    const queryNotifications = query(
-      collection(this.firestore, 'notifications'),
-      where('userId', '==', this.sessionService.user()!.uid),
-      where('read', '==', false),
-      orderBy('timestamp', 'desc'),
-    );
-
   }
   ngOnDestroy() {
     this.unsubscribeForMessages?.();
