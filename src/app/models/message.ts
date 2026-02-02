@@ -7,5 +7,4 @@ export interface Message {
     content: string;
     deliveredAt: Date;
     status:string;
-    isRead: boolean;
 }

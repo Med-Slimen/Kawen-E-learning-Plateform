@@ -43,14 +43,15 @@
                         class="w-full cursor-pointer  rounded-2xl border border-gray-200 p-3 text-left shadow-sm"
                         [class.bg-gray-200]="selectedConversation?.uid === conversation.uid">
                         <div class="flex items-center gap-3">
+                            <span
+                                            class="ml-2 inline-flex items-center rounded-full bg-green-600 px-2 py-0.5 text-[11px] font-extrabold text-white">{{notificationCount(conversation.uid)}}</span>
                             <img [src]="conversation.receiver.pfpUrl" alt="{{ conversation.receiver.name }}"
                                 class="relative h-11 w-11 rounded-2xl bg-linear-to-br from-green-200 to-emerald-100 grid place-items-center font-extrabold text-green-800" />
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-center justify-between gap-2">
                                     <p class="truncate text-sm font-extrabold text-gray-900">
                                         {{ conversation.receiver.name }} {{ conversation.receiver.lastName }}
-                                        <span
-                                            class="ml-2 inline-flex items-center rounded-full bg-green-600 px-2 py-0.5 text-[11px] font-extrabold text-white">2</span>
+                                        
                                     </p>
                                     <p class="text-xs font-bold text-gray-500">2m</p>
                                 </div>
@@ -67,7 +68,7 @@
                                     {{conversation.status}}
                                 </div>
                                 <span
-                                    class="rounded-full border bg-white px-2.5 py-1 text-[11px] font-extrabold text-gray-600">{{
+                                    class="rounded-full border bg-white px-2.5 py-1 text-[8px] font-extrabold text-gray-600">{{
                                     conversation.receiver.role }}</span>
 
                             </div>
