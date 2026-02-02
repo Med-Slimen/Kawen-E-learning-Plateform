@@ -48,7 +48,7 @@ export class MessageService {
     );
     return result;
   }
-  listenForMessages(conversationId: string, callback: (messages: Message[]) => void) {
+  async listenForMessages(conversationId: string, callback: (messages: Message[]) => void) {
     const queryMessages = query(
       collection(this.firestore, 'messages'),
       where('conversationId', '==', conversationId),
@@ -77,17 +77,18 @@ export class MessageService {
     });
     return unsubscribe;
   }
-  listenForMessagesNotifications(
-    userId: string,selectedConversationId:string,
+  async listenForMessagesNotifications(
+    userId: string,selectedConversation:Conversation | null,
     callback: (notifications: Notification[]) => void,
   ) {
     const queryNotifications = query(
       collection(this.firestore, 'messageNotifications'),
       where('userId', '==', userId),
+      where('read', '==', false),
     );
     const unsubscribe = onSnapshot(queryNotifications, async (snapshot) => {
       const messagesNotifications =await  Promise.all(snapshot.docs.map(async (docSnapshot) => {
-        if(selectedConversationId && docSnapshot.data()['conversationId']===selectedConversationId && userId!==docSnapshot.data()['senderId'] && !docSnapshot.data()['read']){
+        if(selectedConversation && docSnapshot.data()['conversationId']===selectedConversation.uid){
           await updateDoc(doc(this.firestore, 'messageNotifications', docSnapshot.id), {
             read: true,
           });

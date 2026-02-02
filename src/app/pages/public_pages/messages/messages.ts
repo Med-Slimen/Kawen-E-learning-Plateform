@@ -62,21 +62,27 @@ export class Messages {
     this.conversations = await this.messageService.getConversationsByUserId(
       this.sessionService.user()!.uid,
     );
-    this.listenForMessagesNotifications();
+    await this.listenForMessagesNotifications();
   }
   notificationCount(conversationId: string): number {
+    if (this.selectedConversation?.uid === conversationId) return 0;
     return this.notifications.filter(
       (notification) => notification.conversationId === conversationId && !notification.read,
     ).length;
   }
-  selectConversation(conversation: Conversation) {
-    this.unsubscribeForMessages?.();
+  async selectConversation(conversation: Conversation) {
+    this.unsubscribeForMessagesNotifications?.();
     this.selectedConversation = conversation;
+    await this.listenForMessagesNotifications();
+    this.messages = [];
+    await Promise.all(this.notifications.map(async (notification) => {
+       await updateDoc(doc(this.firestore, 'messageNotifications', notification.uid), {
+            read: true,
+          });
+    }));
+    this.unsubscribeForMessages?.();
     if (conversation.status === 'open') {
-      this.listenForMessages();
-    } else {
-      this.unsubscribeForMessages?.();
-      this.messages = [];
+      await this.listenForMessages();
     }
   }
   async sendMessage() {
@@ -246,13 +252,13 @@ export class Messages {
       this.loading = false;
     }
   }
-  listenForMessages(): void {
-    this.unsubscribeForMessages = this.messageService.listenForMessages(this.selectedConversation!.uid, (newMessages) => {
+  async listenForMessages(): Promise<void> {
+    this.unsubscribeForMessages = await this.messageService.listenForMessages(this.selectedConversation!.uid, (newMessages) => {
       this.messages = newMessages;
     });
   }
-  listenForMessagesNotifications(): void {
-    this.unsubscribeForMessagesNotifications = this.messageService.listenForMessagesNotifications(this.sessionService.user()!.uid,this.selectedConversation!.uid ,(notifications) => {
+  async listenForMessagesNotifications(): Promise<void> {
+    this.unsubscribeForMessagesNotifications =await this.messageService.listenForMessagesNotifications(this.sessionService.user()!.uid,this.selectedConversation ,(notifications) => {
       this.notifications = notifications;
     });
   }
