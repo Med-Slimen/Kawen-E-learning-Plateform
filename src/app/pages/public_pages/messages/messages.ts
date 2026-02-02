@@ -78,6 +78,10 @@ export class Messages {
     }
   }
   async sendMessage() {
+    if(this.selectedConversation && this.selectedConversation.status !== 'open'){
+      alert('Cannot send messages in a conversation that is not open.');
+      return;
+    }
     try {
       if (this.selectedConversation && this.messageForm.valid) {
         const newMessageContent = this.messageForm.value['messageContent'];
