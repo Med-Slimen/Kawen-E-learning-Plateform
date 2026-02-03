@@ -42,12 +42,13 @@ export class InstructorEditLesson {
     this.loading=true;
     this.course=await this.courseService.getCourseById(this.courseId);
     this.lesson=await this.lessonService.getLessonById(this.courseId,this.lessonId);
-    this.editLessonFormGroup.patchValue({
-      lessonTitle: this.course.title,
-    });
     if(!this.lesson){
       alert("Lesson not found");
       return;}
+    this.editLessonFormGroup.patchValue({
+      lessonTitle: this.lesson.title,
+      lessonContentUrl: this.lesson.contentUrl,
+    });
     if(this.lesson.contentType==='video'){
       this.typeContent='video';
       this.editLessonFormGroup.patchValue({
