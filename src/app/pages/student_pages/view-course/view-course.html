@@ -154,7 +154,7 @@
                   </iframe>
                 }
                 @else if(selectedLesson.lesson?.contentType === 'pdf') {
-                  <iframe class="w-full h-full aspect-video rounded-2xl" [src]="selectedLesson.lesson?.contentUrl" frameborder="0"></iframe>
+                  <iframe class="w-full h-full aspect-video rounded-2xl" [src]="safeUrl" frameborder="0"></iframe>
                 }
                 @else {
                   <video class="w-full h-full aspect-video rounded-2xl" controls>
