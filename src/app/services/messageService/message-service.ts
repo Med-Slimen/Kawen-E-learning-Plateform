@@ -77,6 +77,35 @@ export class MessageService {
     });
     return unsubscribe;
   }
+    async listenForConversationsByUserId(userId: string, callback: (conversations: Conversation[]) => void) {
+    const queryConversations = query(
+      collection(this.firestore, 'conversations'),
+      where('participants', 'array-contains', userId),
+      orderBy('updatedAt', 'asc'),
+    );
+    const unsubscribe = onSnapshot(queryConversations, async (querySnapShot) => {
+      const conversations = await Promise.all(
+        querySnapShot.docs.map(async (docSnapshot) => {
+          const data = docSnapshot.data();
+          const receiverId = data['participants'].find((uid: string) => uid !== userId);
+          const receiver = await getDoc(doc(this.firestore, 'users', receiverId));
+          return {
+            uid: docSnapshot.id,
+            createdAt: data['createdAt'].toDate(),
+            receiver: {
+              uid: receiver.id,
+              ...receiver.data(),
+            },
+            lastMessage: data['lastMessage'],
+            updatedAt: data['updatedAt'].toDate(),
+            status: data['status'],
+          } as Conversation;
+        }),
+      );
+      callback(conversations);
+    });
+    return unsubscribe;
+  }
   async listenForMessagesNotifications(
     userId: string,selectedConversation:Conversation | null,
     callback: (notifications: Notification[]) => void,

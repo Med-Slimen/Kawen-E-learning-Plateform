@@ -53,16 +53,15 @@ export class Messages {
   showConversationActionsMenuId: string | null = null;
   unsubscribeForMessages: Unsubscribe | null = null;
   unsubscribeForMessagesNotifications: Unsubscribe | null = null;
+  unsubscribeForConversations: Unsubscribe | null = null;
   constructor(private formBuilder: FormBuilder) {
     this.messageForm = this.formBuilder.group({
       messageContent: ['', [Validators.required, Validators.maxLength(500)]],
     });
   }
   async ngOnInit() {
-    this.conversations = await this.messageService.getConversationsByUserId(
-      this.sessionService.user()!.uid,
-    );
     await this.listenForMessagesNotifications();
+    await this.listenForConversations();
   }
   notificationCount(conversationId: string): number {
     if (this.selectedConversation?.uid === conversationId) return 0;
@@ -70,8 +69,17 @@ export class Messages {
       (notification) => notification.conversationId === conversationId && !notification.read,
     ).length;
   }
+  async listenForConversations(): Promise<void> {
+    this.unsubscribeForConversations = await this.messageService.listenForConversationsByUserId(
+      this.sessionService.user()!.uid,
+      (conversations) => {
+        this.conversations = conversations;
+      });
+  }
   async selectConversation(conversation: Conversation) {
+    try {
     this.unsubscribeForMessagesNotifications?.();
+    this.unsubscribeForMessages?.();
     this.selectedConversation = conversation;
     await this.listenForMessagesNotifications();
     this.messages = [];
@@ -80,9 +88,11 @@ export class Messages {
             read: true,
           });
     }));
-    this.unsubscribeForMessages?.();
     if (conversation.status === 'open') {
       await this.listenForMessages();
+    }}
+    catch (error) {
+      alert('Error selecting conversation: ' + error);
     }
   }
   async sendMessage() {
@@ -264,5 +274,6 @@ export class Messages {
   ngOnDestroy() {
     this.unsubscribeForMessages?.();
     this.unsubscribeForMessagesNotifications?.();
+    this.unsubscribeForConversations?.();
   }
 }
