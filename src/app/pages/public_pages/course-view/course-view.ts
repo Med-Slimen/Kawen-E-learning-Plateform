@@ -7,6 +7,8 @@ import { Lesson } from '../../../models/lessons';
 import { LessonService } from '../../../services/lessonService/lesson-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { addDoc, collection, doc, Firestore } from '@angular/fire/firestore';
+import { EnrolledCourse } from '../../../models/enrolledCourse';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-course-view',
@@ -22,32 +24,46 @@ export class CourseView {
   loadingContent=false;
   loadingEnroll=false;
   courseId?:string;
+  studentId?:string;
   course?:Course;
+  enrolledCourses:EnrolledCourse[]=[];
   Limitedlessons:Lesson[]=[];
   lessons:Lesson[]=[];
   lessonsProgress?:{
     lessonId:string;
     completed:boolean;
   }[];
-  constructor(private route:ActivatedRoute) {}
+  constructor(private route:ActivatedRoute,private location:Location) {}
   async ngOnInit() {
     try{
     this.loadingContent=true;
     this.courseId=this.route.snapshot.paramMap.get('courseId') || undefined;
-    if(this.courseId){
+    this.studentId=this.sessionService.user()?.uid;
+    if(this.courseId && this.studentId){
       await this.getCourse(this.courseId);
       await this.getLessons(this.courseId);
+      await this.getEnrolledCourses();
     }
     else{
       alert('course not found');
-      return;
+      this.location.back();
     }
     }catch(error){
       alert('Error loading course or lessons: ' + error);
+      this.location.back();
     }
     finally{
       this.loadingContent=false;
     }
+  }
+  isCourseEnrolled(): boolean {
+    return this.enrolledCourses.some(enrolledCourse => enrolledCourse.course.uid === this.courseId);
+  }
+  getCourseEnrolledId(): string {
+    return this.enrolledCourses.find(enrolledCourse => enrolledCourse.course.uid === this.courseId)!.uid;
+  }
+  async getEnrolledCourses(): Promise<void> {
+    this.enrolledCourses = await this.courseService.getEnrolledCoursesByStudentId(this.studentId!);
   }
   async getCourse(courseId:string): Promise<void> {
     try{
@@ -69,14 +85,13 @@ export class CourseView {
   async enrollCourse() : Promise<void> {
     try{
     this.loadingContent=true;
-    const studentId=this.sessionService.user()?.uid;
     this.lessonsProgress= this.lessons.map(lesson=>({
       lessonId:lesson.uid,
       completed:false,
     }));
     const enrolled={
       courseId: this.courseId,
-      studentId:studentId,
+      studentId:this.studentId,
       enrolledAt: new Date(),
       percentageCompleted:0,
       instructorId: this.course?.instructor.uid,

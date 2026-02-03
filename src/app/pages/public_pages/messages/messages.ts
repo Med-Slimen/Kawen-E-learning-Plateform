@@ -138,7 +138,6 @@ export class Messages {
         content: 'This message has been deleted.',
         status: 'deleted',
       });
-
       if (this.selectedConversation?.lastMessage == oldMessage.content) {
         this.selectedConversation.lastMessage = 'This message has been deleted.';
         await updateDoc(doc(this.firestore, 'conversations', this.selectedConversation.uid), {

@@ -3,10 +3,11 @@ import { NavBar } from '../../../components/layoutComponents/dashboard-nav-bar/n
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { Course } from '../../../models/course';
 import { collection, deleteDoc, doc } from 'firebase/firestore';
-import { Firestore, getDoc, getDocs, updateDoc } from '@angular/fire/firestore';
+import { Firestore, getDoc, getDocs, updateDoc, writeBatch } from '@angular/fire/firestore';
 import { CourseService } from '../../../services/courseService/course-service';
 import { Lesson } from '../../../models/lessons';
 import { LessonService } from '../../../services/lessonService/lesson-service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-instructor-lessons-page',
@@ -23,17 +24,18 @@ export class InstructorLessonsPage {
   loadingCourse=false;
   courseService=inject(CourseService);
   lessonService=inject(LessonService);
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,private location:Location) {}
   async ngOnInit() {
     try{
       await this.getCourseById();
     if(!this.course){
       alert('Course not found');
-      return;
+      this.location.back();
     }
     await this.getCourseLessons();
     }catch(error){
       alert('Error loading course or lessons: ' + error);
+      this.location.back();
     }
   }
   async getCourseById(): Promise<void> {
@@ -64,11 +66,13 @@ export class InstructorLessonsPage {
     }
     try{
       this.loadingLessons=true;
-      await deleteDoc(doc(this.firestore,`courses/${this.courseId}/lessons`,lessonId));
-      await this.getCourseLessons();
-      await updateDoc(doc(this.firestore, 'courses', this.courseId), {
+      const batch=writeBatch(this.firestore);
+      batch.delete(doc(this.firestore,`courses/${this.courseId}/lessons`,lessonId));
+      batch.update(doc(this.firestore, 'courses', this.courseId), {
         lessonsCount: this.course!.lessonsCount! - 1
       });
+      await batch.commit();
+      await this.getCourseLessons();
       alert('Lesson deleted successfully');
     } catch (error) {
       alert('Error deleting lesson:' + error);

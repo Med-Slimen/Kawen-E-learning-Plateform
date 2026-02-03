@@ -60,7 +60,7 @@ export class SignUp {
       if(res){
         this.router.navigate(['/Login']);
       }else{
-        console.error('Sign up failed');
+        alert('Sign up failed');
       }
     }).finally(() => {
       this.signUpForm.reset();

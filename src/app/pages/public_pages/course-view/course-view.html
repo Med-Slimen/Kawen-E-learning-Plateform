@@ -64,10 +64,20 @@
                     <!-- CTAs (mobile) -->
                     <div class="mt-6 flex flex-col sm:flex-row gap-2 lg:hidden">
                         @if( this.sessionService.isLoggedIn()) {
-                        <button (click)="enrollCourse()"
+                            @if(isCourseEnrolled()){
+                                <button (click)="enrollCourse()"
                             class="w-full cursor-pointer px-5 py-3 rounded-2xl bg-green-600 text-white font-semibold hover:bg-green-700">
                             Enroll Now
                         </button>}
+                            
+                            @else{
+                                <button [routerLink]="['Student_Dashboard/View_Course/:EnrolledCourseId',getCourseEnrolledId()]"
+                            class="w-full cursor-pointer px-5 py-3 rounded-2xl bg-green-600 text-white font-semibold hover:bg-green-700">
+                            Go to Course
+                        </button>
+                        
+                            }
+                        }
                         @else {
                         <button routerLink="/Login"
                             class="w-full cursor-pointer px-5 py-3 rounded-2xl bg-green-600 text-white font-semibold hover:bg-green-700">

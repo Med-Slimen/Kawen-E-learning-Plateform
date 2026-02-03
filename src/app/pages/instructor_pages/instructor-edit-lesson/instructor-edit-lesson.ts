@@ -8,6 +8,7 @@ import { Course } from '../../../models/course';
 import { CourseService } from '../../../services/courseService/course-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Lesson } from '../../../models/lessons';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-instructor-edit-lesson',
@@ -29,7 +30,7 @@ export class InstructorEditLesson {
   lessonService=inject(LessonService);
   courseService = inject(CourseService);
   firestore = inject(Firestore);
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,private location: Location) {
     this.editLessonFormGroup = this.formBuilder.group({
       lessonTitle: ['', [Validators.required, Validators.minLength(3)]],
       lessonDuration: ['', [Validators.required, Validators.min(1)]],
@@ -70,6 +71,7 @@ export class InstructorEditLesson {
   }
   async editLesson(){
     try {
+          this.loading = true;
           let uploadedUrl=this.editLessonFormGroup.value.lessonContentUrl;
           if (this.toggleContent) {
             if(this.lessonFile){
@@ -80,7 +82,6 @@ export class InstructorEditLesson {
             );
             }
           }
-          this.loading = true;
           const lesson: Omit<Lesson, 'uid'> = {
             title: this.editLessonFormGroup.value.lessonTitle,
             contentType: this.typeContent,
@@ -92,6 +93,7 @@ export class InstructorEditLesson {
           await updateDoc(doc(this.firestore, `courses/${courseId}/lessons/${this.lessonId}`), lesson);
           this.editLessonFormGroup.reset();
           alert('Lesson edited successfully');
+          this.location.back();
         } catch (error) {
           alert('Error editing lesson:' + error);
         } finally {

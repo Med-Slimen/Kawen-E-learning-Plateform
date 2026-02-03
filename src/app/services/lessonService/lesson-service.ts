@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, doc, Firestore, getDoc, getDocs, limit, query } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, Firestore, getDoc, getDocs, limit, query } from '@angular/fire/firestore';
 import { Lesson } from '../../models/lessons';
 import { orderBy } from '@angular/fire/firestore';
 @Injectable({

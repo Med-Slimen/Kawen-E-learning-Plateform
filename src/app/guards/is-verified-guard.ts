@@ -5,10 +5,10 @@ import { inject } from '@angular/core';
 export const isVerifiedGuard: CanActivateFn = (route, state) => {
   const sessionService = inject(SessionService);
   const router = inject(Router);
-  if(sessionService.user()?.status==='Pending'){
+  if(sessionService.user()?.status==='pending'){
     router.navigate(['/Under_Verification']);
   }
-  else if(sessionService.user()?.status==='Rejected'){
+  else if(sessionService.user()?.status==='rejected'){
     router.navigate(['/Rejected']);
   }
   return true;
