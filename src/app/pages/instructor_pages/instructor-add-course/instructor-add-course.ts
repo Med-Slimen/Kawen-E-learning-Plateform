@@ -89,7 +89,6 @@ export class InstructorAddCourse {
         this.addCourseForm.value.courseCategory,
       );
       if(this.thumbnailUrl===null){
-        alert('Thumbnail upload failed. Please try again.');
         return;
       }
       this.addedCourse = {
