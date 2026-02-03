@@ -33,7 +33,7 @@ export class InstructorEditLesson {
     this.editLessonFormGroup = this.formBuilder.group({
       lessonTitle: ['', [Validators.required, Validators.minLength(3)]],
       lessonDuration: ['', [Validators.required, Validators.min(1)]],
-      lessonContentUrl: ['', [Validators.pattern('https?://.+')]],
+      lessonContentUrl: ['', [Validators.required,Validators.pattern('https?://.+')]],
     });
   }
   async ngOnInit(){
@@ -70,7 +70,7 @@ export class InstructorEditLesson {
   }
   async editLesson(){
     try {
-          let uploadedUrl=this.lesson?.contentUrl || '';
+          let uploadedUrl=this.editLessonFormGroup.value.lessonContentUrl;
           if (this.toggleContent) {
             if(this.lessonFile){
               uploadedUrl = await this.cloudinaryService.uploadImage(

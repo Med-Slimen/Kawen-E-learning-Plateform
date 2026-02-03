@@ -117,7 +117,17 @@
                                     <p class="text-xs text-gray-500 mt-1">Paste a URL (YouTube, Drive, Vimeo, etc.)</p>
                                 </div>
                             </label>
-
+                            @if(this.editLessonFormGroup.controls['lessonContentUrl'].hasError('required') &&
+                            this.editLessonFormGroup.controls['lessonContentUrl'].touched) {
+                            <div class=" text-red-700 p-2 rounded borde mt-2">
+                                Content URL is required.
+                            </div>
+                            }
+                             @if(this.editLessonFormGroup.controls['lessonContentUrl'].hasError('pattern') && this.editLessonFormGroup.controls['lessonContentUrl'].touched) {*
+                                <div class=" text-red-700 p-2 rounded borde mt-2">
+                                    Please enter a valid URL.
+                            </div>
+                            }
                             <label
                                 class="flex items-start gap-3 rounded-2xl border p-4 cursor-pointer hover:bg-green-50">
                                 <input (change)="toggleContentFn()" type="radio" name="contentType"
