@@ -62,6 +62,7 @@ export class Messages {
   async ngOnInit() {
     await this.listenForMessagesNotifications();
     await this.listenForConversations();
+    console.log(this.conversations);
   }
   notificationCount(conversationId: string): number {
     if (this.selectedConversation?.uid === conversationId) return 0;
@@ -82,11 +83,13 @@ export class Messages {
   }
   async selectConversation(conversation: Conversation) {
     try {
+    
     this.unsubscribeForMessagesNotifications?.();
     this.unsubscribeForMessages?.();
-    await this.listenForMessages();
     this.selectedConversation = conversation;
+    await this.listenForMessages();
     await this.listenForMessagesNotifications();
+    
     this.messages = [];
     await Promise.all(this.notifications.map(async (notification) => {
        await updateDoc(doc(this.firestore, 'messageNotifications', notification.uid), {
