@@ -67,13 +67,9 @@ export class InstructorAddCourse {
     }
   }
   async uploadThumbnail() {
-    if (!this.thumbnailFile){
-      alert('Please select a thumbnail image.');
-      return;
-    }
     try {
       this.thumbnailUrl = await this.cloudinaryService.uploadImage(
-        this.thumbnailFile,
+        this.thumbnailFile!,
         'kawen_courses_thumbnails',
         'image',
       );
@@ -83,14 +79,15 @@ export class InstructorAddCourse {
   }
   async addCourse(): Promise<void> {
     try {
+      if (!this.thumbnailFile){
+      alert('Please select a thumbnail image.');
+      return;
+    }
       this.loading = true;
       await this.uploadThumbnail();
       const category = await this.categoryService.getCategoryByTitle(
         this.addCourseForm.value.courseCategory,
       );
-      if(this.thumbnailUrl===null){
-        return;
-      }
       this.addedCourse = {
         title: this.addCourseForm.value.courseTitle,
         description: this.addCourseForm.value.courseDescription,
@@ -99,7 +96,7 @@ export class InstructorAddCourse {
         categoryId: category?.uid as string,
         price: this.addCourseForm.value.coursePrice,
         level: this.addCourseForm.value.courseLevel,
-        thumbnailUrl: this.thumbnailUrl,
+        thumbnailUrl: this.thumbnailUrl!,
         lessonsCount: 0,
       };
       addDoc(collection(this.firestore, 'courses'), this.addedCourse)
@@ -109,6 +106,7 @@ export class InstructorAddCourse {
             this.addCourseForm.reset();
             this.thumbnailPreview = null;
             this.thumbnailUrl = null;
+            this.thumbnailFile = null;
           } else {
             alert('Failed to add course. Please try again.');
           }
