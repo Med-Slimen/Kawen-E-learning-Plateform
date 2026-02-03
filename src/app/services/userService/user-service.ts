@@ -108,7 +108,6 @@ export class UserService {
         ...userSnap.data()
       }as User;
     }catch(error){
-      alert('Error fetching instructor: ' + error);
       throw new Error('Error fetching instructor');
     }
     
@@ -133,5 +132,25 @@ export class UserService {
       throw new Error('Error fetching verification');
     }
   }
-
-}
+  async getAllVerifications(): Promise<Verification[]> {
+    try{
+      const verifSnap=await getDocs(collection(this.firestore, 'verifications'));
+      return Promise.all(
+        verifSnap.docs.map(async (doc) => {
+          const data = doc.data();
+          const instructor = await this.getInstructorById(data['instructorId']);
+          return {
+            uid: doc.id,
+            cvFileUrl: data['cvFileUrl'],
+            linkedinProfileUrl: data['linkedinProfileUrl'],
+            portfolioUrl: data['portfolioUrl'],
+            instructor: instructor,
+          };
+        })
+      );
+    }catch(error){
+      alert('Error fetching verifications: ' + error);
+      throw new Error('Error fetching verifications');
+    }
+  }
+  }

@@ -122,7 +122,7 @@
                 <button class="px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700">Enable</button>
               }
               @else if(instructor.status=='pending'){
-                <button [routerLink]="['review', instructor.verificationId]" class="px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700">Review</button>
+                <button [routerLink]="['review', getVerificationIdByInstructorId(instructor.uid)]" class="px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700">Review</button>
               }
               <button class="px-3 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50">Delete</button>
             </div>
