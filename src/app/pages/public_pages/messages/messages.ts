@@ -84,6 +84,7 @@ export class Messages {
     try {
     this.unsubscribeForMessagesNotifications?.();
     this.unsubscribeForMessages?.();
+    await this.listenForMessages();
     this.selectedConversation = conversation;
     await this.listenForMessagesNotifications();
     this.messages = [];
