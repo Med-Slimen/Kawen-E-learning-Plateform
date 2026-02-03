@@ -49,6 +49,10 @@ export class CourseService {
     );
     return this.courses;
   }
+  async getCoursesCount(): Promise<number> {
+    const snap = await getDocs(collection(this.firestore, 'courses'));
+    return snap.size;
+  }
   async getCourseById(courseId: string): Promise<Course> {
     try {
       const courseSnap = await getDoc(doc(this.firestore, 'courses', courseId));

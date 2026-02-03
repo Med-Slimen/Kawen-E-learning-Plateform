@@ -132,19 +132,19 @@
                             <div class="flex flex-col items-center text-center gap-2">
                                 <div
                                     class="h-12 w-12 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-xl">
-                                    🖼️
+                                    📄
                                 </div>
                                 <p class="font-semibold">Upload CV</p>
                                 <p class="text-sm text-gray-500">
-                                    PNG, JPG, JPEG • Recommended format
+                                    PDF • format
                                 </p>
 
                                 <!-- Hidden input + label trick -->
                                 <input formControlName="cvFile" id="thumb" type="file" (change)="selectCV($event)"
-                                    accept="image/*" class="hidden" />
+                                    accept="application/pdf" class="hidden" />
                                 @if(this.signUpForm.controls['cvFile'].hasError('required') &&
                                 this.signUpForm.controls['cvFile'].touched){
-                                <p class="text-xs text-red-500 mt-1">Cv is required.</p>
+                                <p class="text-xs text-red-500 mt-1">CV is required.</p>
                                 }
                                 <label for="thumb"
                                     class="mt-2 inline-flex items-center justify-center px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 cursor-pointer">
