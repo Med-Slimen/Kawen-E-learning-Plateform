@@ -210,10 +210,6 @@
                                 <!-- Hidden input + label trick -->
                                 <input formControlName="courseImage" id="thumb" type="file"
                                     (change)="selectThumbnail($event)" accept="image/*" class="hidden" />
-                                @if(this.addCourseForm.controls['courseImage'].hasError('required') &&
-                                this.addCourseForm.controls['courseImage'].touched){
-                                <p class="text-xs text-red-500 mt-1">Thumbnail is required.</p>
-                                }
                                 <label for="thumb"
                                     class="mt-2 inline-flex items-center justify-center px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 cursor-pointer">
                                     Choose file

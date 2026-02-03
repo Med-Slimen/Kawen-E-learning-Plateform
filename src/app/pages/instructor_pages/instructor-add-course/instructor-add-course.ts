@@ -48,7 +48,6 @@ export class InstructorAddCourse {
       ],
       courseCategory: ['Development', [Validators.required]],
       coursePrice: [0, [Validators.required, Validators.min(0)]],
-      courseImage: ['', [Validators.required]],
       courseLevel: ['Beginner', [Validators.required]],
       courseDuration: ['', [Validators.required]],
     });
@@ -68,7 +67,10 @@ export class InstructorAddCourse {
     }
   }
   async uploadThumbnail() {
-    if (!this.thumbnailFile) return;
+    if (!this.thumbnailFile){
+      alert('Please select a thumbnail image.');
+      return;
+    }
     try {
       this.thumbnailUrl = await this.cloudinaryService.uploadImage(
         this.thumbnailFile,
