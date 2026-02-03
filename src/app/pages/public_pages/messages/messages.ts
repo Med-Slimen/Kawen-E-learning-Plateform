@@ -74,6 +74,10 @@ export class Messages {
       this.sessionService.user()!.uid,
       (conversations) => {
         this.conversations = conversations;
+        if (this.selectedConversation) {
+        const updated = conversations.find(c => c.uid === this.selectedConversation!.uid);
+        if (updated) this.selectedConversation = updated;
+      }
       });
   }
   async selectConversation(conversation: Conversation) {
@@ -88,10 +92,7 @@ export class Messages {
             read: true,
           });
     }));
-    if (conversation.status === 'open') {
-      await this.listenForMessages();
-    }}
-    catch (error) {
+    } catch (error) {
       alert('Error selecting conversation: ' + error);
     }
   }
@@ -140,7 +141,6 @@ export class Messages {
       return;
     }
     const oldMessage = message;
-    const oldlastMessage = this.selectedConversation?.lastMessage;
     try {
       this.loadingDelete = true;
       message.content = 'This message has been deleted.';
@@ -157,8 +157,6 @@ export class Messages {
       alert('Message deleted successfully.');
     } catch (error) {
       alert('Error deleting message: ' + error);
-      message = oldMessage;
-      this.selectedConversation!.lastMessage = oldlastMessage!;
     } finally {
       this.showMessageActionsMenu = false;
       this.showMessageActionsMenuId = null;
@@ -178,17 +176,17 @@ export class Messages {
     if (!confirm) {
       return;
     }
-    const oldConversationStatus = this.selectedConversation?.status;
     try {
       this.loading = true;
       await updateDoc(doc(this.firestore, 'conversations', this.selectedConversation!.uid), {
         status: 'open',
       });
-      alert('Conversation request accepted.');
       this.selectedConversation!.status = 'open';
+      this.unsubscribeForConversations?.();
+      await this.listenForConversations();
+      alert('Conversation request accepted.');
     } catch (error) {
       alert('Error accepting conversation request: ' + error);
-      this.selectedConversation!.status = oldConversationStatus!;
     } finally {
       this.loading = false;
     }
@@ -198,16 +196,15 @@ export class Messages {
     if (!confirm) {
       return;
     }
-    const oldConversationStatus = this.selectedConversation?.status;
     try {
-      this.selectedConversation!.status = 'rejected';
       await updateDoc(doc(this.firestore, 'conversations', this.selectedConversation!.uid), {
         status: 'rejected',
       });
+      this.selectedConversation = null;
+      this.unsubscribeForConversations?.();
       alert('Conversation request rejected.');
     } catch (error) {
       alert('Error accepting conversation request: ' + error);
-      this.selectedConversation!.status = oldConversationStatus!;
     }
   }
   async markConversationClosed() {
