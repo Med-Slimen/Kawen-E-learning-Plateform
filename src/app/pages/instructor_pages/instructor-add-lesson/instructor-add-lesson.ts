@@ -9,6 +9,7 @@ import { NavBar } from '../../../components/layoutComponents/dashboard-nav-bar/n
 import { LessonService } from '../../../services/lessonService/lesson-service';
 import { Course } from '../../../models/course';
 import { CourseService } from '../../../services/courseService/course-service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-instructor-add-lesson',
@@ -31,6 +32,7 @@ export class InstructorAddLesson {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private location:Location
   ) {
     this.addLessonFormGroup = this.formBuilder.group({
       lessonTitle: ['', [Validators.required, Validators.minLength(3)]],
@@ -93,6 +95,7 @@ export class InstructorAddLesson {
       alert('Error adding lesson file:' + error);
     } finally {
       this.loading = false;
+      this.location.back();
     }
   }
   toggleTypeContentFn(event: any) {

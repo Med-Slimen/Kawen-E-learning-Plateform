@@ -75,8 +75,8 @@
               <div class="flex-1">
                 <div class="flex items-start justify-between gap-2">
                   <p class="font-semibold text-gray-900">{{i + 1}}. {{lessonDetails.lesson?.title}}</p>
-                  <span class="text-xs px-2 py-1 rounded-full bg-white border text-gray-700">{{lessonDetails.lesson?.duration}}
-                    mn</span>
+                  <span class="text-xs px-2 py-1 rounded-full bg-white border text-gray-700">{{lessonDetails.lesson?.duration +'mn' || 'PDF File'}}
+                    </span>
                 </div>
                 <p class="text-sm text-gray-500 mt-1">• {{lessonDetails.lesson?.contentType}} • </p>
               </div>
@@ -136,14 +136,6 @@
               <span class="text-sm font-semibold text-gray-900">Mark as uncompleted</span>
             </button>
             }
-            <div class="flex gap-2">
-              <button class="px-4 py-2 rounded-xl border bg-white hover:bg-green-50">
-                Previous
-              </button>
-              <button class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
-                Next
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -160,6 +152,9 @@
                 @if(isYoutubeUrl(selectedLesson.lesson!.contentUrl)) {
                 <iframe  class="w-full m-0 h-full aspect-video rounded-2xl"   allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen [src]="safeUrl" frameborder="0">
                   </iframe>
+                }
+                @else if(selectedLesson.lesson?.contentType === 'pdf') {
+                  <iframe class="w-full h-full aspect-video rounded-2xl" [src]="selectedLesson.lesson?.contentUrl" frameborder="0"></iframe>
                 }
                 @else {
                   <video class="w-full h-full aspect-video rounded-2xl" controls>

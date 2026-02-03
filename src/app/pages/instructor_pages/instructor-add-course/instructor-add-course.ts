@@ -10,6 +10,7 @@ import { Lesson } from '../../../models/lessons';
 import { CategoryService } from '../../../services/categoryService/category-service';
 import { RouterLink } from '@angular/router';
 import { Category } from '../../../models/category';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-instructor-add-course',
@@ -39,7 +40,7 @@ export class InstructorAddCourse {
     thumbnailUrl: string;
     lessonsCount: number;
   };
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private location:Location) {
     this.addCourseForm = this.formBuilder.group({
       courseTitle: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       courseDescription: [
@@ -118,6 +119,7 @@ export class InstructorAddCourse {
       console.error('Error adding course ', error);
     } finally {
       this.loading = false;
+      this.location.back();
     }
   }
 }

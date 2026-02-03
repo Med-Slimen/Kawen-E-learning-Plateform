@@ -3,6 +3,7 @@ import { UserService } from '../../../services/userService/user-service';
 import { Verification } from '../../../models/verification';
 import { ActivatedRoute } from '@angular/router';
 import { doc, Firestore, writeBatch } from '@angular/fire/firestore';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-review-instructor',
@@ -15,7 +16,7 @@ export class ReviewInstructor {
   verification:Verification|null=null;
   firestore=inject(Firestore);
   loading:boolean=false;
-  constructor(private route:ActivatedRoute) {}
+  constructor(private route:ActivatedRoute,private location:Location) {}
   async ngOnInit() {
     const verificationId=this.route.snapshot.paramMap.get('verificationId');
     if(!verificationId){
@@ -34,6 +35,7 @@ export class ReviewInstructor {
       const batch=writeBatch(this.firestore);
     if(!this.verification){
       alert('No verification loaded');
+      this.location.back();
       return;
     }
     batch.update(doc(this.firestore, 'users', this.verification.instructor.uid), {
@@ -43,8 +45,10 @@ export class ReviewInstructor {
     batch.delete(doc(this.firestore, 'verifications', this.verification.uid));
     await batch.commit();
     alert('Verification approved');
+    this.location.back();
   }catch(error){
     alert('Error approving verification: '+(error as Error).message);
+    this.location.back();
   }finally{
     this.loading=false;
   }
@@ -59,6 +63,7 @@ export class ReviewInstructor {
       const batch=writeBatch(this.firestore);
     if(!this.verification){
       alert('No verification loaded');
+      this.location.back();
       return;
     }
     batch.update(doc(this.firestore, 'users', this.verification.instructor.uid), {
@@ -68,8 +73,10 @@ export class ReviewInstructor {
     batch.delete(doc(this.firestore, 'verifications', this.verification.uid));
     await batch.commit();
     alert('Verification rejected');
+    this.location.back();
   }catch(error){
     alert('Error rejecting verification: '+(error as Error).message);
+    this.location.back();
   }finally{
     this.loading=false;
   }

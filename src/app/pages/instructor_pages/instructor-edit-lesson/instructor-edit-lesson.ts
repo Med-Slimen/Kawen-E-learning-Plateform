@@ -93,11 +93,11 @@ export class InstructorEditLesson {
           await updateDoc(doc(this.firestore, `courses/${courseId}/lessons/${this.lessonId}`), lesson);
           this.editLessonFormGroup.reset();
           alert('Lesson edited successfully');
-          this.location.back();
         } catch (error) {
           alert('Error editing lesson:' + error);
         } finally {
           this.loading = false;
+          this.location.back();
         }
   }
    toggleTypeContentFn(event: any) {
