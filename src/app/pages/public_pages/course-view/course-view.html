@@ -64,7 +64,7 @@
                     <!-- CTAs (mobile) -->
                     <div class="mt-6 flex flex-col sm:flex-row gap-2 lg:hidden">
                         @if( this.sessionService.isLoggedIn()) {
-                            @if(isCourseEnrolled()){
+                            @if(!isCourseEnrolled()){
                                 <button (click)="enrollCourse()"
                             class="w-full cursor-pointer px-5 py-3 rounded-2xl bg-green-600 text-white font-semibold hover:bg-green-700">
                             Enroll Now

@@ -14,7 +14,7 @@
             <a class="" href="#">
                 <img class="w-42 h-auto" src="public/assets/images/logo.png" alt="Logo" />
             </a>
-            <div class="online_menu px-2 md:px-5" [class.block]="sessionService.isLoggedIn()" [class.hidden]="!sessionService.isLoggedIn()">
+            <div class="hidden online_menu px-2 md:px-5" [class.block]="sessionService.isLoggedIn()" [class.hidden]="!sessionService.isLoggedIn()">
                 <div class="flex items-center gap-1 md:gap-8">
                     <div class="relative md:hidden">
                         <div class="flex items-center cursor-pointer" (click)="toggleLinksMenu()">
@@ -65,7 +65,7 @@
 
                 </div>
             </div>
-            <div class="offline_menu px-4 md:px-10" [class.block]="!sessionService.isLoggedIn()" [class.hidden]="sessionService.isLoggedIn()">
+            <div class="hidden offline_menu px-4 md:px-10" [class.block]="!sessionService.isLoggedIn()" [class.hidden]="sessionService.isLoggedIn()">
 
 
                 <!-- Desktop links -->
