@@ -6,5 +6,4 @@ export interface User {
     role: string;
     pfpUrl: string;
     status: string;
-    verificationId?: string;
 }

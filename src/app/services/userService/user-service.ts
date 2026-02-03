@@ -66,7 +66,6 @@ export class UserService {
             role: data.role,
             pfpUrl: data.pfpUrl,
             status: data.status,
-            verificationId: data.verificationId || '',
           };
         })
       );

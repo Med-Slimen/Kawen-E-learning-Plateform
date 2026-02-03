@@ -45,7 +45,7 @@ export class AuthService {
         if(role==='Instructor'){
           const cvFileUrl=await this.cloudinaryService.uploadImage(cvFile, 'verifications', 'raw');
           const verificiationData={
-            userId: cred.user.uid,
+            instructorId: cred.user.uid,
             cvFileUrl: cvFileUrl,
             linkedinProfileUrl: linkedinProfileUrl,
             portfolioUrl: portfolioUrl,

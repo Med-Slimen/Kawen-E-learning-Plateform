@@ -30,7 +30,7 @@ export class AdminInstructorPage {
     }
   }
   getVerificationIdByInstructorId(instructorUid:string):string | undefined{
-    const verification = this.verifications.find(v => v.uid === instructorUid);
+    const verification = this.verifications.find(v => v.instructor.uid === instructorUid);
     return verification ? verification.uid : undefined;
   }
 }
