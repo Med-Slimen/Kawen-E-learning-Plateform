@@ -98,8 +98,8 @@ export class Messages {
     }
   }
   async sendMessage() {
-    if(this.selectedConversation && this.selectedConversation.status !== 'open'){
-      alert('Cannot send messages in a conversation that is not open.');
+    if(!this.selectedConversation || (this.selectedConversation && this.selectedConversation.status !== 'open')){
+      alert('Cannot send messages in a conversation that is not open. ( It may be closed , pending or deleted )  refresh the page');
       return;
     }
     try {
