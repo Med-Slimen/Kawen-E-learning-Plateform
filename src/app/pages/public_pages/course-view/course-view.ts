@@ -100,6 +100,14 @@ export class CourseView {
     this.lessonsProgress.map(async(lessonProgress)=>{
       await addDoc(collection(this.firestore,`courses_enrolls/${enrolledSnap.id}/lessons_progress`), lessonProgress);
     });
+    this.enrolledCourses.push({
+      uid: enrolledSnap.id,
+      course: this.course!,
+      enrollmentDate: new Date(),
+      studentId: this.studentId!,
+      percentageCompleted: 0,
+      instructorId: this.course!.instructor.uid,
+    });
     alert('Enrolled successfully in the course! Check your dashboard for access.');
     }
     catch(error){
