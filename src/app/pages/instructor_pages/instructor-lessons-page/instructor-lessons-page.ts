@@ -8,10 +8,11 @@ import { CourseService } from '../../../services/courseService/course-service';
 import { Lesson } from '../../../models/lessons';
 import { LessonService } from '../../../services/lessonService/lesson-service';
 import { Location } from '@angular/common';
+import { Loading } from '../../../components/layoutComponents/loading/loading';
 
 @Component({
   selector: 'app-instructor-lessons-page',
-  imports: [NavBar, RouterLink],
+  imports: [NavBar, RouterLink, Loading],
   templateUrl: './instructor-lessons-page.html',
   styleUrl: './instructor-lessons-page.css',
 })
@@ -27,36 +28,36 @@ export class InstructorLessonsPage {
   constructor(private route: ActivatedRoute,private location:Location) {}
   async ngOnInit() {
     try{
+      this.loadingCourse=true;
       await this.getCourseById();
     if(!this.course){
       alert('Course not found');
       this.location.back();
     }
+    this.loadingLessons=true;
     await this.getCourseLessons();
     }catch(error){
       alert('Error loading course or lessons: ' + error);
       this.location.back();
+    }finally{
+      this.loadingLessons=false;
+      this.loadingCourse=false;
     }
   }
   async getCourseById(): Promise<void> {
     try{
-      this.loadingCourse=true;
+      
     this.courseId = this.route.snapshot.paramMap.get('courseId') || '';
     this.course = await this.courseService.getCourseById(this.courseId);}
     catch(error){
       alert('Error fetching course: ' + error);
-    }finally{
-      this.loadingCourse=false;
     }
   }
   async getCourseLessons(): Promise<void> {
     try{
-      this.loadingLessons=true;
     this.lessons = await this.lessonService.getCourseLessons(this.courseId);
     }catch(error){
       alert('Error fetching lessons: ' + error);
-    }finally{
-      this.loadingLessons=false;
     }
   }
   async deleteLesson(lessonId:string){
@@ -65,7 +66,6 @@ export class InstructorLessonsPage {
       return;
     }
     try{
-      this.loadingLessons=true;
       const batch=writeBatch(this.firestore);
       batch.delete(doc(this.firestore,`courses/${this.courseId}/lessons`,lessonId));
       batch.update(doc(this.firestore, 'courses', this.courseId), {
@@ -76,8 +76,6 @@ export class InstructorLessonsPage {
       alert('Lesson deleted successfully');
     } catch (error) {
       alert('Error deleting lesson:' + error);
-    }finally{
-      this.loadingLessons=false;
     }
   }
 }

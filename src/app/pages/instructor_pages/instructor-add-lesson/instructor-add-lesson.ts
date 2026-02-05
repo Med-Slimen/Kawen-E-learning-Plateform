@@ -10,10 +10,11 @@ import { LessonService } from '../../../services/lessonService/lesson-service';
 import { Course } from '../../../models/course';
 import { CourseService } from '../../../services/courseService/course-service';
 import { Location } from '@angular/common';
+import { Loading } from '../../../components/layoutComponents/loading/loading';
 
 @Component({
   selector: 'app-instructor-add-lesson',
-  imports: [ReactiveFormsModule, NavBar, RouterLink],
+  imports: [ReactiveFormsModule, NavBar, RouterLink,Loading],
   templateUrl: './instructor-add-lesson.html',
   styleUrl: './instructor-add-lesson.css',
 })

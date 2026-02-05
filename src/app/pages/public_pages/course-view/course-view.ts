@@ -9,10 +9,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { addDoc, collection, doc, Firestore } from '@angular/fire/firestore';
 import { EnrolledCourse } from '../../../models/enrolledCourse';
 import { Location } from '@angular/common';
+import { Loading } from '../../../components/layoutComponents/loading/loading';
 
 @Component({
   selector: 'app-course-view',
-  imports: [NavBar,RouterLink],
+  imports: [NavBar,RouterLink,Loading],
   templateUrl: './course-view.html',
   styleUrl: './course-view.css',
 })

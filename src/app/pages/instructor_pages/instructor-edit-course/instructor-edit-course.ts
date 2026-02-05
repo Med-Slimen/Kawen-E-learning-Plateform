@@ -10,10 +10,11 @@ import { getDoc, updateDoc } from 'firebase/firestore';
 import { doc, Firestore } from '@angular/fire/firestore';
 import { CategoryService } from '../../../services/categoryService/category-service';
 import { Category } from '../../../models/category';
+import { Loading } from '../../../components/layoutComponents/loading/loading';
 
 @Component({
   selector: 'app-instructor-edit-course',
-  imports: [NavBar,ReactiveFormsModule,RouterLink],
+  imports: [NavBar,ReactiveFormsModule,RouterLink,Loading],
   templateUrl: './instructor-edit-course.html',
   styleUrl: './instructor-edit-course.css',
 })

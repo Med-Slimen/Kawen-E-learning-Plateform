@@ -9,10 +9,11 @@ import { CourseService } from '../../../services/courseService/course-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Lesson } from '../../../models/lessons';
 import { Location } from '@angular/common';
+import { Loading } from '../../../components/layoutComponents/loading/loading';
 
 @Component({
   selector: 'app-instructor-edit-lesson',
-  imports: [ReactiveFormsModule,NavBar,RouterLink],
+  imports: [ReactiveFormsModule,NavBar,RouterLink,Loading],
   templateUrl: './instructor-edit-lesson.html',
   styleUrl: './instructor-edit-lesson.css',
 })
@@ -38,6 +39,7 @@ export class InstructorEditLesson {
     });
   }
   async ngOnInit(){
+    try{
     this.courseId = this.route.snapshot.paramMap.get('courseId') as string;
     this.lessonId = this.route.snapshot.paramMap.get('lessonId') as string;
     this.loading=true;
@@ -45,6 +47,7 @@ export class InstructorEditLesson {
     this.lesson=await this.lessonService.getLessonById(this.courseId,this.lessonId);
     if(!this.lesson){
       alert("Lesson not found");
+      this.location.back();
       return;}
     this.editLessonFormGroup.patchValue({
       lessonTitle: this.lesson.title,
@@ -60,8 +63,12 @@ export class InstructorEditLesson {
       this.typeContent='pdf';
       this.editLessonFormGroup.get('lessonDuration')?.clearValidators();
       this.editLessonFormGroup.get('lessonDuration')?.updateValueAndValidity();
-    }
+    }}catch(error){
+      alert("Error loading lesson: "+error);
+      this.location.back();
+    } finally {
     this.loading=false;
+  }
   }
    selectFile(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0] || null;

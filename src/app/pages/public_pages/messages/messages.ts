@@ -28,10 +28,11 @@ import { DatePipe } from '@angular/common';
 import { getDocs, where } from 'firebase/firestore';
 import { Unsubscribe } from 'firebase/auth';
 import { Notification } from '../../../models/notification';
+import { Loading } from '../../../components/layoutComponents/loading/loading';
 
 @Component({
   selector: 'app-messages',
-  imports: [NavBar, ɵInternalFormsSharedModule, ReactiveFormsModule, DatePipe],
+  imports: [NavBar, ɵInternalFormsSharedModule, ReactiveFormsModule, DatePipe,Loading],
   templateUrl: './messages.html',
   styleUrl: './messages.css',
 })
@@ -60,9 +61,15 @@ export class Messages {
     });
   }
   async ngOnInit() {
+    try{
+    this.loading = true;
     await this.listenForMessagesNotifications();
     await this.listenForConversations();
-    console.log(this.conversations);
+  }catch(error){
+    alert('Error initializing messages: ' + error);}
+    finally{
+    this.loading = false;
+    }
   }
   notificationCount(conversationId: string): number {
     if (this.selectedConversation?.uid === conversationId) return 0;

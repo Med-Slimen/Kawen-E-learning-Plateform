@@ -10,10 +10,11 @@ import { Course } from '../../../models/course';
 import { EnrolledCourse } from '../../../models/enrolledCourse';
 import { addDoc, collection, doc, Firestore, getDoc, getDocs, query, where } from '@angular/fire/firestore';
 import { User } from '../../../models/user';
+import { Loading } from '../../../components/layoutComponents/loading/loading';
 
 @Component({
   selector: 'app-student-dashboard',
-  imports: [NavBar,RouterLink],
+  imports: [NavBar,RouterLink,Loading],
   templateUrl: './student-dashboard.html',
   styleUrl: './student-dashboard.css',
 })
@@ -24,7 +25,7 @@ export class StudentDashboard implements OnInit {
   courseService=inject(CourseService);
   firestore=inject(Firestore);
   loadingEnrolledCourses:boolean=false;
-  loadingMessages:boolean=false;
+  loadingConv:boolean=false;
   enrolledCourses:EnrolledCourse[]=[];
   completedCoursesCount:number=0;
   inProgressCoursesCount:number=0;
@@ -49,7 +50,7 @@ export class StudentDashboard implements OnInit {
       return;
     }
     try{
-      this.loadingMessages = true;
+      this.loadingConv = true;
       const participants=[this.sessionService.user()?.uid, instructorUid];
       const queryGet=query(collection(this.firestore,'conversations'),where('participants','==',participants));
       const querySnapshot = await getDocs(queryGet);
@@ -73,7 +74,7 @@ export class StudentDashboard implements OnInit {
     catch (error) {
       alert("Error creating conversation: " + error);
     }finally {
-      this.loadingMessages = false;
+      this.loadingConv = false;
     }
   }
 }

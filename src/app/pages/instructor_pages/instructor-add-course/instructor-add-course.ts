@@ -11,10 +11,11 @@ import { CategoryService } from '../../../services/categoryService/category-serv
 import { RouterLink } from '@angular/router';
 import { Category } from '../../../models/category';
 import { Location } from '@angular/common';
+import { Loading } from '../../../components/layoutComponents/loading/loading';
 
 @Component({
   selector: 'app-instructor-add-course',
-  imports: [NavBar, ReactiveFormsModule, RouterLink],
+  imports: [NavBar, ReactiveFormsModule, RouterLink,Loading],
   templateUrl: './instructor-add-course.html',
   styleUrl: './instructor-add-course.css',
 })

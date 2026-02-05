@@ -9,10 +9,13 @@ import { EnrolledCourse } from '../../../models/enrolledCourse';
 import { EnrolledCourselessons } from '../../../models/EnrolledCourselessons';
 import { updateDoc } from 'firebase/firestore';
 import { doc, Firestore } from '@angular/fire/firestore';
+import { NavBar } from '../../../components/layoutComponents/dashboard-nav-bar/nav-bar';
+import { Location } from '@angular/common';
+import { Loading } from '../../../components/layoutComponents/loading/loading';
 
 @Component({
   selector: 'app-view-course',
-  imports: [RouterLink],
+  imports: [RouterLink,NavBar,Loading],
   templateUrl: './view-course.html',
   styleUrl: './view-course.css',
 })
@@ -29,9 +32,10 @@ export class ViewCourse {
   private enrolledCourseId:string|null = null;
   selectedLesson: EnrolledCourselessons | null = null;
   safeUrl:SafeResourceUrl | null = null;
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private location:Location) {}
   async ngOnInit() {
     try{
+      this.loading=true;
     this.enrolledCourseId = this.route.snapshot.paramMap.get('EnrolledCourseId');
     if (this.enrolledCourseId) {
       await this.getEnrolledCourseById(this.enrolledCourseId);
@@ -39,33 +43,31 @@ export class ViewCourse {
     }
     else{
       alert('No enrolledCourseId provided in route.');
+      this.location.back();
       return;
     }
     }catch(error){
       alert('Error initializing view course page:' + error);
+      this.location.back();
+    }finally{
+      this.loading=false;
     }
   }
   async getEnrolledCourseById(enrolledCourseId: string): Promise<void> {
     try {
-      this.loading = true;
       this.enrolledCourse = await this.courseService.getEnrolledCourseById(enrolledCourseId);
     } catch (error) {
       alert('Error fetching enrolled course:' + error);
-    } finally {
-      this.loading = false;
     }
   }
   async getEnrolledCourselessonsById(enrolledCourseId:string):Promise<void>{
     try {
-      this.loading = true;
       this.enrolledCourselessons = await this.courseService.getEnrolledCourseLessonsById(enrolledCourseId,this.enrolledCourse!.course.uid);
       this.enrolledCourselessons.sort((a,b)=> (a.lesson && b.lesson) ? a.lesson.order - b.lesson.order : 0);
       this.completedLessons = this.enrolledCourselessons.filter(lesson => lesson.completed).length;
       this.percentageCompleted =Math.round((this.completedLessons / this.enrolledCourselessons.length) * 100);
     } catch (error) {
       alert('Error fetching enrolled course lessons:' + error);
-    } finally {
-      this.loading = false;
     }
   }
   selectEnrolledCourselesson(enrolledCourselessons: EnrolledCourselessons): void {
