@@ -155,7 +155,7 @@ export class UserService {
   }
     async getActiveStudentsCount():Promise<number>{
       try{
-        const usersSnap=await getDocs(query(collection(this.firestore, 'users'),where('role','==','Student'),where('status','==','Active')));
+        const usersSnap=await getDocs(query(collection(this.firestore, 'users'),where('role','==','Student'),where('status','==','active')));
         return usersSnap.size;
       }
       catch(error){
@@ -165,7 +165,7 @@ export class UserService {
     }
      async getDisabledStudentsCount():Promise<number>{
       try{
-        const usersSnap=await getDocs(query(collection(this.firestore, 'users'),where('role','==','Student'),where('status','==','Disabled')));
+        const usersSnap=await getDocs(query(collection(this.firestore, 'users'),where('role','==','Student'),where('status','==','disabled')));
         return usersSnap.size;
       }
       catch(error){
