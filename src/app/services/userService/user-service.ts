@@ -96,6 +96,7 @@ export class UserService {
       throw new Error('Error fetching students');
     }
   }
+
    async getInstructorById(instructorId: string) : Promise<User> {
     try{
       const userSnap=await getDoc(doc(this.firestore, 'users', instructorId));
@@ -152,4 +153,24 @@ export class UserService {
       throw new Error('Error fetching verifications');
     }
   }
+    async getActiveStudentsCount():Promise<number>{
+      try{
+        const usersSnap=await getDocs(query(collection(this.firestore, 'users'),where('role','==','Student'),where('status','==','Active')));
+        return usersSnap.size;
+      }
+      catch(error){
+        alert('Error fetching active students count: ' + error);
+        return 0;
+      }
+    }
+     async getDisabledStudentsCount():Promise<number>{
+      try{
+        const usersSnap=await getDocs(query(collection(this.firestore, 'users'),where('role','==','Student'),where('status','==','Disabled')));
+        return usersSnap.size;
+      }
+      catch(error){
+        alert('Error fetching disabled students count: ' + error);
+        return 0;
+      }
+    }
   }
