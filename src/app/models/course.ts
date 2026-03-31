@@ -6,7 +6,7 @@ export interface Course {
     uid: string;
     title: string;
     description: string;
-    duration: number; // duration in hours
+    duration: number;
     instructor: User;
     category: Category;
     price: number;
